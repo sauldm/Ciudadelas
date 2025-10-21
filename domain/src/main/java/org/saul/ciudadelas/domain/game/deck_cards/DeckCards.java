@@ -32,6 +32,11 @@ public class DeckCards {
         cards.forEach(this.cards::addLast);
     }
 
+    public void addCard(Card card){
+        if (card == null) throw new InternalGameException("La carta no puede ser nula");
+        cards.add(card);
+    }
+
 
     @Override
     public String toString() {

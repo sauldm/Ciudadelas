@@ -37,6 +37,9 @@ public class Player {
         gold += quantity;
     }
 
+    public void getCharacterCard(CharacterCard characterCard){
+        this.characterCards.addCard(characterCard);
+    }
 
     @Override
     public String toString() {

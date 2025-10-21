@@ -1,5 +1,6 @@
 package org.saul.ciudadelas.domain.game;
 
+import org.saul.ciudadelas.domain.exception.ExpectedGameError;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.Card;
 import org.saul.ciudadelas.domain.game.deck_cards.DeckCards;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.CharacterCard;
@@ -14,7 +15,8 @@ public class Game {
     private DeckCards deckCharacterCards;
     private int rondas;
     private List<Turn> turns;
-    private List<Player> chooseCharacterOrder;
+    private List<Player> playerChooseOrder;
+    private int indexPlayerSelecting;
 
 
     public Game(DeckCards deckDistrictCards, List<Player> players, DeckCards deckCharacterCards) {
@@ -23,13 +25,25 @@ public class Game {
         this.deckCharacterCards = deckCharacterCards;
         this.rondas = 1;
         this.turns = new ArrayList<>();
-        this.chooseCharacterOrder = players;
+        this.playerChooseOrder = players;
+        this.indexPlayerSelecting = 0;
 
         this.players.forEach(player -> player.addDistrictCards(deckDistrictCards.getCard(3)));
     }
 
+
+
     public List<Card> getDistrictCards(int numberOfCards){
         return deckDistrictCards.getCard(numberOfCards);
+    }
+
+    public void chooseCharacter(CharacterCard characterCard){
+        playerChooseOrder.get(indexPlayerSelecting).getCharacterCard(characterCard);
+        nextPlayerSelecting();
+    }
+
+    private void nextPlayerSelecting() {
+        indexPlayerSelecting++;
     }
 
     /*public void passTurn(CharacterCard characterCard){
