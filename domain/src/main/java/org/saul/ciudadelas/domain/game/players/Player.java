@@ -14,6 +14,14 @@ public class Player {
     private Long gold = 0L;
     private int points;
 
+    public Player(Long id, String nickName, DeckCards characterCards, Long gold, int points) {
+        this.id = id;
+        this.nickName = nickName;
+        this.characterCards = null;
+        this.gold = 2L;
+        this.points = 0;
+    }
+
     public boolean removeGold(int quantity){
         if (gold < quantity) return false;
         gold -= quantity;
@@ -27,6 +35,8 @@ public class Player {
     public void addGold(int quantity){
         gold += quantity;
     }
+
+
 
 
 

@@ -20,11 +20,12 @@ public class Main {
 
 
         ));
-        Player player = new Player();
-        player.addGold(3);
+        //Player player = new Player();
+        //player.addGold(3);
 
         Card card = new TakeThreeActionCard();
 
+        System.out.println(card.getClass());
 
 
         /*Game game = new Game(deckCards);
