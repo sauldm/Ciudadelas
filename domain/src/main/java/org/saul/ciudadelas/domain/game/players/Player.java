@@ -2,6 +2,7 @@ package org.saul.ciudadelas.domain.game.players;
 
 import org.saul.ciudadelas.domain.game.deck_cards.cards.Card;
 import org.saul.ciudadelas.domain.game.deck_cards.DeckCards;
+import org.saul.ciudadelas.domain.game.deck_cards.cards.CharacterCard;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ public class Player {
     private final DeckCards districtDeckCardsInHand = new DeckCards();
     private DeckCards districtDeckCardsBuilt;
     private DeckCards characterCards;
-    private Long gold = 0L;
+    private Long gold;
     private int points;
 
     public Player(Long id, String nickName, DeckCards characterCards, Long gold, int points) {
@@ -35,9 +36,6 @@ public class Player {
     public void addGold(int quantity){
         gold += quantity;
     }
-
-
-
 
 
     @Override

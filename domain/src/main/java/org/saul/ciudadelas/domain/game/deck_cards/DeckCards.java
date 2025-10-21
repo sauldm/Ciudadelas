@@ -3,6 +3,7 @@ package org.saul.ciudadelas.domain.game.deck_cards;
 import org.saul.ciudadelas.domain.exception.ExpectedGameError;
 import org.saul.ciudadelas.domain.exception.InternalGameException;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.Card;
+import org.saul.ciudadelas.domain.game.deck_cards.cards.CharacterCard;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,7 @@ public class DeckCards {
         if (cards == null) throw new InternalGameException("Las cartas no pueden ser nulas");
         cards.forEach(this.cards::addLast);
     }
+
 
     @Override
     public String toString() {
