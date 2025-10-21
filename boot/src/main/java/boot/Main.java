@@ -1,9 +1,7 @@
 package boot;
 
-import org.saul.ciudadelas.domain.game.Game;
-import org.saul.ciudadelas.domain.game.deck_cards.Card;
+import org.saul.ciudadelas.domain.game.deck_cards.cards.Card;
 import org.saul.ciudadelas.domain.game.deck_cards.DeckCards;
-import org.saul.ciudadelas.domain.game.deck_cards.OptionalEpicCard;
 import org.saul.ciudadelas.domain.game.deck_cards.actions.TakeThreeActionCard;
 import org.saul.ciudadelas.domain.game.players.Player;
 
@@ -29,13 +27,13 @@ public class Main {
 
 
 
-        Game game = new Game(deckCards);
+        /*Game game = new Game(deckCards);
 
         if (card instanceof TakeThreeActionCard card1){
             card1.execute(game,player);
         }
 
         System.out.println(player);
-        System.out.println(deckCards);
+        System.out.println(deckCards);*/
     }
 }

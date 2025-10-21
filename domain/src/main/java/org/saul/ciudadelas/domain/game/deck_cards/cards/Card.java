@@ -1,4 +1,4 @@
-package org.saul.ciudadelas.domain.game.deck_cards;
+package org.saul.ciudadelas.domain.game.deck_cards.cards;
 
 public class Card {
     private String name;

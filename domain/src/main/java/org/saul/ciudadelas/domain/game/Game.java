@@ -1,6 +1,6 @@
 package org.saul.ciudadelas.domain.game;
 
-import org.saul.ciudadelas.domain.game.deck_cards.Card;
+import org.saul.ciudadelas.domain.game.deck_cards.cards.Card;
 import org.saul.ciudadelas.domain.game.deck_cards.DeckCards;
 import org.saul.ciudadelas.domain.game.players.Player;
 
@@ -10,7 +10,6 @@ public class Game {
     private final DeckCards deckDistrictCards;
     private List<Player> players;
     private DeckCards deckCharacterCards;
-    private
 
 
     public Game(DeckCards deckCards){

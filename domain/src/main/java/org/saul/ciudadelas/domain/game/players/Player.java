@@ -1,6 +1,6 @@
 package org.saul.ciudadelas.domain.game.players;
 
-import org.saul.ciudadelas.domain.game.deck_cards.Card;
+import org.saul.ciudadelas.domain.game.deck_cards.cards.Card;
 import org.saul.ciudadelas.domain.game.deck_cards.DeckCards;
 
 import java.util.List;

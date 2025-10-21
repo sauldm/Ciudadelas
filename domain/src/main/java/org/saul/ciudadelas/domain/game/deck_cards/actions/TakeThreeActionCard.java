@@ -2,8 +2,7 @@ package org.saul.ciudadelas.domain.game.deck_cards.actions;
 
 import org.saul.ciudadelas.domain.exception.ExpectedGameError;
 import org.saul.ciudadelas.domain.game.Game;
-import org.saul.ciudadelas.domain.game.deck_cards.Card;
-import org.saul.ciudadelas.domain.game.deck_cards.DistrictCard;
+import org.saul.ciudadelas.domain.game.deck_cards.cards.DistrictCard;
 import org.saul.ciudadelas.domain.game.deck_cards.OptionalEpicCard;
 import org.saul.ciudadelas.domain.game.players.Player;
 
