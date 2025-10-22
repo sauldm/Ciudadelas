@@ -1,5 +1,6 @@
 package org.saul.ciudadelas.domain.game.players;
 
+import org.saul.ciudadelas.domain.exception.InternalGameException;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.Card;
 import org.saul.ciudadelas.domain.game.deck_cards.DeckCards;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.CharacterCard;
@@ -15,10 +16,10 @@ public class Player {
     private Long gold;
     private int points;
 
-    public Player(Long id, String nickName, DeckCards characterCards, Long gold, int points) {
+    public Player(Long id, String nickName, DeckCards characterCards) {
         this.id = id;
         this.nickName = nickName;
-        this.characterCards = null;
+        this.characterCards = characterCards;
         this.gold = 2L;
         this.points = 0;
     }
@@ -27,6 +28,11 @@ public class Player {
         if (gold < quantity) return false;
         gold -= quantity;
         return true;
+    }
+
+    public boolean haveThisCard(Card card){
+        if (card == null) throw new InternalGameException("La carta no puede ser nula");
+        return characterCards.haveThisCard(card);
     }
 
     public void addDistrictCards(List<Card> districtCards){
@@ -46,8 +52,11 @@ public class Player {
         return "Player{" +
                 "id=" + id +
                 ", nickName='" + nickName + '\'' +
-                ", districtDeckCards=" + districtDeckCardsInHand +
+                ", districtDeckCardsInHand=" + districtDeckCardsInHand +
+                ", districtDeckCardsBuilt=" + districtDeckCardsBuilt +
+                ", characterCards=" + characterCards +
                 ", gold=" + gold +
+                ", points=" + points +
                 '}';
     }
 }

@@ -1,6 +1,8 @@
 package org.saul.ciudadelas.domain.game;
 
 import org.saul.ciudadelas.domain.exception.ExpectedGameError;
+import org.saul.ciudadelas.domain.exception.InternalGameException;
+import org.saul.ciudadelas.domain.game.deck_cards.actions.KingActionCard;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.Card;
 import org.saul.ciudadelas.domain.game.deck_cards.DeckCards;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.CharacterCard;
@@ -15,7 +17,7 @@ public class Game {
     private DeckCards deckCharacterCards;
     private int rondas;
     private List<Turn> turns;
-    private List<Player> playerChooseOrder;
+    public List<Player> playerChooseOrder;
     private int indexPlayerSelecting;
 
 
@@ -42,7 +44,29 @@ public class Game {
         nextPlayerSelecting();
     }
 
+    public void getCharacterOrder(){
+        KingActionCard kingActionCard = new KingActionCard();
+        int indexKingCard = -1;
+        int searchKingError = 0;
+
+        for (int i = 0; i < playerChooseOrder.size(); i++) {
+            if (playerChooseOrder.get(i).haveThisCard(kingActionCard)){
+                indexKingCard = i;
+                searchKingError++;
+            }
+        }
+        if (searchKingError == 0) throw new InternalGameException("No puede no haber carta de rey");
+        if (searchKingError >=2) throw new InternalGameException("No puede haber mas de una carta de rey");
+
+        System.out.println(indexKingCard);
+        List<Player> auxPlayers = new ArrayList<>(playerChooseOrder.subList(indexKingCard,playerChooseOrder.size()));
+        auxPlayers.addAll(playerChooseOrder.subList(0,indexKingCard));
+
+        playerChooseOrder = auxPlayers;
+    }
+
     private void nextPlayerSelecting() {
+        if (indexPlayerSelecting >= players.size()) indexPlayerSelecting = 0;
         indexPlayerSelecting++;
     }
 

@@ -3,10 +3,10 @@ package org.saul.ciudadelas.domain.game.deck_cards;
 import org.saul.ciudadelas.domain.exception.ExpectedGameError;
 import org.saul.ciudadelas.domain.exception.InternalGameException;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.Card;
-import org.saul.ciudadelas.domain.game.deck_cards.cards.CharacterCard;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class DeckCards {
     private final List<Card> cards = new ArrayList<>();
@@ -35,6 +35,12 @@ public class DeckCards {
     public void addCard(Card card){
         if (card == null) throw new InternalGameException("La carta no puede ser nula");
         cards.add(card);
+    }
+
+    public boolean haveThisCard(Card card){
+        if (card == null) throw new InternalGameException("La carta no puede ser nula");
+        System.out.println(cards.stream().anyMatch(card1 -> card1.getClass().equals(card.getClass())));
+        return cards.stream().anyMatch(card1 -> card1.getClass().equals(card.getClass()));
     }
 
 
