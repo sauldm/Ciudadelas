@@ -5,6 +5,7 @@ import org.saul.ciudadelas.domain.game.deck_cards.cards.Card;
 import org.saul.ciudadelas.domain.game.deck_cards.DeckCards;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.CharacterCard;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
@@ -16,12 +17,12 @@ public class Player {
     private Long gold;
     private int points;
 
-    public Player(Long id, String nickName, DeckCards characterCards) {
+    public Player(Long id, String nickName) {
         this.id = id;
         this.nickName = nickName;
-        this.characterCards = characterCards;
         this.gold = 2L;
         this.points = 0;
+        this.characterCards = new DeckCards();
     }
 
     public boolean removeGold(int quantity){
@@ -30,7 +31,7 @@ public class Player {
         return true;
     }
 
-    public boolean haveThisCard(Card card){
+    public Card findCard(Card card){
         if (card == null) throw new InternalGameException("La carta no puede ser nula");
         return characterCards.haveThisCard(card);
     }
@@ -43,7 +44,7 @@ public class Player {
         gold += quantity;
     }
 
-    public void getCharacterCard(CharacterCard characterCard){
+    public void addCharacterCard(CharacterCard characterCard){
         this.characterCards.addCard(characterCard);
     }
 

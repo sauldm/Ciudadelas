@@ -3,13 +3,17 @@ package org.saul.ciudadelas.domain.game.deck_cards;
 import org.saul.ciudadelas.domain.exception.ExpectedGameError;
 import org.saul.ciudadelas.domain.exception.InternalGameException;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.Card;
+import org.saul.ciudadelas.domain.game.deck_cards.cards.CharacterCard;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class DeckCards {
     private final List<Card> cards = new ArrayList<>();
+    private final Random random = new Random();
+
 
 
     public List<Card> getCard(int quantity){
@@ -37,17 +41,23 @@ public class DeckCards {
         cards.add(card);
     }
 
-    public boolean haveThisCard(Card card){
+    public Card haveThisCard(Card card){
         if (card == null) throw new InternalGameException("La carta no puede ser nula");
-        System.out.println(cards.stream().anyMatch(card1 -> card1.getClass().equals(card.getClass())));
-        return cards.stream().anyMatch(card1 -> card1.getClass().equals(card.getClass()));
+        return cards.stream().filter(card1 -> card1.getClass().equals(card.getClass())).findFirst().orElse(null);
+    }
+
+
+    public Card getRandomCard(){
+        if (cards.isEmpty()) throw new InternalGameException("No hay cartas disponibles");
+        int randomIndex = random.nextInt(cards.size());
+        return cards.remove(randomIndex);
     }
 
 
     @Override
     public String toString() {
         return "DeckCards{" +
-                "cards=" + cards.size() +
+                "cards=" + cards +
                 '}';
     }
 }
