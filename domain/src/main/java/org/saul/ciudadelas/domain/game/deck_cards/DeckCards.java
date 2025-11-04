@@ -58,4 +58,8 @@ public class DeckCards {
                 "cards=" + cards +
                 '}';
     }
+
+    public boolean haveThisCard(CharacterCard characterCard) {
+        return cards.stream().anyMatch(card -> card.getClass().equals(characterCard.getClass()));
+    }
 }

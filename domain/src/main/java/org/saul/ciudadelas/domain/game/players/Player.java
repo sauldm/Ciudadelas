@@ -1,11 +1,9 @@
 package org.saul.ciudadelas.domain.game.players;
 
-import org.saul.ciudadelas.domain.exception.InternalGameException;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.Card;
 import org.saul.ciudadelas.domain.game.deck_cards.DeckCards;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.CharacterCard;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
@@ -31,12 +29,18 @@ public class Player {
         return true;
     }
 
+    public Long getAllGold(){
+        Long stoledGold = gold;
+        gold = 0L;
+        return stoledGold;
+
+    }
 
     public void addDistrictCards(List<Card> districtCards){
         districtDeckCardsInHand.addCards(districtCards);
     }
 
-    public void addGold(int quantity){
+    public void addGold(Long quantity){
         gold += quantity;
     }
 
@@ -50,6 +54,11 @@ public class Player {
                 "id=" + id +
                 ", nickName='" + nickName + '\'' +
                 ", characterCards=" + characterCards +
+                ", gold=" + gold +
                 '}';
+    }
+
+    public boolean haveCharacter(CharacterCard characterCard) {
+        return characterCards.haveThisCard(characterCard);
     }
 }

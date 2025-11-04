@@ -1,10 +1,8 @@
 package boot;
 
 import org.saul.ciudadelas.domain.game.Game;
-import org.saul.ciudadelas.domain.game.deck_cards.actions.AssassinActionCard;
-import org.saul.ciudadelas.domain.game.deck_cards.actions.KingActionCard;
+import org.saul.ciudadelas.domain.game.deck_cards.actions.*;
 import org.saul.ciudadelas.domain.game.deck_cards.DeckCards;
-import org.saul.ciudadelas.domain.game.deck_cards.actions.TakeThreeActionCard;
 import org.saul.ciudadelas.domain.game.players.Player;
 
 import java.util.List;
@@ -12,24 +10,23 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
 
+        ThiefActionCard a = new ThiefActionCard();
+        AssassinActionCard b = new AssassinActionCard();
+        KingActionCard k = new KingActionCard();
+
+
 
         DeckCards deckCharacterCards1 = new DeckCards();
         deckCharacterCards1.addCards(List.of(
-                new AssassinActionCard()
+                new ThiefActionCard()
         ));
 
         DeckCards deckCharacterCards2 = new DeckCards();
         deckCharacterCards2.addCards(List.of(
-                new KingActionCard(),
-                new AssassinActionCard(),
-                new KingActionCard(),
-                new KingActionCard()
+                k,
+                b,
+                a
 
-        ));
-
-        DeckCards deckCharacterCards3 = new DeckCards();
-        deckCharacterCards3.addCards(List.of(
-                new AssassinActionCard()
         ));
 
         DeckCards deckCards = new DeckCards();
@@ -56,10 +53,16 @@ public class Main {
         );
         Game game = new Game(deckCards,players,deckCharacterCards2);
 
-        System.out.println(game.playerChooseOrder);
+        System.out.println(players);
 
         game.addRandomCharacter();
 
-        System.out.println(game.playerChooseOrder);
+        System.out.println(players);
+
+
+        a.execute(game,k);
+
+        System.out.println(players);
+
     }
 }

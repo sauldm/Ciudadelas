@@ -8,6 +8,8 @@ import java.util.List;
 
 public class Round {
     List<Turn> turns;
+    CharacterCard characterRobed;
+    CharacterCard characterThief;
 
 
     public Round(List<Card> orderOfCharacters) {
@@ -17,4 +19,5 @@ public class Round {
     public void passTurn(CharacterCard characterCard){
         if (characterCard == null) throw new InternalGameException("La carta no puede ser null");
     }
+
 }
