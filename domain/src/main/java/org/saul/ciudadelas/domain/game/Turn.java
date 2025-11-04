@@ -13,4 +13,8 @@ public class Turn {
 
     }
 
+    public boolean canPlayerPlay(){
+        return this.canPlay;
+    }
+
 }

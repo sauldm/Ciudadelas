@@ -58,7 +58,7 @@ public class Main {
 
         System.out.println(game.playerChooseOrder);
 
-        game.getRandomCharacter();
+        game.addRandomCharacter();
 
         System.out.println(game.playerChooseOrder);
     }

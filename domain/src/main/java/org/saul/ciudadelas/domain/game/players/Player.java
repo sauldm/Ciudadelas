@@ -31,10 +31,6 @@ public class Player {
         return true;
     }
 
-    public Card findCard(Card card){
-        if (card == null) throw new InternalGameException("La carta no puede ser nula");
-        return characterCards.haveThisCard(card);
-    }
 
     public void addDistrictCards(List<Card> districtCards){
         districtDeckCardsInHand.addCards(districtCards);
@@ -53,11 +49,7 @@ public class Player {
         return "Player{" +
                 "id=" + id +
                 ", nickName='" + nickName + '\'' +
-                ", districtDeckCardsInHand=" + districtDeckCardsInHand +
-                ", districtDeckCardsBuilt=" + districtDeckCardsBuilt +
                 ", characterCards=" + characterCards +
-                ", gold=" + gold +
-                ", points=" + points +
                 '}';
     }
 }

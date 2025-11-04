@@ -1,7 +1,6 @@
 package org.saul.ciudadelas.domain.game;
 
 import org.saul.ciudadelas.domain.exception.InternalGameException;
-import org.saul.ciudadelas.domain.game.deck_cards.OtherPlayerActionCharacterCard;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.Card;
 import org.saul.ciudadelas.domain.game.deck_cards.DeckCards;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.CharacterCard;
@@ -15,36 +14,32 @@ public class Game {
     private final DeckCards deckDistrictCards;
     private List<Player> players;
     private DeckCards deckCharacterCards;
-    private int rondas;
-    private List<Turn> turns;
-    public List<Player> playerChooseOrder;
-    private int indexPlayerSelecting;
+    private List<Round> rounds;
 
 
     public Game(DeckCards deckDistrictCards, List<Player> players, DeckCards deckCharacterCards) {
         this.deckDistrictCards = deckDistrictCards;
         this.players = players;
         this.deckCharacterCards = deckCharacterCards;
-        this.rondas = 1;
-        this.turns = new ArrayList<>();
-        this.playerChooseOrder = new ArrayList<>(players);
-        this.indexPlayerSelecting = 0;
-
+        this.rounds = new ArrayList<>();
 
         this.players.forEach(player -> player.addDistrictCards(deckDistrictCards.getCard(3)));
     }
 
 
+    public void addNewRound(){
+        List<Card> orderedCharacters = deckCharacterCards.orderCards();
+        Round round = new Round(orderedCharacters);
+        rounds.add(round);
+    }
 
     public List<Card> getDistrictCards(int numberOfCards){
         return deckDistrictCards.getCard(numberOfCards);
     }
 
 
-    public void getRandomCharacter(){
-        Collections.shuffle(playerChooseOrder);
-
-        for (Player player : playerChooseOrder) {
+    public void addRandomCharacter(){
+        for (Player player : players) {
             for (int j = 0; j < 2; j++) {
                 player.addCharacterCard((CharacterCard) deckCharacterCards.getRandomCard());
             }
@@ -57,12 +52,3 @@ public class Game {
 
 
 
-
-
-
-
-    /*public void passTurn(CharacterCard characterCard){
-        if (turns.contains(characterCard))
-    }*/
-
-}
