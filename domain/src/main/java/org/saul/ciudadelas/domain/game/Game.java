@@ -27,18 +27,18 @@ public class Game {
     }
 
 
-    public void addNewRound(){
+    public void addNewRound() {
         List<Card> orderedCharacters = deckCharacterCards.orderCards();
         Round round = new Round(orderedCharacters);
         rounds.add(round);
     }
 
-    public List<Card> getDistrictCards(int numberOfCards){
+    public List<Card> getDistrictCards(int numberOfCards) {
         return deckDistrictCards.getCard(numberOfCards);
     }
 
 
-    public void addRandomCharacter(){
+    public void addRandomCharacter() {
         for (Player player : players) {
             for (int j = 0; j < 2; j++) {
                 player.addCharacterCard((CharacterCard) deckCharacterCards.getRandomCard());
@@ -49,6 +49,10 @@ public class Game {
     public void skipCharacterTurn(CharacterCard characterCard) {
 
     }
+
+    public void stoleCharacterGold(CharacterCard characterCard) {
+    }
+}
 
 
 
