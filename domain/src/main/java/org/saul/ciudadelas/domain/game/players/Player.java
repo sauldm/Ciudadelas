@@ -1,5 +1,6 @@
 package org.saul.ciudadelas.domain.game.players;
 
+import org.saul.ciudadelas.domain.game.Turn;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.Card;
 import org.saul.ciudadelas.domain.game.deck_cards.DeckCards;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.CharacterCard;
@@ -60,5 +61,13 @@ public class Player {
 
     public boolean haveCharacter(CharacterCard characterCard) {
         return characterCards.haveThisCard(characterCard);
+    }
+
+    public void startPlaying(Turn turn, CharacterCard characterCard) {
+
+    }
+
+    public void turnSkipped(Turn turn, CharacterCard characterCard) {
+
     }
 }

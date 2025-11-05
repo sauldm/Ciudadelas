@@ -15,7 +15,7 @@ public class Game {
     private final DeckCards deckDistrictCards;
     private List<Player> players;
     private DeckCards deckCharacterCards;
-    private List<Round> rounds;
+    public List<Round> rounds;
 
 
     public Game(DeckCards deckDistrictCards, List<Player> players, DeckCards deckCharacterCards) {
@@ -27,22 +27,23 @@ public class Game {
         this.players.forEach(player -> player.addDistrictCards(deckDistrictCards.getCard(3)));
     }
 
-
-    public void addNewRound() {
-        List<Card> orderedCharacters = deckCharacterCards.orderCards();
-        Round round = new Round(orderedCharacters);
-        rounds.add(round);
-    }
-
     public List<Card> getDistrictCards(int numberOfCards) {
         return deckDistrictCards.getCard(numberOfCards);
     }
 
+    public void startRound(){
+        rounds.add(new Round());
+        addRandomCharacter();
+    }
+
 
     public void addRandomCharacter() {
+        CharacterCard randomCharacterCard;
         for (Player player : players) {
             for (int j = 0; j < 1; j++) {
-                player.addCharacterCard((CharacterCard) deckCharacterCards.getRandomCard());
+                randomCharacterCard = (CharacterCard) deckCharacterCards.getRandomCard();
+                player.addCharacterCard(randomCharacterCard);
+                getActualRound().addTurn(player,randomCharacterCard);
             }
         }
     }
@@ -71,9 +72,10 @@ public class Game {
         return null;
     }
 
-    private Round getActualRound(){
+    public Round getActualRound(){
         return rounds.getLast();
     }
+
 }
 
 

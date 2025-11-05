@@ -10,16 +10,10 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
 
-        ThiefActionCard a = new ThiefActionCard();
-        AssassinActionCard b = new AssassinActionCard();
-        KingActionCard k = new KingActionCard();
+        ThiefActionCard a = new ThiefActionCard(2L);
+        AssassinActionCard b = new AssassinActionCard(1L);
+        KingActionCard k = new KingActionCard(5L);
 
-
-
-        DeckCards deckCharacterCards1 = new DeckCards();
-        deckCharacterCards1.addCards(List.of(
-                new ThiefActionCard()
-        ));
 
         DeckCards deckCharacterCards2 = new DeckCards();
         deckCharacterCards2.addCards(List.of(
@@ -55,9 +49,10 @@ public class Main {
 
         System.out.println(players);
 
-        game.addRandomCharacter();
+        game.startRound();
 
         System.out.println(players);
+        System.out.println(game.rounds);
 
 
         a.execute(game,k);

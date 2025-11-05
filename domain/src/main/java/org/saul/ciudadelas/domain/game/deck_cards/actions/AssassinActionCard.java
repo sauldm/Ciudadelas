@@ -8,6 +8,10 @@ import org.saul.ciudadelas.domain.game.deck_cards.OtherPlayerActionCharacterCard
 
 public class AssassinActionCard extends CharacterCard implements OtherPlayerActionCharacterCard {
 
+    public AssassinActionCard(Long id) {
+        super(id);
+    }
+
     @Override
     public void execute(Game game, CharacterCard characterCard) {
         if (characterCard == null) throw new InternalGameException("La carta no puede ser nula");
