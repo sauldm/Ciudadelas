@@ -49,7 +49,7 @@ public class Main {
 
         System.out.println(players);
 
-        game.startRound();
+        game.addRound();
 
         System.out.println(players);
         System.out.println(game.rounds);

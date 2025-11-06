@@ -29,6 +29,13 @@ public class DeckCards {
         return result;
     }
 
+    public Card getCard(Card card){
+        if (card == null) throw new InternalGameException("card no puede ser null");
+        if (!cards.contains(card)) throw new InternalGameException("La carta tiene que estar en el mazo");
+        cards.remove(card);
+        return card;
+    }
+
     public void addCards(List<Card> cards){
         if (cards == null) throw new InternalGameException("Las cartas no pueden ser nulas");
         cards.forEach(this.cards::addLast);

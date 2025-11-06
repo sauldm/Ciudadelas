@@ -13,8 +13,10 @@ public class Player {
     private final DeckCards districtDeckCardsInHand = new DeckCards();
     private DeckCards districtDeckCardsBuilt;
     private DeckCards characterCards;
+    private DeckCards characterCardsPlayed;
     private Long gold;
     private int points;
+    private boolean isPlaying;
 
     public Player(Long id, String nickName) {
         this.id = id;
@@ -67,7 +69,9 @@ public class Player {
 
     }
 
-    public void turnSkipped(Turn turn, CharacterCard characterCard) {
 
+    public void turnSkipped(Turn turn, CharacterCard characterCard) {
+        characterCardsPlayed.addCard(characterCards.getCard(characterCard));
+        isPlaying = false;
     }
 }

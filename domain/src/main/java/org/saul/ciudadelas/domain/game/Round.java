@@ -1,5 +1,6 @@
 package org.saul.ciudadelas.domain.game;
 
+import com.sun.source.tree.Tree;
 import org.saul.ciudadelas.domain.exception.InternalGameException;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.Card;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.CharacterCard;
@@ -9,17 +10,27 @@ import java.util.List;
 import java.util.TreeSet;
 
 public class Round {
-    private TreeSet<Turn> turns;
-    private CharacterCard characterRobed;
-    private CharacterCard characterThief;
+    private List<Turn> turns;
+    private int actualTurn;
 
-    public Round() {
-        this.turns = new TreeSet<>();
+    public Round(List<Turn> turns) {
+        this.turns = turns;
+        actualTurn = 0;
     }
 
-    public void addTurn(Player player,CharacterCard characterCard){
-        turns.add(new Turn(player,characterCard));
+
+
+    public Turn getActualTurn(){
+        if (turns.isEmpty()) throw new InternalGameException("Tienen que haber turnos");
+        return turns.get(actualTurn);
     }
+
+    //Acabar
+    public void nextTurn(){
+        actualTurn++;
+
+    }
+
 
     @Override
     public String toString() {

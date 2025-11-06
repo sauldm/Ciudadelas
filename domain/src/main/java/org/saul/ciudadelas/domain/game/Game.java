@@ -1,6 +1,5 @@
 package org.saul.ciudadelas.domain.game;
 
-import org.saul.ciudadelas.domain.exception.ExpectedGameError;
 import org.saul.ciudadelas.domain.exception.InternalGameException;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.Card;
 import org.saul.ciudadelas.domain.game.deck_cards.DeckCards;
@@ -10,6 +9,7 @@ import org.saul.ciudadelas.domain.game.players.Player;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.TreeSet;
 
 public class Game {
     private final DeckCards deckDistrictCards;
@@ -25,27 +25,31 @@ public class Game {
         this.rounds = new ArrayList<>();
 
         this.players.forEach(player -> player.addDistrictCards(deckDistrictCards.getCard(3)));
+
+        addRound();
     }
 
     public List<Card> getDistrictCards(int numberOfCards) {
         return deckDistrictCards.getCard(numberOfCards);
     }
 
-    public void startRound(){
-        rounds.add(new Round());
-        addRandomCharacter();
+    public void addRound(){
+        rounds.add(new Round(getNewTurns()));
     }
 
 
-    public void addRandomCharacter() {
+    public List<Turn> getNewTurns() {
+        List<Turn> turns = new ArrayList<>();
         CharacterCard randomCharacterCard;
         for (Player player : players) {
-            for (int j = 0; j < 1; j++) {
+            for (int j = 0; j < 2; j++) {
                 randomCharacterCard = (CharacterCard) deckCharacterCards.getRandomCard();
                 player.addCharacterCard(randomCharacterCard);
-                getActualRound().addTurn(player,randomCharacterCard);
+                turns.add(new Turn(player,randomCharacterCard));
             }
         }
+        Collections.sort(turns);
+        return turns;
     }
 
     public void skipCharacterTurn(CharacterCard characterCard) {
