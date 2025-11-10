@@ -15,6 +15,10 @@ public class CharacterCard extends Card implements Comparable<CharacterCard>{
         return "ID:" + id;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     @Override
     public int compareTo(CharacterCard o) {
         return Long.compare(id, o.id);

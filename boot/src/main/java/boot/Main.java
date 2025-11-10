@@ -45,7 +45,7 @@ public class Main {
                 new Player(2L,"DDD")
 
         );
-        Game game = new Game(deckCards,players,deckCharacterCards2);
+        Game game = Game.initializeNewGame(deckCards,players,deckCharacterCards2);
 
         System.out.println(players);
 

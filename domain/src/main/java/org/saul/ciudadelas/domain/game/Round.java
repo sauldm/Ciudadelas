@@ -7,15 +7,28 @@ import org.saul.ciudadelas.domain.game.deck_cards.cards.CharacterCard;
 import org.saul.ciudadelas.domain.game.players.Player;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.TreeSet;
 
 public class Round {
     private List<Turn> turns;
     private int actualTurn;
+    private List<RoundEvent> roundEvents;
 
-    public Round(List<Turn> turns) {
+
+    private Round(List<Turn> turns) {
         this.turns = turns;
-        actualTurn = 0;
+    }
+
+    public static Round initializeRound(List<Turn> turns){
+        Round round = new Round(turns);
+        round.actualTurn = 0;
+        round.turns.getFirst().startPlaying();
+        return round;
+    }
+
+    public void addRoundEvent(RoundEvent roundEvent){
+        roundEvents.add(roundEvent);
     }
 
 
@@ -25,11 +38,16 @@ public class Round {
         return turns.get(actualTurn);
     }
 
-    //Acabar
-    public void nextTurn(){
+    public boolean nextTurn(){
+        turns.get(actualTurn).stopPlaying();
+        if (turns.size() == (actualTurn + 1)) return false;
         actualTurn++;
-
+        turns.get(actualTurn).startPlaying();
+        // Enviar evento al front de nuevo turno
+        return true;
     }
+
+
 
 
     @Override

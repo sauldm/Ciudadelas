@@ -1,19 +1,23 @@
 package org.saul.ciudadelas.domain.game.players;
 
+import org.saul.ciudadelas.domain.game.GameConstants;
 import org.saul.ciudadelas.domain.game.Turn;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.Card;
 import org.saul.ciudadelas.domain.game.deck_cards.DeckCards;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.CharacterCard;
+import org.saul.ciudadelas.domain.game.deck_cards.cards.DistrictCard;
 
 import java.util.List;
 
+import static org.saul.ciudadelas.domain.game.GameConstants.INITIAL_PLAYER_GOLD;
+
 public class Player {
-    private Long id;
-    private String nickName;
-    private final DeckCards districtDeckCardsInHand = new DeckCards();
-    private DeckCards districtDeckCardsBuilt;
-    private DeckCards characterCards;
-    private DeckCards characterCardsPlayed;
+    private final Long id;
+    private final String nickName;
+    private final DeckCards<DistrictCard> districtDeckCardsInHand = new DeckCards<>();
+    private DeckCards<DistrictCard> districtDeckCardsBuilt;
+    private final DeckCards<CharacterCard> characterCards;
+    private DeckCards<CharacterCard> characterCardsPlayed;
     private Long gold;
     private int points;
     private boolean isPlaying;
@@ -21,9 +25,9 @@ public class Player {
     public Player(Long id, String nickName) {
         this.id = id;
         this.nickName = nickName;
-        this.gold = 2L;
+        this.gold = INITIAL_PLAYER_GOLD;
         this.points = 0;
-        this.characterCards = new DeckCards();
+        this.characterCards = new DeckCards<>();
     }
 
     public boolean removeGold(int quantity){
@@ -39,7 +43,7 @@ public class Player {
 
     }
 
-    public void addDistrictCards(List<Card> districtCards){
+    public void addDistrictCards(List<DistrictCard> districtCards){
         districtDeckCardsInHand.addCards(districtCards);
     }
 

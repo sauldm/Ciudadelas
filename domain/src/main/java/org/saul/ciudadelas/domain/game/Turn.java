@@ -5,21 +5,27 @@ import org.saul.ciudadelas.domain.game.deck_cards.cards.CharacterCard;
 import org.saul.ciudadelas.domain.game.players.Player;
 
 public class Turn implements Comparable<Turn>{
-    private Player player;
-    private CharacterCard characterCard;
-    private boolean canPlay = true;
+    private final Player player;
+    private final CharacterCard characterCard;
+    private final boolean canPlay = true;
     private boolean isPlaying = false;
+    private final boolean isCompleted = false;
 
     public Turn(Player player, CharacterCard characterCard){
         this.player = player;
         this.characterCard = characterCard;
     }
 
-    public void startTurn(){
-        if (!isPlaying) throw new InternalGameException("Este método solo puede activarse si el jugador esta jugando");
-        if(canPlay){
-            player.startPlaying(this,characterCard);
-        }else player.turnSkipped(this,characterCard);
+    public boolean isTurnCompleted(){
+        return isCompleted;
+    }
+
+    public void startPlaying(){
+        isPlaying = true;
+    }
+
+    public void stopPlaying(){
+        isPlaying = false;
     }
 
 

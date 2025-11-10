@@ -1,40 +1,48 @@
 package org.saul.ciudadelas.domain.game;
 
 import org.saul.ciudadelas.domain.exception.InternalGameException;
-import org.saul.ciudadelas.domain.game.deck_cards.cards.Card;
 import org.saul.ciudadelas.domain.game.deck_cards.DeckCards;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.CharacterCard;
+import org.saul.ciudadelas.domain.game.deck_cards.cards.DistrictCard;
 import org.saul.ciudadelas.domain.game.players.Player;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.TreeSet;
+
+import static org.saul.ciudadelas.domain.game.GameConstants.CHARACTER_CARDS_PER_PLAYER;
+import static org.saul.ciudadelas.domain.game.GameConstants.DISTRICT_CARDS_PER_PLAYER;
 
 public class Game {
-    private final DeckCards deckDistrictCards;
-    private List<Player> players;
-    private DeckCards deckCharacterCards;
+    private final DeckCards<DistrictCard> deckDistrictCards;
+    private final List<Player> players;
+    private final DeckCards<CharacterCard> deckCharacterCards;
     public List<Round> rounds;
 
 
-    public Game(DeckCards deckDistrictCards, List<Player> players, DeckCards deckCharacterCards) {
+    private Game(DeckCards<DistrictCard> deckDistrictCards, List<Player> players, DeckCards<CharacterCard> deckCharacterCards) {
         this.deckDistrictCards = deckDistrictCards;
         this.players = players;
         this.deckCharacterCards = deckCharacterCards;
         this.rounds = new ArrayList<>();
 
-        this.players.forEach(player -> player.addDistrictCards(deckDistrictCards.getCard(3)));
 
-        addRound();
     }
 
-    public List<Card> getDistrictCards(int numberOfCards) {
+    public static Game initializeNewGame(DeckCards<DistrictCard> deckDistrictCards, List<Player> players, DeckCards<CharacterCard> deckCharacterCards){
+        Game game = new Game(deckDistrictCards,players,deckCharacterCards);
+        game.players.forEach(player -> player.addDistrictCards(deckDistrictCards.getCard(DISTRICT_CARDS_PER_PLAYER)));
+        game.addRound();
+        return game;
+    }
+
+    public List<DistrictCard> getDistrictCards(int numberOfCards) {
         return deckDistrictCards.getCard(numberOfCards);
     }
 
     public void addRound(){
-        rounds.add(new Round(getNewTurns()));
+        // Enviar evento de nueva ronda
+        rounds.add(Round.initializeRound(getNewTurns()));
     }
 
 
@@ -42,10 +50,10 @@ public class Game {
         List<Turn> turns = new ArrayList<>();
         CharacterCard randomCharacterCard;
         for (Player player : players) {
-            for (int j = 0; j < 2; j++) {
-                randomCharacterCard = (CharacterCard) deckCharacterCards.getRandomCard();
+            for (int j = 0; j < CHARACTER_CARDS_PER_PLAYER; j++) {
+                randomCharacterCard = deckCharacterCards.getRandomCard();
                 player.addCharacterCard(randomCharacterCard);
-                turns.add(new Turn(player,randomCharacterCard));
+                turns.add(new Turn(player, randomCharacterCard));
             }
         }
         Collections.sort(turns);
@@ -54,6 +62,10 @@ public class Game {
 
     public void skipCharacterTurn(CharacterCard characterCard) {
 
+    }
+
+    public void addRoundEvent(RoundEvent roundEvent){
+        getActualRound().addRoundEvent(roundEvent);
     }
 
     public void stoleCharacterGold(CharacterCard characterRobed,CharacterCard characterThief) {
@@ -67,6 +79,15 @@ public class Game {
         playerThief.addGold(playerRobed.getAllGold());
 
     }
+
+    public void nextStep(){
+        if (!getActualRound().getActualTurn().isTurnCompleted()){
+            return; //Enviar evento de error
+        }
+        if (!getActualRound().nextTurn()) addRound();
+
+    }
+
 
     public Player getPlayerByCharacter(CharacterCard characterCard){
         if (characterCard == null) throw new InternalGameException("La carta no puede ser nula");

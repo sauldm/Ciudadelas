@@ -8,52 +8,52 @@ import org.saul.ciudadelas.domain.game.deck_cards.cards.CharacterCard;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class DeckCards {
-    private final List<Card> cards = new ArrayList<>();
+public class DeckCards<T extends Card> {
+    private final List<T> cards = new ArrayList<>();
     private final Random random = new Random();
 
 
 
-    public List<Card> getCard(int quantity){
+    public List<T> getCard(int quantity){
         if (cards.isEmpty())  throw new ExpectedGameError("No hay cartas en el mazo");
         if (cards.size() < quantity){
-            List<Card> result = new ArrayList<>(cards);
+            List<T> result = new ArrayList<>(cards);
             cards.clear();
             return result;
         }
 
-        List<Card> stoledCards = cards.subList(0,quantity);
-        List<Card> result = new ArrayList<>(stoledCards);
+        List<T> stoledCards = cards.subList(0,quantity);
+        List<T> result = new ArrayList<>(stoledCards);
         stoledCards.clear();
 
         return result;
     }
 
-    public Card getCard(Card card){
+    public T getCard(T card){
         if (card == null) throw new InternalGameException("card no puede ser null");
         if (!cards.contains(card)) throw new InternalGameException("La carta tiene que estar en el mazo");
         cards.remove(card);
         return card;
     }
 
-    public void addCards(List<Card> cards){
+    public void addCards(List<T> cards){
         if (cards == null) throw new InternalGameException("Las cartas no pueden ser nulas");
         cards.forEach(this.cards::addLast);
     }
 
-    public void addCard(Card card){
+    public void addCard(T card){
         if (card == null) throw new InternalGameException("La carta no puede ser nula");
         cards.add(card);
     }
 
 
-    public Card getRandomCard(){
+    public T getRandomCard(){
         if (cards.isEmpty()) throw new InternalGameException("No hay cartas disponibles");
         int randomIndex = random.nextInt(cards.size());
         return cards.remove(randomIndex);
     }
 
-    public List<Card> orderCards(){
+    public List<T> orderCards(){
         return cards.stream().sorted().toList();
 
     }
@@ -66,7 +66,7 @@ public class DeckCards {
                 '}';
     }
 
-    public boolean haveThisCard(CharacterCard characterCard) {
-        return cards.stream().anyMatch(card -> card.getClass().equals(characterCard.getClass()));
+    public boolean haveThisCard(T card) {
+        return cards.stream().anyMatch(currentCard -> currentCard.getClass().equals(card.getClass()));
     }
 }
