@@ -16,8 +16,8 @@ public class ThiefActionCard extends CharacterCard implements OtherPlayerActionC
     public void execute(Game game, CharacterCard characterCard) {
         if (characterCard == null) throw new InternalGameException("La carta no puede ser nula");
         if (characterCard.getClass().equals(AssassinActionCard.class)) throw new ExpectedGameError("La carta no puede ser un asesino");
-        RoundEvent event = new RoundEvent(characterCard.getId(), currentGame -> {
-            currentGame.stoleCharacterGold(characterCard,this);
+        RoundEvent event = new RoundEvent(characterCard.getId(), () -> {
+            game.stoleCharacterGold(characterCard,this);
         });
         game.addRoundEvent(event);
     }

@@ -7,13 +7,21 @@ import org.saul.ciudadelas.domain.game.players.Player;
 public class Turn implements Comparable<Turn>{
     private final Player player;
     private final CharacterCard characterCard;
-    private final boolean canPlay = true;
+    private boolean canPlay = true;
     private boolean isPlaying = false;
     private final boolean isCompleted = false;
 
     public Turn(Player player, CharacterCard characterCard){
         this.player = player;
         this.characterCard = characterCard;
+    }
+
+    public boolean canPlayerPlay(){
+        return canPlay;
+    }
+
+    public Long getCharacterId(){
+        return characterCard.getId();
     }
 
     public boolean isTurnCompleted(){
@@ -28,6 +36,11 @@ public class Turn implements Comparable<Turn>{
         isPlaying = false;
     }
 
+    public void playerCantPlay(){
+        canPlay = false;
+    }
+
+
 
     @Override
     public int compareTo(Turn o) {
@@ -39,7 +52,6 @@ public class Turn implements Comparable<Turn>{
         return "Turn{" +
                 "player=" + player +
                 ", characterCard=" + characterCard +
-                ", canPlay=" + canPlay +
                 ", isPlaying=" + isPlaying +
                 '}';
     }

@@ -1,8 +1,5 @@
 package org.saul.ciudadelas.domain.game.players;
 
-import org.saul.ciudadelas.domain.game.GameConstants;
-import org.saul.ciudadelas.domain.game.Turn;
-import org.saul.ciudadelas.domain.game.deck_cards.cards.Card;
 import org.saul.ciudadelas.domain.game.deck_cards.DeckCards;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.CharacterCard;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.DistrictCard;
@@ -17,10 +14,8 @@ public class Player {
     private final DeckCards<DistrictCard> districtDeckCardsInHand = new DeckCards<>();
     private DeckCards<DistrictCard> districtDeckCardsBuilt;
     private final DeckCards<CharacterCard> characterCards;
-    private DeckCards<CharacterCard> characterCardsPlayed;
     private Long gold;
     private int points;
-    private boolean isPlaying;
 
     public Player(Long id, String nickName) {
         this.id = id;
@@ -28,7 +23,9 @@ public class Player {
         this.gold = INITIAL_PLAYER_GOLD;
         this.points = 0;
         this.characterCards = new DeckCards<>();
+        this.districtDeckCardsBuilt = new DeckCards<>();
     }
+
 
     public boolean removeGold(int quantity){
         if (gold < quantity) return false;
@@ -55,6 +52,10 @@ public class Player {
         this.characterCards.addCard(characterCard);
     }
 
+    public boolean haveCharacter(CharacterCard characterCard) {
+        return characterCards.haveThisCard(characterCard);
+    }
+
     @Override
     public String toString() {
         return "Player{" +
@@ -65,17 +66,5 @@ public class Player {
                 '}';
     }
 
-    public boolean haveCharacter(CharacterCard characterCard) {
-        return characterCards.haveThisCard(characterCard);
-    }
 
-    public void startPlaying(Turn turn, CharacterCard characterCard) {
-
-    }
-
-
-    public void turnSkipped(Turn turn, CharacterCard characterCard) {
-        characterCardsPlayed.addCard(characterCards.getCard(characterCard));
-        isPlaying = false;
-    }
 }

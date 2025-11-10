@@ -60,9 +60,7 @@ public class Game {
         return turns;
     }
 
-    public void skipCharacterTurn(CharacterCard characterCard) {
 
-    }
 
     public void addRoundEvent(RoundEvent roundEvent){
         getActualRound().addRoundEvent(roundEvent);
@@ -74,10 +72,16 @@ public class Game {
         Player playerThief = getPlayerByCharacter(characterThief);
         if (playerThief == null) throw new InternalGameException("El jugador que roba no puede ser nulo");
         Player playerRobed = getPlayerByCharacter(characterRobed);
-        if (playerRobed == null) return;
+        if (getActualRound().getActualTurn().canPlayerPlay()) return // Enviar evento de que el jugador esta asesinado;
+         ;
 
         playerThief.addGold(playerRobed.getAllGold());
 
+    }
+
+    public void stopCharacterPlaying(CharacterCard characterCard) {
+        if (characterCard == null) throw new InternalGameException("La carta no puede ser nula");
+        getActualRound().skipCharacterTurn(characterCard);
     }
 
     public void nextStep(){

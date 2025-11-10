@@ -44,9 +44,27 @@ public class Round {
         actualTurn++;
         turns.get(actualTurn).startPlaying();
         // Enviar evento al front de nuevo turno
+        trigerEvents();
         return true;
     }
 
+    private void trigerEvents() {
+        if (roundEvents.isEmpty()) return;
+        Long characterId = getActualTurn().getCharacterId();
+        roundEvents.stream()
+                .filter(event -> event.getCharacterTrigger().equals(characterId))
+                .forEach(RoundEvent::trigerEvent) //Lanzar evento al front de nuevo evento;
+                ;
+    }
+
+    public void skipCharacterTurn(CharacterCard characterCard) {
+        Optional<Turn> turnOptional = turns.stream()
+                .filter(turn -> turn.getCharacterId().equals(characterCard.getId()))
+                .findFirst();
+        if (turnOptional.isEmpty()) throw new InternalGameException("El turno tiene que existir en la ronda");
+        Turn turn = turnOptional.get();
+        turn.stopPlaying();
+    }
 
 
 
@@ -54,4 +72,6 @@ public class Round {
     public String toString() {
         return "Turnos: "+turns;
     }
+
+
 }
