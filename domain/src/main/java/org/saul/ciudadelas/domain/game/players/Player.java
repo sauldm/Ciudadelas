@@ -44,6 +44,10 @@ public class Player {
         districtDeckCardsInHand.addCards(districtCards);
     }
 
+    public List<DistrictCard> getAllDistrictCardsInHand(){
+        return districtDeckCardsInHand.getAllCards();
+    }
+
     public void addGold(Long quantity){
         gold += quantity;
     }

@@ -1,6 +1,5 @@
 package org.saul.ciudadelas.domain.game;
 
-import org.saul.ciudadelas.domain.exception.InternalGameException;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.CharacterCard;
 import org.saul.ciudadelas.domain.game.players.Player;
 
@@ -9,7 +8,7 @@ public class Turn implements Comparable<Turn>{
     private final CharacterCard characterCard;
     private boolean canPlay = true;
     private boolean isPlaying = false;
-    private final boolean isCompleted = false;
+    private boolean isCompleted = false;
 
     public Turn(Player player, CharacterCard characterCard){
         this.player = player;
@@ -28,18 +27,19 @@ public class Turn implements Comparable<Turn>{
         return isCompleted;
     }
 
-    public void startPlaying(){
+    public void startTurn(){
         isPlaying = true;
     }
 
     public void stopPlaying(){
-        isPlaying = false;
-    }
-
-    public void playerCantPlay(){
+        isCompleted = true;
         canPlay = false;
     }
 
+    public void endTurn(){
+        isCompleted = true;
+        isPlaying = false;
+    }
 
 
     @Override

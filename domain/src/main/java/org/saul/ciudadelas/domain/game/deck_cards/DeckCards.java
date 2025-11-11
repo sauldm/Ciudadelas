@@ -36,8 +36,13 @@ public class DeckCards<T extends Card> {
         return card;
     }
 
+    public List<T> getAllCards(){
+        List<T> result = new ArrayList<>(cards);
+        cards.clear();
+        return result;
+    }
+
     public void addCards(List<T> cards){
-        if (cards == null) throw new InternalGameException("Las cartas no pueden ser nulas");
         cards.forEach(this.cards::addLast);
     }
 
