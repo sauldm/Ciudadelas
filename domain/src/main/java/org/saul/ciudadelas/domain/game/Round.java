@@ -3,6 +3,7 @@ package org.saul.ciudadelas.domain.game;
 import org.saul.ciudadelas.domain.exception.InternalGameException;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.CharacterCard;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,10 +21,14 @@ public class Round {
         Round round = new Round(turns);
         round.actualTurn = 0;
         round.turns.getFirst().startTurn();
+        round.roundEvents = new ArrayList<>();
+
         return round;
     }
 
     public void addRoundEvent(RoundEvent roundEvent){
+        System.out.println("Se añade un nuevo evento a la ronda: " + roundEvent);
+        if (roundEvent == null) throw new InternalGameException("El evento no puede ser nulo");
         roundEvents.add(roundEvent);
     }
 
@@ -45,12 +50,11 @@ public class Round {
     }
 
     private void trigerEvents() {
-        if (roundEvents.isEmpty()) return;
+        if (roundEvents == null || roundEvents.isEmpty()) return; // Arreglar
         Long characterId = getActualTurn().getCharacterId();
         roundEvents.stream()
-                .filter(event -> event.getCharacterTrigger().equals(characterId))
-                .forEach(RoundEvent::trigerEvent) //Lanzar evento al front de nuevo evento;
-                ;
+        .filter(event -> event.getCharacterTrigger().equals(characterId))
+                .forEach(RoundEvent::trigerEvent); //Lanzar el evento de nuevo evento;
     }
 
     public void skipCharacterTurn(CharacterCard characterCard) {
@@ -60,6 +64,7 @@ public class Round {
         if (turnOptional.isEmpty()) throw new InternalGameException("El turno tiene que existir en la ronda");
         Turn turn = turnOptional.get();
         turn.stopPlaying();
+        System.out.println("Se ha saltado el turno del personaje: " + characterCard);
     }
 
     public Turn getTurnByCharacter(CharacterCard characterCard){
@@ -70,12 +75,12 @@ public class Round {
         return turnOptional.get();
     }
 
-
-
     @Override
     public String toString() {
-        return "Turnos: "+turns;
+        return "Round{" +
+                "turns=" + turns +
+                ", actualTurn=" + actualTurn +
+                ", roundEvents=" + roundEvents +
+                '}';
     }
-
-
 }

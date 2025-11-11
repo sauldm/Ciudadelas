@@ -55,4 +55,12 @@ public class Turn implements Comparable<Turn>{
                 ", isPlaying=" + isPlaying +
                 '}';
     }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public CharacterCard getCharacter() {
+        return characterCard;
+    }
 }

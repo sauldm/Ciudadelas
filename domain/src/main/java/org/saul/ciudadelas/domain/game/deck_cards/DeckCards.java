@@ -71,7 +71,11 @@ public class DeckCards<T extends Card> {
                 '}';
     }
 
-    public boolean haveThisCard(T card) {
-        return cards.stream().anyMatch(currentCard -> currentCard.getClass().equals(card.getClass()));
+    public T haveThisCard(T card) {
+        Optional<T> cardOptional = cards.stream()
+                .filter(c -> c.equals(card))
+                .findFirst();
+        return cardOptional.orElse(null);
     }
+
 }

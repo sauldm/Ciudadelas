@@ -29,8 +29,8 @@ public class Game {
 
     }
 
-    public static Game initializeNewGame(DeckCards<DistrictCard> deckDistrictCards, List<Player> players, DeckCards<CharacterCard> deckCharacterCards){
-        Game game = new Game(deckDistrictCards,players,deckCharacterCards);
+    public static Game initializeNewGame(DeckCards<DistrictCard> deckDistrictCards, List<Player> players, DeckCards<CharacterCard> deckCharacterCards) {
+        Game game = new Game(deckDistrictCards, players, deckCharacterCards);
         game.players.forEach(player -> player.addDistrictCards(deckDistrictCards.getCard(DISTRICT_CARDS_PER_PLAYER)));
         game.addRound();
         return game;
@@ -40,7 +40,7 @@ public class Game {
         return deckDistrictCards.getCard(numberOfCards);
     }
 
-    public void addRound(){
+    public void addRound() {
         // Enviar evento de nueva ronda
         rounds.add(Round.initializeRound(getNewTurns()));
     }
@@ -61,19 +61,20 @@ public class Game {
     }
 
 
-
-    public void addRoundEvent(RoundEvent roundEvent){
+    public void addRoundEvent(RoundEvent roundEvent) {
+        if (roundEvent == null) throw new InternalGameException("El evento no puede ser nulo");
         getActualRound().addRoundEvent(roundEvent);
     }
 
-    public void stoleCharacterGold(CharacterCard characterRobed,CharacterCard characterThief) {
+    public void stoleCharacterGold(CharacterCard characterRobed, CharacterCard characterThief) {
         if (characterRobed == null) throw new InternalGameException("La carta no puede ser nula");
         if (characterThief == null) throw new InternalGameException("La carta no puede ser nula");
         Player playerThief = getPlayerByCharacter(characterThief);
         if (playerThief == null) throw new InternalGameException("El jugador que roba no puede ser nulo");
         Player playerRobed = getPlayerByCharacter(characterRobed);
-        if (!getActualRound().getTurnByCharacter(characterRobed).canPlayerPlay()) return // Enviar evento de que el jugador esta asesinado;
-         ;
+        if (!getActualRound().getTurnByCharacter(characterRobed).canPlayerPlay())
+            return // Enviar evento de que el jugador esta asesinado;
+                    ;
         playerThief.addGold(playerRobed.getAllGold());
     }
 
@@ -83,24 +84,30 @@ public class Game {
         nextStep();
     }
 
-    public void nextStep(){
-        if (!getActualRound().getActualTurn().isTurnCompleted()){
+    public void nextStep() {
+        if (!getActualRound().getActualTurn().isTurnCompleted()) {
+            System.out.println("No se puede pasar de turno, el turno actual no ha finalizado");
             return; //Enviar evento de error
         }
-        if (!getActualRound().nextTurn()) addRound();
+        if (!getActualRound().nextTurn()){
+            for (Player player : players) {
+                deckCharacterCards.addCards(player.clearCharacterCards());
+            }
+            addRound();
 
+        }
     }
 
 
-    public Player getPlayerByCharacter(CharacterCard characterCard){
+    public Player getPlayerByCharacter(CharacterCard characterCard) {
         if (characterCard == null) throw new InternalGameException("La carta no puede ser nula");
-        for (Player player: players) {
+        for (Player player : players) {
             if (player.haveCharacter(characterCard)) return player;
         }
         return null;
     }
 
-    public Round getActualRound(){
+    public Round getActualRound() {
         return rounds.getLast();
     }
 
@@ -110,9 +117,17 @@ public class Game {
         Player playerToSwap = getPlayerByCharacter(characterCardToSwap);
         Player actualPlayer = getPlayerByCharacter(actualCharacterCard);
 
+        if (playerToSwap == null) return;//throw new InternalGameException("El jugador con el que se va a intercambiar no puede ser nulo");
         List<DistrictCard> tempHand = new ArrayList<>(actualPlayer.getAllDistrictCardsInHand());
         actualPlayer.addDistrictCards(playerToSwap.getAllDistrictCardsInHand());
         playerToSwap.addDistrictCards(tempHand);
+    }
+
+    public void executePlayerCharacterAbility(Player player, CharacterCard characterCardTarget) {
+        if (player == null) throw new InternalGameException("El jugador no puede ser nulo");
+        if (characterCardTarget == null) throw new InternalGameException("La carta no puede ser nula");
+        if (getActualRound().getActualTurn().getPlayer() != player) throw new InternalGameException("No es el turno del jugador");
+        player.executeCharacterAbility(this, characterCardTarget, getActualRound().getActualTurn().getCharacter());
     }
 }
 

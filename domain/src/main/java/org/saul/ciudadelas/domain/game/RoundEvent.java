@@ -22,5 +22,14 @@ public class RoundEvent {
 
     public void trigerEvent() {
         eventEffect.run();
+
+    }
+
+    @Override
+    public String toString() {
+        return "RoundEvent{" +
+                "characterTrigger=" + characterTrigger +
+                ", eventEffect=" + eventEffect +
+                '}';
     }
 }

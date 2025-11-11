@@ -3,41 +3,43 @@ package boot;
 import org.saul.ciudadelas.domain.game.Game;
 import org.saul.ciudadelas.domain.game.deck_cards.actions.*;
 import org.saul.ciudadelas.domain.game.deck_cards.DeckCards;
+import org.saul.ciudadelas.domain.game.deck_cards.cards.DistrictCard;
 import org.saul.ciudadelas.domain.game.players.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
 
-        ThiefActionCard a = new ThiefActionCard(2L);
-        AssassinActionCard b = new AssassinActionCard(1L);
-        KingActionCard k = new KingActionCard(5L);
+        AssassinActionCard a = new AssassinActionCard(1L);
+        ThiefActionCard b = new ThiefActionCard(2L);
+        WizardActionCard c = new WizardActionCard(3L);
+        KingActionCard d = new KingActionCard(4L);
+        BishopActionCard e = new BishopActionCard(5L);
+        MerchantActionCard f = new MerchantActionCard(6L);
+        ArchitectActionCard g = new ArchitectActionCard(7L);
+        MilitaryActionCard h = new MilitaryActionCard(8L);
+
 
 
         DeckCards deckCharacterCards2 = new DeckCards();
         deckCharacterCards2.addCards(List.of(
-                k,
                 b,
-                a
+                c,
+                d,
+                e
 
         ));
 
-        DeckCards deckCards = new DeckCards();
-        deckCards.addCards(List.of(
-                new TakeThreeActionCard(),
-                new TakeThreeActionCard(),
-                new TakeThreeActionCard(),
-                new TakeThreeActionCard(),
-                new TakeThreeActionCard(),
-                new TakeThreeActionCard(),
-                new TakeThreeActionCard(),
-                new TakeThreeActionCard()
+        List<DistrictCard> k = new ArrayList<>();
 
+        for (int i = 0; i < 30; i++) {
+            k.add(new TwoPointsFinalActionCard());
+        }
 
-
-
-        ));
+        DeckCards deckDistrictCards = new DeckCards();
+        deckDistrictCards.addCards(k);
 
 
         List<Player> players = List.of(
@@ -45,19 +47,62 @@ public class Main {
                 new Player(2L,"DDD")
 
         );
-        Game game = Game.initializeNewGame(deckCards,players,deckCharacterCards2);
+        Game game = Game.initializeNewGame(deckDistrictCards,players,deckCharacterCards2);
 
-        System.out.println(players);
+        game.executePlayerCharacterAbility(game.getActualRound().getActualTurn().getPlayer(), c);
 
-        game.addRound();
-
-        System.out.println(players);
         System.out.println(game.rounds);
+        game.getActualRound().getActualTurn().endTurn();
+
+        game.nextStep();
+
+        game.executePlayerCharacterAbility(game.getActualRound().getActualTurn().getPlayer(), c);
 
 
-        a.execute(game,k);
+        System.out.println(game.rounds);
+        game.getActualRound().getActualTurn().endTurn();
 
-        System.out.println(players);
 
+        game.nextStep();
+
+        game.executePlayerCharacterAbility(game.getActualRound().getActualTurn().getPlayer(), c);
+        System.out.println(game.rounds);
+        game.getActualRound().getActualTurn().endTurn();
+
+        game.nextStep();
+
+        game.executePlayerCharacterAbility(game.getActualRound().getActualTurn().getPlayer(), c);
+        System.out.println(game.rounds);
+        game.getActualRound().getActualTurn().endTurn();
+
+        game.nextStep();
+
+        game.executePlayerCharacterAbility(game.getActualRound().getActualTurn().getPlayer(), c);
+        System.out.println(game.rounds);
+        game.getActualRound().getActualTurn().endTurn();
+
+        game.nextStep();
+
+        game.executePlayerCharacterAbility(game.getActualRound().getActualTurn().getPlayer(), c);
+        System.out.println(game.rounds);
+        game.getActualRound().getActualTurn().endTurn();
+
+        game.nextStep();
+
+        game.executePlayerCharacterAbility(game.getActualRound().getActualTurn().getPlayer(), c);
+        System.out.println(game.rounds);
+        game.getActualRound().getActualTurn().endTurn();
+
+        game.nextStep();
+
+        game.executePlayerCharacterAbility(game.getActualRound().getActualTurn().getPlayer(), c);
+        System.out.println(game.rounds);
+        game.getActualRound().getActualTurn().endTurn();
+
+        game.nextStep();
+
+        game.executePlayerCharacterAbility(game.getActualRound().getActualTurn().getPlayer(), c);
+        System.out.println(game.rounds);
+        game.getActualRound().getActualTurn().endTurn();
     }
 }

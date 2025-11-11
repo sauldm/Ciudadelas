@@ -12,9 +12,12 @@ public class AssassinActionCard extends CharacterCard implements OtherPlayerActi
         super(id);
     }
 
+
+    //ARREGLAR: El jugadro no puede elegirse a si mismo, ni con la carta de asesino ni con otra de su mazo
     @Override
     public void execute(Game game, CharacterCard characterCard) {
         if (characterCard == null) throw new InternalGameException("La carta no puede ser nula");
+        if (characterCard.equals(this)) throw new InternalGameException("La carta no puede ser un asesino");
         RoundEvent event = new RoundEvent(characterCard.getId(), () -> {
             game.stopCharacterPlaying(characterCard);
         });

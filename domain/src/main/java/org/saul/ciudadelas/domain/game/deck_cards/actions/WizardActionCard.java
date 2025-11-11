@@ -10,7 +10,9 @@ public class WizardActionCard extends CharacterCard implements OtherPlayerAction
         super(id);
     }
 
-
+    //ARREGLAR: El jugadro no puede elegirse a si mismo, ni con la carta de mago ni con otra de su mazo
+    //ARREGLAR: Deberia ser execute(Game game, Player player) en vez de execute(Game game, CharacterCard characterCard)
+    // es decir otra interface
     @Override
     public void execute(Game game, CharacterCard characterCard) {
         if (characterCard == null) throw new InternalGameException("La carta no puede ser nula");
