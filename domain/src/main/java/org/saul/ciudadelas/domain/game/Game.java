@@ -2,6 +2,7 @@ package org.saul.ciudadelas.domain.game;
 
 import org.saul.ciudadelas.domain.exception.InternalGameException;
 import org.saul.ciudadelas.domain.game.deck_cards.DeckCards;
+import org.saul.ciudadelas.domain.game.deck_cards.actions.MilitaryActionCard;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.CharacterCard;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.DistrictCard;
 import org.saul.ciudadelas.domain.game.players.Player;
@@ -89,7 +90,7 @@ public class Game {
             System.out.println("No se puede pasar de turno, el turno actual no ha finalizado");
             return; //Enviar evento de error
         }
-        if (!getActualRound().nextTurn()){
+        if (!getActualRound().nextTurn()) {
             for (Player player : players) {
                 deckCharacterCards.addCards(player.clearCharacterCards());
             }
@@ -123,8 +124,26 @@ public class Game {
     public void executePlayerCharacterAbility(Player player, CharacterCard characterCardTarget) {
         if (player == null) throw new InternalGameException("El jugador no puede ser nulo");
         if (characterCardTarget == null) throw new InternalGameException("La carta no puede ser nula");
-        if (getActualRound().getActualTurn().getPlayer() != player) throw new InternalGameException("No es el turno del jugador");
+        if (getActualRound().getActualTurn().getPlayer() != player)
+            throw new InternalGameException("No es el turno del jugador");
         player.executeCharacterAbility(this, characterCardTarget, getActualRound().getActualTurn().getCharacter());
+    }
+
+    public void destroyDistrictOfOtherPlayer(DistrictCard districtCard) {
+        if (districtCard == null) throw new InternalGameException("La carta no puede ser nula");
+        Player playerTarget = getPlayerByDistrictCard(districtCard);
+        if (playerTarget == null) throw new InternalGameException("El jugador objetivo no puede ser nulo");
+        this.deckDistrictCards.addCard(playerTarget.getDistrictCardFromHand(districtCard));
+
+
+    }
+
+    public Player getPlayerByDistrictCard(DistrictCard districtCard) {
+        if (districtCard == null) throw new InternalGameException("La carta no puede ser nula");
+        for (Player player : players) {
+            if (player.haveDistrictCard(districtCard)) return player;
+        }
+        return null;
     }
 }
 

@@ -13,7 +13,6 @@ public class AssassinActionCard extends CharacterCard implements OtherPlayerActi
     }
 
 
-    //ARREGLAR: El jugadro no puede elegirse a si mismo, ni con la carta de asesino ni con otra de su mazo
     @Override
     public void execute(Game game, CharacterCard characterCard) {
         if (characterCard == null) throw new InternalGameException("La carta no puede ser nula");

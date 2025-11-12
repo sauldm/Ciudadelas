@@ -46,6 +46,7 @@ public class DeckCards<T extends Card> {
         cards.forEach(this.cards::addLast);
     }
 
+
     public void addCard(T card){
         if (card == null) throw new InternalGameException("La carta no puede ser nula");
         cards.add(card);

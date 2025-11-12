@@ -72,6 +72,15 @@ public class Player {
         return characterCards.getAllCards();
     }
 
+    public boolean haveDistrictCard(DistrictCard districtCard) {
+        return districtDeckCardsBuilt.haveThisCard(districtCard) != null;
+    }
+
+    public DistrictCard getDistrictCardFromHand(DistrictCard districtCard) {
+        if (districtCard == null) throw new IllegalArgumentException("El distrito no puede ser nulo");
+        return districtDeckCardsInHand.getCard(districtCard);
+    }
+
 
 
     @Override
@@ -83,4 +92,6 @@ public class Player {
                 ", gold=" + gold +
                 '}';
     }
+
+
 }
