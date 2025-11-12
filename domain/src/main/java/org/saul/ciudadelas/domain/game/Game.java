@@ -111,13 +111,10 @@ public class Game {
         return rounds.getLast();
     }
 
-    public void swapHandsWithPlayer(CharacterCard characterCardToSwap, CharacterCard actualCharacterCard) {
-        if (characterCardToSwap == null) throw new InternalGameException("La carta no puede ser nula");
+    public void swapHandsWithPlayer(Player playerToSwap, CharacterCard actualCharacterCard) {
+        if (playerToSwap == null) throw new InternalGameException("El jugador no puede ser nulo");
         if (actualCharacterCard == null) throw new InternalGameException("La carta no puede ser nula");
-        Player playerToSwap = getPlayerByCharacter(characterCardToSwap);
         Player actualPlayer = getPlayerByCharacter(actualCharacterCard);
-
-        if (playerToSwap == null) return;//throw new InternalGameException("El jugador con el que se va a intercambiar no puede ser nulo");
         List<DistrictCard> tempHand = new ArrayList<>(actualPlayer.getAllDistrictCardsInHand());
         actualPlayer.addDistrictCards(playerToSwap.getAllDistrictCardsInHand());
         playerToSwap.addDistrictCards(tempHand);

@@ -68,6 +68,10 @@ public class Player {
         }
     }
 
+    public List<CharacterCard> clearCharacterCards() {
+        return characterCards.getAllCards();
+    }
+
 
 
     @Override
@@ -78,10 +82,5 @@ public class Player {
                 ", characterCards=" + characterCards +
                 ", gold=" + gold +
                 '}';
-    }
-
-
-    public List<CharacterCard> clearCharacterCards() {
-        return characterCards.getAllCards();
     }
 }

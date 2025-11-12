@@ -17,7 +17,7 @@ public class AssassinActionCard extends CharacterCard implements OtherPlayerActi
     @Override
     public void execute(Game game, CharacterCard characterCard) {
         if (characterCard == null) throw new InternalGameException("La carta no puede ser nula");
-        if (characterCard.equals(this)) throw new InternalGameException("La carta no puede ser un asesino");
+        if (game.getActualRound().getActualTurn().getPlayer() == game.getPlayerByCharacter(characterCard)) throw new InternalGameException("El jugador no puede elegirse a si mismo");
         RoundEvent event = new RoundEvent(characterCard.getId(), () -> {
             game.stopCharacterPlaying(characterCard);
         });

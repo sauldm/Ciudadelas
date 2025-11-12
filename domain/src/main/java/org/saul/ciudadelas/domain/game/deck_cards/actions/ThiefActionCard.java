@@ -12,10 +12,10 @@ public class ThiefActionCard extends CharacterCard implements OtherPlayerActionC
         super(id);
     }
 
-    //ARREGLAR: El jugadro no puede elegirse a si mismo, ni con la carta de ladron ni con otra de su mazo
     @Override
     public void execute(Game game, CharacterCard characterCard) {
         if (characterCard == null) throw new InternalGameException("La carta no puede ser nula");
+        if (game.getActualRound().getActualTurn().getPlayer() == game.getPlayerByCharacter(characterCard)) throw new InternalGameException("El jugador no puede elegirse a si mismo");
         if (characterCard.getClass().equals(AssassinActionCard.class)) throw new ExpectedGameError("La carta no puede ser un asesino");
         RoundEvent event = new RoundEvent(characterCard.getId(), () -> {
             game.stoleCharacterGold(characterCard,this);
