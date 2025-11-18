@@ -14,12 +14,13 @@ public class AssassinActionCard extends CharacterCard implements OtherPlayerActi
 
 
     @Override
-    public void execute(Game game, CharacterCard characterCard) {
-        if (characterCard == null) throw new InternalGameException("La carta no puede ser nula");
-        if (game.getActualRound().getActualTurn().getPlayer() == game.getPlayerByCharacter(characterCard)) throw new InternalGameException("El jugador no puede elegirse a si mismo");
-        RoundEvent event = new RoundEvent(characterCard.getId(), () -> {
-            game.stopCharacterPlaying(characterCard);
+    public void execute(Game game, Long characterCardId) {
+        if (characterCardId == null) throw new InternalGameException("La carta no puede ser nula");
+        if (game.getActualRound().getActualTurn().getPlayer() == game.findPlayerByCharacterId(characterCardId)) throw new InternalGameException("El jugador no puede elegirse a si mismo");
+        RoundEvent event = new RoundEvent(characterCardId, () -> {
+            game.stopCharacterPlaying(characterCardId);
         });
+        game.getActualRound().getActualTurn().characterHabilityUsed();
         game.addRoundEvent(event);
     }
 }

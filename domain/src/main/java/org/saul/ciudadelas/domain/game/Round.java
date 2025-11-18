@@ -57,23 +57,33 @@ public class Round {
                 .forEach(RoundEvent::trigerEvent); //Lanzar el evento de nuevo evento;
     }
 
-    public void skipCharacterTurn(CharacterCard characterCard) {
+    public void skipCharacterTurn(Long characterCardId) {
         Optional<Turn> turnOptional = turns.stream()
-                .filter(turn -> turn.getCharacterId().equals(characterCard.getId()))
+                .filter(turn -> turn.getCharacterId().equals(characterCardId))
                 .findFirst();
         if (turnOptional.isEmpty()) throw new InternalGameException("El turno tiene que existir en la ronda");
         Turn turn = turnOptional.get();
         turn.stopPlaying();
-        System.out.println("Se ha saltado el turno del personaje: " + characterCard);
+        System.out.println("Se ha saltado el turno del personaje: " + characterCardId);
     }
 
-    public Turn getTurnByCharacter(CharacterCard characterCard){
+    public Turn getTurnByCharacter(Long characterCardId){
         Optional<Turn> turnOptional = turns.stream()
-                .filter(turn -> turn.getCharacterId().equals(characterCard.getId()))
+                .filter(turn -> turn.getCharacterId().equals(characterCardId))
                 .findFirst();
         if (turnOptional.isEmpty()) throw new InternalGameException("El turno tiene que existir en la ronda");
         return turnOptional.get();
     }
+
+    public CharacterCard findCharacterById(Long characterCardId){
+        Optional<Turn> turnOptional = turns.stream()
+                .filter(turn -> turn.getCharacterId().equals(characterCardId))
+                .findFirst();
+        if (turnOptional.isEmpty()) throw new InternalGameException("El turno tiene que existir en la ronda");
+        return turnOptional.get().getCharacter();
+    }
+
+
 
     @Override
     public String toString() {

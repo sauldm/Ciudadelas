@@ -1,26 +1,28 @@
 package org.saul.ciudadelas.domain.game.deck_cards.cards;
 
-import java.util.Objects;
+import org.saul.ciudadelas.domain.game.Game;
+import org.saul.ciudadelas.domain.game.deck_cards.MainDeckCardActionCharacterCard;
+import org.saul.ciudadelas.domain.game.deck_cards.OtherPlayerActionCharacterCard;
+import org.saul.ciudadelas.domain.game.deck_cards.WizardTarget;
 
-public class CharacterCard extends Card implements Comparable<CharacterCard>{
+public class CharacterCard extends Card{
 
-    private Long id;
 
-    public CharacterCard(Long id){
-        this.id = id;
+
+    public CharacterCard(Long id) {
+        super(id);
     }
 
-    @Override
-    public String toString() {
-        return "ID:" + id;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    @Override
-    public int compareTo(CharacterCard o) {
-        return Long.compare(id, o.id);
+    public void executeCharacterAbility(Game game, Long targetId) {
+        if (this instanceof OtherPlayerActionCharacterCard otherPlayerActionCharacterCard){
+            otherPlayerActionCharacterCard.execute(game,targetId);
+        }
+        if (this instanceof MainDeckCardActionCharacterCard && this instanceof OtherPlayerActionCharacterCard){
+            WizardTarget target = WizardTarget.fromValue(targetId);
+            switch (target){
+                case GAMEDECK -> ((MainDeckCardActionCharacterCard) this).execute(game);
+                case PLAYER -> ((OtherPlayerActionCharacterCard) this).execute(game, targetId);
+            }
+        }
     }
 }

@@ -1,5 +1,7 @@
 package org.saul.ciudadelas.domain.game;
 
+import org.saul.ciudadelas.domain.exception.ExpectedGameError;
+import org.saul.ciudadelas.domain.exception.InternalGameException;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.CharacterCard;
 import org.saul.ciudadelas.domain.game.players.Player;
 
@@ -48,6 +50,14 @@ public class Turn implements Comparable<Turn>{
     public void endTurn(){
         isCompleted = true;
         isPlaying = false;
+    }
+
+    public void executeCharacterHability(Game game, Long characterCardActionId, Long targetId){
+        if (characterCardActionId == null) throw new InternalGameException("La carta no puede ser nula");
+        if (targetId == null) throw new InternalGameException("La carta no puede ser nula");
+        if (getCharacterId().equals(characterCardActionId)) throw new InternalGameException("El turno no corresponde a esa carta");
+        if (isCharacterHabilityUsed()) throw new ExpectedGameError("No puede usar otra vez la habilidad");//Enviar evento al frontend;
+        getCharacter().executeCharacterAbility(game, targetId);
     }
 
 

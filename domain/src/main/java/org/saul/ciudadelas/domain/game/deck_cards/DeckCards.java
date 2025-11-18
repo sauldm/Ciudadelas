@@ -79,4 +79,11 @@ public class DeckCards<T extends Card> {
         return cardOptional.orElse(null);
     }
 
+    public T haveThisCard(Long cardId) {
+        Optional<T> cardOptional = cards.stream()
+                .filter(c -> c.getId().equals(cardId))
+                .findFirst();
+        return cardOptional.orElse(null);
+    }
+
 }

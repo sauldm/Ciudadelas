@@ -8,6 +8,10 @@ import org.saul.ciudadelas.domain.game.players.Player;
 
 public class TakeThreeActionCard extends DistrictCard implements OptionalEpicCard {
 
+    public TakeThreeActionCard(Long id) {
+        super(id);
+    }
+
     @Override
     public void execute(Game game, Player player) {
         if (!player.removeGold(2)) throw new ExpectedGameError("No tienes monedas suficientes");

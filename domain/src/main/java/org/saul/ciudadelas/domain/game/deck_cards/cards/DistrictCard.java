@@ -6,5 +6,7 @@ public class DistrictCard extends Card{
     private String color;
 
 
-
+    public DistrictCard(Long id) {
+        super(id);
+    }
 }

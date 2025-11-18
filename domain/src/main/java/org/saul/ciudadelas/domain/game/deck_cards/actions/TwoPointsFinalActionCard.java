@@ -7,6 +7,10 @@ import org.saul.ciudadelas.domain.game.players.Player;
 
 public class TwoPointsFinalActionCard extends DistrictCard implements FinalGameEpicCard {
 
+    public TwoPointsFinalActionCard(Long id) {
+        super(id);
+    }
+
     @Override
     public void execute(Game game, Player player) {
 
