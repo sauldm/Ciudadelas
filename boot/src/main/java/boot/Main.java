@@ -56,7 +56,7 @@ public class Main {
 
         game.nextStep();
 
-        game.executePlayerCharacterAbility(game.getActualRound().getActualTurn().getPlayer(), c.getId());
+        game.executePlayerCharacterAbility(c.getId(), d.getId());
 
 
         System.out.println(game.rounds);
@@ -65,43 +65,43 @@ public class Main {
 
         game.nextStep();
 
-        game.executePlayerCharacterAbility(game.getActualRound().getActualTurn().getPlayer(), c.getId());
+        game.executePlayerCharacterAbility(c.getId(), d.getId());
         System.out.println(game.rounds);
         game.getActualRound().getActualTurn().endTurn();
 
         game.nextStep();
 
-        game.executePlayerCharacterAbility(game.getActualRound().getActualTurn().getPlayer(), c.getId());
+        game.executePlayerCharacterAbility(c.getId(), d.getId());
         System.out.println(game.rounds);
         game.getActualRound().getActualTurn().endTurn();
 
         game.nextStep();
 
-        game.executePlayerCharacterAbility(game.getActualRound().getActualTurn().getPlayer(), c.getId());
+        game.executePlayerCharacterAbility(c.getId(), d.getId());
         System.out.println(game.rounds);
         game.getActualRound().getActualTurn().endTurn();
 
         game.nextStep();
 
-        game.executePlayerCharacterAbility(game.getActualRound().getActualTurn().getPlayer(), c.getId());
+        game.executePlayerCharacterAbility(c.getId(), d.getId());
         System.out.println(game.rounds);
         game.getActualRound().getActualTurn().endTurn();
 
         game.nextStep();
 
-        game.executePlayerCharacterAbility(game.getActualRound().getActualTurn().getPlayer(), c.getId());
+        game.executePlayerCharacterAbility(c.getId(), d.getId());
         System.out.println(game.rounds);
         game.getActualRound().getActualTurn().endTurn();
 
         game.nextStep();
 
-        game.executePlayerCharacterAbility(game.getActualRound().getActualTurn().getPlayer(), c.getId());
+        game.executePlayerCharacterAbility(c.getId(), d.getId());
         System.out.println(game.rounds);
         game.getActualRound().getActualTurn().endTurn();
 
         game.nextStep();
 
-        game.executePlayerCharacterAbility(game.getActualRound().getActualTurn().getPlayer(), c.getId());
+        game.executePlayerCharacterAbility(c.getId(), d.getId());
         System.out.println(game.rounds);
         game.getActualRound().getActualTurn().endTurn();
     }
