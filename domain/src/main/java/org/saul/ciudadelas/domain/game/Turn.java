@@ -9,6 +9,7 @@ public class Turn implements Comparable<Turn>{
     private boolean canPlay = true;
     private boolean isPlaying = false;
     private boolean isCompleted = false;
+    private boolean isCharacterHabilityUsed = false;
 
     public Turn(Player player, CharacterCard characterCard){
         this.player = player;
@@ -17,6 +18,14 @@ public class Turn implements Comparable<Turn>{
 
     public boolean canPlayerPlay(){
         return canPlay;
+    }
+
+    public boolean isCharacterHabilityUsed(){
+        return isCharacterHabilityUsed;
+    }
+
+    public void characterHabilityUsed(){
+        isCharacterHabilityUsed = true;
     }
 
     public Long getCharacterId(){

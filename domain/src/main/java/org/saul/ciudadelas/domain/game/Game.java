@@ -1,5 +1,6 @@
 package org.saul.ciudadelas.domain.game;
 
+import org.saul.ciudadelas.domain.exception.ExpectedGameError;
 import org.saul.ciudadelas.domain.exception.InternalGameException;
 import org.saul.ciudadelas.domain.game.deck_cards.DeckCards;
 import org.saul.ciudadelas.domain.game.deck_cards.actions.MilitaryActionCard;
@@ -126,7 +127,10 @@ public class Game {
         if (characterCardTarget == null) throw new InternalGameException("La carta no puede ser nula");
         if (getActualRound().getActualTurn().getPlayer() != player)
             throw new InternalGameException("No es el turno del jugador");
+        if (getActualRound().getActualTurn().isCharacterHabilityUsed()) throw new ExpectedGameError("No puede usar otra vez la habilidad");//Enviar evento al frontend
         player.executeCharacterAbility(this, characterCardTarget, getActualRound().getActualTurn().getCharacter());
+        getActualRound().getActualTurn().characterHabilityUsed();
+
     }
 
     public void destroyDistrictOfOtherPlayer(DistrictCard districtCard) {

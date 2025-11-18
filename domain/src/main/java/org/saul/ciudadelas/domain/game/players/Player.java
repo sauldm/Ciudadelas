@@ -2,7 +2,10 @@ package org.saul.ciudadelas.domain.game.players;
 
 import org.saul.ciudadelas.domain.game.Game;
 import org.saul.ciudadelas.domain.game.deck_cards.DeckCards;
+import org.saul.ciudadelas.domain.game.deck_cards.MainDeckCardActionCharacterCard;
 import org.saul.ciudadelas.domain.game.deck_cards.OtherPlayerActionCharacterCard;
+import org.saul.ciudadelas.domain.game.deck_cards.OtherPlayerDistrictBuiltActionCharacterCard;
+import org.saul.ciudadelas.domain.game.deck_cards.cards.Card;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.CharacterCard;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.DistrictCard;
 
@@ -62,11 +65,19 @@ public class Player {
         return characterCards.haveThisCard(characterCard) != null;
     }
 
-    public void executeCharacterAbility(Game game,CharacterCard characterCardTarget, CharacterCard characterCardExecutorId) {
+    public void executeCharacterAbility(Game game, Card targetCard, CharacterCard characterCardExecutorId) {
         if (characterCardExecutorId instanceof OtherPlayerActionCharacterCard otherPlayerActionCharacterCard){
-            otherPlayerActionCharacterCard.execute(game,characterCardTarget);
+            otherPlayerActionCharacterCard.execute(game,targetCard);
+        }
+        if (characterCardExecutorId instanceof MainDeckCardActionCharacterCard mainDeckCardActionCharacterCard){
+            mainDeckCardActionCharacterCard.execute(game, this);
+        }
+        if (characterCardExecutorId instanceof OtherPlayerDistrictBuiltActionCharacterCard otherPlayerDistrictBuiltActionCharacterCard){
+            otherPlayerDistrictBuiltActionCharacterCard.execute(game, targetCard);
         }
     }
+
+
 
     public List<CharacterCard> clearCharacterCards() {
         return characterCards.getAllCards();
