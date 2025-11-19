@@ -2,6 +2,7 @@ package org.saul.ciudadelas.domain.game;
 
 import org.saul.ciudadelas.domain.exception.ExpectedGameError;
 import org.saul.ciudadelas.domain.exception.InternalGameException;
+import org.saul.ciudadelas.domain.game.deck_cards.Color;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.CharacterCard;
 import org.saul.ciudadelas.domain.game.players.Player;
 
@@ -39,23 +40,21 @@ public class Turn implements Comparable<Turn>{
     }
 
     public void startTurn(){
+        if (characterCard.getColor() != Color.GREY)
+            collectCoinsPerDistrictColor(); // Enviar evento al frontend
         isPlaying = true;
-    }
-
-    public void stopPlaying(){
-        isCompleted = true;
-        canPlay = false;
     }
 
     public void endTurn(){
         isCompleted = true;
         isPlaying = false;
+        canPlay = false;
     }
 
     public void executeCharacterHability(Game game, Long characterCardActionId, Long targetId){
         if (characterCardActionId == null) throw new InternalGameException("La carta no puede ser nula");
         if (targetId == null) throw new InternalGameException("La carta no puede ser nula");
-        if (getCharacterId().equals(characterCardActionId)) throw new InternalGameException("El turno no corresponde a esa carta");
+        if (!getCharacterId().equals(characterCardActionId)) throw new InternalGameException("El turno no corresponde a esa carta"+getCharacterId());
         if (isCharacterHabilityUsed()) throw new ExpectedGameError("No puede usar otra vez la habilidad");//Enviar evento al frontend;
         getCharacter().executeCharacterAbility(game, targetId);
     }
@@ -81,5 +80,10 @@ public class Turn implements Comparable<Turn>{
 
     public CharacterCard getCharacter() {
         return characterCard;
+    }
+
+    public void collectCoinsPerDistrictColor() {
+        Long goldCollectedPerDistrict = player.getIntDistrictsWithSameColor(characterCard.getColor());
+        player.addGold(goldCollectedPerDistrict);
     }
 }

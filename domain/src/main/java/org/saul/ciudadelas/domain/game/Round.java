@@ -39,9 +39,13 @@ public class Round {
         return turns.get(actualTurn);
     }
 
+    public boolean isLastTurn(){
+        return actualTurn == (turns.size() -1);
+    }
+
     public boolean nextTurn(){
-        turns.get(actualTurn).stopPlaying();
-        if (turns.size() == (actualTurn + 1)) return false;
+        turns.get(actualTurn).endTurn();
+        if (isLastTurn()) return false;
         actualTurn++;
         turns.get(actualTurn).startTurn();
         // Enviar evento al front de nuevo turno
@@ -58,13 +62,16 @@ public class Round {
     }
 
     public void skipCharacterTurn(Long characterCardId) {
+        Turn turn = getActualTurn();
+        turn.endTurn();
+        System.out.println("Se ha saltado el turno del personaje: " + characterCardId);
+    }
+
+    public boolean characterIsNotInRound(Long characterCardId){
         Optional<Turn> turnOptional = turns.stream()
                 .filter(turn -> turn.getCharacterId().equals(characterCardId))
                 .findFirst();
-        if (turnOptional.isEmpty()) throw new InternalGameException("El turno tiene que existir en la ronda");
-        Turn turn = turnOptional.get();
-        turn.stopPlaying();
-        System.out.println("Se ha saltado el turno del personaje: " + characterCardId);
+        return turnOptional.isEmpty();
     }
 
     public Turn getTurnByCharacter(Long characterCardId){

@@ -3,10 +3,8 @@ package org.saul.ciudadelas.domain.game.deck_cards;
 import org.saul.ciudadelas.domain.exception.ExpectedGameError;
 import org.saul.ciudadelas.domain.exception.InternalGameException;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.Card;
-import org.saul.ciudadelas.domain.game.deck_cards.cards.CharacterCard;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class DeckCards<T extends Card> {
     private final List<T> cards = new ArrayList<>();
@@ -86,4 +84,9 @@ public class DeckCards<T extends Card> {
         return cardOptional.orElse(null);
     }
 
+    public Long getIntSameColorCards(Color color) {
+        return  cards.stream()
+                .filter(card -> card.getColor().equals(color))
+                .count();
+    }
 }

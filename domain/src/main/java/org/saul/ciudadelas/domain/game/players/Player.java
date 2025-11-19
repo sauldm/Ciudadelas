@@ -1,5 +1,6 @@
 package org.saul.ciudadelas.domain.game.players;
 
+import org.saul.ciudadelas.domain.game.deck_cards.Color;
 import org.saul.ciudadelas.domain.game.deck_cards.DeckCards;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.CharacterCard;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.DistrictCard;
@@ -8,7 +9,7 @@ import java.util.List;
 
 import static org.saul.ciudadelas.domain.game.GameConstants.INITIAL_PLAYER_GOLD;
 
-public class Player {
+public class Player{
     private final Long id;
     private final String nickName;
     private final DeckCards<DistrictCard> districtDeckCardsInHand = new DeckCards<>();
@@ -26,8 +27,16 @@ public class Player {
         this.districtDeckCardsBuilt = new DeckCards<>();
     }
 
+    public DeckCards <DistrictCard> districtCardDeckCards() {
+        return districtDeckCardsInHand;
+    }
 
-    public boolean removeGold(int quantity){
+    public Long getId() {
+        return id;
+    }
+
+
+    public boolean removeGold(Long quantity){
         if (gold < quantity) return false;
         gold -= quantity;
         return true;
@@ -60,6 +69,12 @@ public class Player {
         return characterCards.haveThisCard(characterCardId);
     }
 
+    public CharacterCard lastCharacterCard() {
+        List<CharacterCard> allCards = characterCards.orderCards();
+        if (allCards.isEmpty()) return null;
+        return allCards.getLast();
+    }
+
     public List<CharacterCard> clearCharacterCards() {
         return characterCards.getAllCards();
     }
@@ -74,6 +89,8 @@ public class Player {
         return districtDeckCardsInHand.getCard(districtCard);
     }
 
+
+
     @Override
     public String toString() {
         return "Player{" +
@@ -84,5 +101,7 @@ public class Player {
                 '}';
     }
 
-
+    public Long getIntDistrictsWithSameColor(Color color) {
+        return districtDeckCardsBuilt.getIntSameColorCards(color);
+    }
 }

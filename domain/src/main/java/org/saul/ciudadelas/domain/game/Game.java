@@ -1,6 +1,5 @@
 package org.saul.ciudadelas.domain.game;
 
-import org.saul.ciudadelas.domain.exception.ExpectedGameError;
 import org.saul.ciudadelas.domain.exception.InternalGameException;
 import org.saul.ciudadelas.domain.game.deck_cards.DeckCards;
 import org.saul.ciudadelas.domain.game.deck_cards.actions.WizardActionCard;
@@ -83,7 +82,11 @@ public class Game {
     public void stopCharacterPlaying(Long characterCardId) {
         if (characterCardId == null) throw new InternalGameException("La carta no puede ser nula");
         getActualRound().skipCharacterTurn(characterCardId);
-        nextStep();
+    }
+
+    public boolean characterIsNotInRound(Long characterCardId) {
+        if (characterCardId == null) throw new InternalGameException("La carta no puede ser nula");
+        return getActualRound().characterIsNotInRound(characterCardId);
     }
 
     public void nextStep() {
@@ -92,12 +95,16 @@ public class Game {
             return; //Enviar evento de error
         }
         if (!getActualRound().nextTurn()) {
-            for (Player player : players) {
-                deckCharacterCards.addCards(player.clearCharacterCards());
-            }
+            clearPlayerCharacterCards();
             addRound();
-
         }
+    }
+
+    public void clearPlayerCharacterCards(){
+        for (Player player : players) {
+            deckCharacterCards.addCards(player.clearCharacterCards());
+        }
+
     }
 
 
@@ -113,16 +120,22 @@ public class Game {
         return rounds.getLast();
     }
 
-    public void swapHandsWithPlayer(CharacterCard actualCharacter, Long targetCharacterId) {
+    public void swapHandsWithPlayer(CharacterCard actualCharacter, Long targetPlayerId) {
         if (actualCharacter == null) throw new InternalGameException("El jugador no puede ser nulo");
-        if (targetCharacterId == null) throw new InternalGameException("La carta no puede ser nula");
+        if (targetPlayerId == null) throw new InternalGameException("La carta no puede ser nula");
         Player actualPlayer = findPlayerByCharacterId(actualCharacter.getId());
-        Player targetPlayer = findPlayerByCharacterId(targetCharacterId);
+        Player targetPlayer = players.stream().filter(player -> player.getId().equals(targetPlayerId)).findFirst().orElse(null);
         if (actualPlayer == null) throw new InternalGameException("El jugador no puede ser nulo");
         if (targetPlayer == null) throw new InternalGameException("El jugador objetivo no puede ser nulo");
+        if (actualPlayer == targetPlayer) throw new InternalGameException("El jugador no puede elegirse a si mismo");
         List<DistrictCard> tempHand = new ArrayList<>(targetPlayer.getAllDistrictCardsInHand());
+        System.out.println("tempHand: " + tempHand);
+        System.out.println("1"+targetPlayer.districtCardDeckCards()+"    " + actualPlayer.districtCardDeckCards());
         targetPlayer.addDistrictCards(actualPlayer.getAllDistrictCardsInHand());
         actualPlayer.addDistrictCards(tempHand);
+        System.out.println(targetPlayer.districtCardDeckCards()+"    " + actualPlayer.districtCardDeckCards());
+
+
         getActualRound().getActualTurn().characterHabilityUsed();
     }
 
@@ -130,10 +143,16 @@ public class Game {
         getActualRound().getActualTurn().executeCharacterHability(this, characterCardActionId, targetId);
     }
 
-    public void destroyDistrictOfOtherPlayer(Long districtCardId) {
+    public void destroyDistrictOfOtherPlayer(Long districtCardId, CharacterCard actualCharacter) {
+        if (actualCharacter == null) throw new InternalGameException("El jugador no puede ser nulo");
         if (districtCardId == null) throw new InternalGameException("La carta no puede ser nula");
         Player playerTarget = findPlayerByDistrictCardId(districtCardId);
         if (playerTarget == null) throw new InternalGameException("El jugador objetivo no puede ser nulo");
+        if (playerTarget.lastCharacterCard().isUndestructible()) return; //Enviar evento al frontend
+        DistrictCard districtCard = playerTarget.getDistrictCardFromHand(districtCardId);
+        Player actualPlayer = findPlayerByCharacterId(actualCharacter.getId());
+        if (actualPlayer == null) throw new InternalGameException("El jugador no puede ser nulo");
+        actualPlayer.removeGold(districtCard.getPrice()+1);
         this.deckDistrictCards.addCard(playerTarget.getDistrictCardFromHand(districtCardId));
         getActualRound().getActualTurn().characterHabilityUsed();
 
@@ -151,15 +170,17 @@ public class Game {
     public void swapCardsWithGame(WizardActionCard wizardActionCard) {
         if (wizardActionCard == null) throw new InternalGameException("La carta no puede ser nula");
         Player actualPlayer = findPlayerByCharacterId(wizardActionCard.getId());
+        System.out.println("actualPlayer district cards before swap: " +actualPlayer.districtCardDeckCards());
+
         List<DistrictCard> playerCards = actualPlayer.getAllDistrictCardsInHand();
         List<DistrictCard> gameCards = deckDistrictCards.getCard(playerCards.size());
         actualPlayer.addDistrictCards(gameCards);
         deckDistrictCards.addCards(playerCards);
+        System.out.println("actualPlayer district cards: " +actualPlayer.districtCardDeckCards());
         getActualRound().getActualTurn().characterHabilityUsed();
     }
 
     public CharacterCard findCharacterCardById(Long characterCardId) {
         return getActualRound().findCharacterById(characterCardId);
     }
-
 }

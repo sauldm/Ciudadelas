@@ -29,7 +29,7 @@ public class RoundEvent {
     public String toString() {
         return "RoundEvent{" +
                 "characterTrigger=" + characterTrigger +
-                ", eventEffect=" + eventEffect.toString() +
+                ", eventEffect=" + eventEffect +
                 '}';
     }
 }
