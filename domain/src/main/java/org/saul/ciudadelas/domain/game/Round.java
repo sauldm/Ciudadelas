@@ -2,6 +2,8 @@ package org.saul.ciudadelas.domain.game;
 
 import org.saul.ciudadelas.domain.exception.InternalGameException;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.CharacterCard;
+import org.saul.ciudadelas.domain.game.deck_cards.cards.DistrictCard;
+import org.saul.ciudadelas.domain.game.players.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +13,7 @@ public class Round {
     private List<Turn> turns;
     private int actualTurn;
     private List<RoundEvent> roundEvents;
+    private List<Long> districtsHabilityUsedThisRound;
 
 
     private Round(List<Turn> turns) {
@@ -22,6 +25,7 @@ public class Round {
         round.actualTurn = 0;
         round.turns.getFirst().startTurn();
         round.roundEvents = new ArrayList<>();
+        round.districtsHabilityUsedThisRound = new ArrayList<>();
 
         return round;
     }
@@ -49,6 +53,7 @@ public class Round {
         actualTurn++;
         turns.get(actualTurn).startTurn();
         // Enviar evento al front de nuevo turno
+        turns.get(actualTurn).executeDistrictsHabilitiesAtTurnStart();
         trigerEvents();
         return true;
     }
@@ -107,4 +112,11 @@ public class Round {
     public void incrementDistrictsBuiltThisTurn() {
         getActualTurn().incrementDistrictsBuiltThisTurn();
     }
+
+
+    public void addDistrictUsedThisRound(Long districtCardId) {
+        districtsHabilityUsedThisRound.add(districtCardId);
+    }
+
+
 }

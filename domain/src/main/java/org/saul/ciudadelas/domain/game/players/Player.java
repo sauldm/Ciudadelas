@@ -70,12 +70,6 @@ public class Player{
         return characterCards.haveThisCard(characterCardId);
     }
 
-    public CharacterCard lastCharacterCard() {
-        List<CharacterCard> allCards = characterCards.orderCards();
-        if (allCards.isEmpty()) return null;
-        return allCards.getLast();
-    }
-
     public CharacterCard findCharacterUndestructible() {
         for (CharacterCard characterCard : characterCards.orderCards()) {
             if (characterCard.isUndestructible()) {
@@ -135,7 +129,7 @@ public class Player{
         districtDeckCardsInHand.addCard(districtCard);
     }
 
-    public boolean haveGoldToBuy(long price) {
-        return gold >= price;
+    public void addPoints(int i) {
+        points += i;
     }
 }

@@ -34,7 +34,7 @@ public class Main {
         List<DistrictCard> k = new ArrayList<>();
 
         for (int i = 0; i < 30; i++) {
-            k.add(new TwoPointsFinalActionCard(((long) i)));
+            k.add(new TakeThreeActionCard(((long) i)));
         }
 
         DeckCards deckDistrictCards = new DeckCards();

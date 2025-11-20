@@ -2,6 +2,8 @@ package org.saul.ciudadelas.domain.game;
 
 import org.saul.ciudadelas.domain.exception.InternalGameException;
 import org.saul.ciudadelas.domain.game.deck_cards.DeckCards;
+import org.saul.ciudadelas.domain.game.deck_cards.OptionalEpicCard;
+import org.saul.ciudadelas.domain.game.deck_cards.actions.TakeThreeActionCard;
 import org.saul.ciudadelas.domain.game.deck_cards.actions.WizardActionCard;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.CharacterCard;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.DistrictCard;
@@ -45,7 +47,6 @@ public class Game {
         // Enviar evento de nueva ronda
         rounds.add(Round.initializeRound(getNewTurns()));
     }
-
 
     public List<Turn> getNewTurns() {
         List<Turn> turns = new ArrayList<>();
@@ -143,6 +144,13 @@ public class Game {
         getActualRound().getActualTurn().executeCharacterHability(this, characterCardActionId, targetId);
     }
 
+    public void executeDistrictAbility(Long districtCardId){
+        if (districtCardId == null) throw new InternalGameException("La carta no puede ser nula");
+        getActualRound().getActualTurn().executeDistrictAbility(this, districtCardId);
+
+
+    }
+
     public void destroyDistrictOfOtherPlayer(Long districtCardId, CharacterCard actualCharacter) {
         if (actualCharacter == null) throw new InternalGameException("El jugador no puede ser nulo");
         if (districtCardId == null) throw new InternalGameException("La carta no puede ser nula");
@@ -157,7 +165,7 @@ public class Game {
         if (districtCard == null) throw new InternalGameException("La carta de distrito no puede ser nula");
 
 
-        if (!actualPlayer.haveGoldToBuy(districtCard.getPrice() + 1)) {
+        if (!actualPlayer.removeGold(districtCard.getPrice() + 1)) {
             System.out.println("El jugador no tiene suficiente oro para destruir el distrito");
             return; //Enviar evento al frontend
         }
@@ -226,7 +234,7 @@ public class Game {
 
         DistrictCard districtCard = player.findDistrictCardInHand(districtCardId);
         if (districtCard == null) throw new InternalGameException("La carta no puede ser nula");
-        if (!player.haveGoldToBuy(districtCard.getPrice())){
+        if (!player.removeGold(districtCard.getPrice())){
             System.out.println("El jugador no tiene suficiente oro para construir el distrito");
             return; //Enviar evento al frontend
         }
@@ -239,5 +247,4 @@ public class Game {
     public boolean characterIsTurnCharacter(Long characterCardId){
         return getActualRound().getActualTurn().getCharacterId().equals(characterCardId);
     }
-
 }
