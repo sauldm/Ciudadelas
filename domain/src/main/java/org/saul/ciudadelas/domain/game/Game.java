@@ -107,7 +107,6 @@ public class Game {
 
     }
 
-
     public Player findPlayerByCharacterId(Long characterCardId) {
         if (characterCardId == null) throw new InternalGameException("La carta no puede ser nula");
         for (Player player : players) {
@@ -140,6 +139,7 @@ public class Game {
     }
 
     public void executePlayerCharacterAbility(Long characterCardActionId, Long targetId) {
+        if (!characterIsTurnCharacter(characterCardActionId)) throw new InternalGameException("No es el turno de ese personaje");
         getActualRound().getActualTurn().executeCharacterHability(this, characterCardActionId, targetId);
     }
 
@@ -181,6 +181,28 @@ public class Game {
     }
 
     public CharacterCard findCharacterCardById(Long characterCardId) {
-        return getActualRound().findCharacterById(characterCardId);
+        CharacterCard characterCard = getActualRound().findCharacterById(characterCardId) ;
+        if (characterCard == null){
+            characterCard = deckCharacterCards.haveThisCard(characterCardId);
+        }
+        return characterCard;
     }
+    public void buildDistrictCard(Long districtCardId, Long characterCardId) {
+        if (!characterIsTurnCharacter(characterCardId)) throw new InternalGameException("No es el turno de ese personaje");
+        CharacterCard characterCard = findCharacterCardById(characterCardId);
+        if (characterCard == null) throw new InternalGameException("La carta no puede ser nula");
+        if (!characterCard.canBuildDistrict(getActualRound().getDistrictsBuiltThisTurn())) return;//Enviar evento al frontend
+        Player player = findPlayerByCharacterId(characterCardId);
+        if (player == null) throw new InternalGameException("El jugador no puede ser nulo");
+        DistrictCard districtCard = player.getDistrictCardFromHand(districtCardId);
+        if (districtCard == null) throw new InternalGameException("La carta no puede ser nula");
+        player.removeGold(districtCard.getPrice());
+        player.buildDistrictCard(districtCard);
+        getActualRound().incrementDistrictsBuiltThisTurn();
+    }
+
+    public boolean characterIsTurnCharacter(Long characterCardId){
+        return getActualRound().getActualTurn().getCharacterId().equals(characterCardId);
+    }
+
 }

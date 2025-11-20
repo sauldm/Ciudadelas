@@ -8,8 +8,11 @@ import org.saul.ciudadelas.domain.game.deck_cards.WizardTarget;
 
 public class CharacterCard extends Card{
 
-    public CharacterCard(Long id, String name, Color color, boolean undestructible) {
+    private int maxDistrictsToBuild;
+
+    public CharacterCard(Long id, String name, Color color, boolean undestructible, int maxDistrictsToBuild) {
         super(id, name, color, undestructible);
+        this.maxDistrictsToBuild = maxDistrictsToBuild;
     }
 
     public void executeCharacterAbility(Game game, Long targetId) {
@@ -27,4 +30,7 @@ public class CharacterCard extends Card{
         }
     }
 
+    public boolean canBuildDistrict(int districtsBuiltThisTurn) {
+        return districtsBuiltThisTurn < maxDistrictsToBuild;
+    }
 }

@@ -13,10 +13,15 @@ public class Turn implements Comparable<Turn>{
     private boolean isPlaying = false;
     private boolean isCompleted = false;
     private boolean isCharacterHabilityUsed = false;
+    private int districtsBuiltThisTurn = 0;
 
     public Turn(Player player, CharacterCard characterCard){
         this.player = player;
         this.characterCard = characterCard;
+    }
+
+    public int getDistrictsBuiltThisTurn() {
+        return districtsBuiltThisTurn;
     }
 
     public boolean canPlayerPlay(){
@@ -85,5 +90,9 @@ public class Turn implements Comparable<Turn>{
     public void collectCoinsPerDistrictColor() {
         Long goldCollectedPerDistrict = player.getIntDistrictsWithSameColor(characterCard.getColor());
         player.addGold(goldCollectedPerDistrict);
+    }
+
+    public void incrementDistrictsBuiltThisTurn() {
+        districtsBuiltThisTurn++;
     }
 }

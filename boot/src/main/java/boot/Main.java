@@ -28,7 +28,10 @@ public class Main {
                 b,
                 c,
                 d,
-                e
+                e,
+                f,
+                g,
+                h
 
         ));
 
@@ -49,15 +52,22 @@ public class Main {
         );
         Game game = Game.initializeNewGame(deckDistrictCards, players, deckCharacterCards2);
 
-        for (int i = 0; i < 5; i++) {
+        /*for (int i = 0; i < 8; i++) {
+            System.out.println(i + "" + game.getActualRound().getActualTurn());
+            game.buildDistrictCard(2L, game.getActualRound().getActualTurn().getCharacterId());
+            System.out.println(i + "" + game.getActualRound().getActualTurn());
+
+            if (game.getActualRound().getActualTurn().getCharacterId() == 8L){
+                game.executePlayerCharacterAbility(game.getActualRound().getActualTurn().getCharacterId(), 1L);
+            }else
             if (game.getActualRound().getActualTurn().getCharacterId() != 3L) {
-                game.executePlayerCharacterAbility(game.getActualRound().getActualTurn().getCharacterId(), game.getActualRound().getActualTurn().getCharacterId()+1);
+                game.executePlayerCharacterAbility(game.getActualRound().getActualTurn().getCharacterId(), game.getActualRound().getActualTurn().getCharacterId()+2);
             } else {
                 game.executePlayerCharacterAbility(game.getActualRound().getActualTurn().getCharacterId(), 0L);
             }
-            System.out.println(i + "" + game.rounds);
             game.getActualRound().getActualTurn().endTurn();
             game.nextStep();
-        }
+        }*/
+
     }
 }

@@ -97,11 +97,17 @@ public class Player{
                 "id=" + id +
                 ", nickName='" + nickName + '\'' +
                 ", characterCards=" + characterCards +
+                ", districtDeckCardsInHand=" + districtDeckCardsInHand +
+                ", districtDeckCardsBuilt=" + districtDeckCardsBuilt +
                 ", gold=" + gold +
                 '}';
     }
 
     public Long getIntDistrictsWithSameColor(Color color) {
         return districtDeckCardsBuilt.getIntSameColorCards(color);
+    }
+
+    public void buildDistrictCard(DistrictCard districtCard) {
+        districtDeckCardsBuilt.addCard(districtCard);
     }
 }

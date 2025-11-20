@@ -4,7 +4,7 @@ import org.saul.ciudadelas.domain.game.deck_cards.cards.CharacterCard;
 
 public class KingActionCard extends CharacterCard {
     public KingActionCard() {
-        super(4L,"King", Color.YELLOW,false);
+        super(4L,"King", Color.YELLOW,false,1);
     }
 
 }

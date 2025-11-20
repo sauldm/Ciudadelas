@@ -5,6 +5,6 @@ import org.saul.ciudadelas.domain.game.deck_cards.cards.CharacterCard;
 
 public class BishopActionCard extends CharacterCard {
     public BishopActionCard() {
-        super(5L,"Bishop", Color.BLUE, true);
+        super(5L,"Bishop", Color.BLUE, true,1);
     }
 }

@@ -86,8 +86,7 @@ public class Round {
         Optional<Turn> turnOptional = turns.stream()
                 .filter(turn -> turn.getCharacterId().equals(characterCardId))
                 .findFirst();
-        if (turnOptional.isEmpty()) throw new InternalGameException("El turno tiene que existir en la ronda");
-        return turnOptional.get().getCharacter();
+        return turnOptional.map(Turn::getCharacter).orElse(null);
     }
 
 
@@ -99,5 +98,13 @@ public class Round {
                 ", actualTurn=" + actualTurn +
                 ", roundEvents=" + roundEvents +
                 '}';
+    }
+
+    public int getDistrictsBuiltThisTurn() {
+        return getActualTurn().getDistrictsBuiltThisTurn();
+    }
+
+    public void incrementDistrictsBuiltThisTurn() {
+        getActualTurn().incrementDistrictsBuiltThisTurn();
     }
 }

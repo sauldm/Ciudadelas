@@ -5,6 +5,6 @@ import org.saul.ciudadelas.domain.game.deck_cards.cards.CharacterCard;
 
 public class MerchantActionCard extends CharacterCard {
     public MerchantActionCard() {
-        super(6L,"Merchant", Color.GREEN,false);
+        super(6L,"Merchant", Color.GREEN,false,1);
     }
 }

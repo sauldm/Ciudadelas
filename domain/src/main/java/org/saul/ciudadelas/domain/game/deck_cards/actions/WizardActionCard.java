@@ -11,7 +11,7 @@ public class WizardActionCard extends CharacterCard implements MainDeckCardActio
 
 
     public WizardActionCard() {
-        super(3L,"Wizard", Color.GREY,false);
+        super(3L,"Wizard", Color.GREY,false,1);
     }
 
     @Override
