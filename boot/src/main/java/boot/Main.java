@@ -24,10 +24,6 @@ public class Main {
 
         DeckCards deckCharacterCards2 = new DeckCards();
         deckCharacterCards2.addCards(List.of(
-                a,
-                b,
-                c,
-                d,
                 e,
                 f,
                 g,
@@ -69,5 +65,28 @@ public class Main {
             game.nextStep();
         }*/
 
+
+
+
+        for (int i = 5; i < 19; i++) {
+            System.out.println(i + "" + game.getActualRound().getActualTurn());
+
+            if (game.findPlayerByDistrictCardIdHand(0L) !=null){
+
+                if (game.findPlayerByDistrictCardIdHand(0L).haveCharacter((long) i) != null) {
+                    System.out.println("CONSTRUIDO POR " + i);
+
+                    game.buildDistrictCard(0L,(long) i);
+                }
+            }
+            if (game.characterIsTurnCharacter(8L)){
+                Player player = game.findPlayerByDistrictCardIdBuilt(0L);
+                System.out.println(player);
+                game.executePlayerCharacterAbility(8L, 0L);
+                System.out.println(player);
+            }
+            game.getActualRound().getActualTurn().endTurn();
+            game.nextStep();
+        }
     }
 }

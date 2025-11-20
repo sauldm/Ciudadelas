@@ -32,7 +32,7 @@ public class Game {
 
     public static Game initializeNewGame(DeckCards<DistrictCard> deckDistrictCards, List<Player> players, DeckCards<CharacterCard> deckCharacterCards) {
         Game game = new Game(deckDistrictCards, players, deckCharacterCards);
-        game.players.forEach(player -> player.addDistrictCards(deckDistrictCards.getCard(DISTRICT_CARDS_PER_PLAYER)));
+        game.players.forEach(player -> player.addDistrictCardsInHand(deckDistrictCards.getCard(DISTRICT_CARDS_PER_PLAYER)));
         game.addRound();
         return game;
     }
@@ -130,8 +130,8 @@ public class Game {
         List<DistrictCard> tempHand = new ArrayList<>(targetPlayer.getAllDistrictCardsInHand());
         System.out.println("tempHand: " + tempHand);
         System.out.println("1"+targetPlayer.districtCardDeckCards()+"    " + actualPlayer.districtCardDeckCards());
-        targetPlayer.addDistrictCards(actualPlayer.getAllDistrictCardsInHand());
-        actualPlayer.addDistrictCards(tempHand);
+        targetPlayer.addDistrictCardsInHand(actualPlayer.getAllDistrictCardsInHand());
+        actualPlayer.addDistrictCardsInHand(tempHand);
         System.out.println(targetPlayer.districtCardDeckCards()+"    " + actualPlayer.districtCardDeckCards());
 
 
@@ -146,23 +146,50 @@ public class Game {
     public void destroyDistrictOfOtherPlayer(Long districtCardId, CharacterCard actualCharacter) {
         if (actualCharacter == null) throw new InternalGameException("El jugador no puede ser nulo");
         if (districtCardId == null) throw new InternalGameException("La carta no puede ser nula");
-        Player playerTarget = findPlayerByDistrictCardId(districtCardId);
+
+        Player playerTarget = findPlayerByDistrictCardIdBuilt(districtCardId);
         if (playerTarget == null) throw new InternalGameException("El jugador objetivo no puede ser nulo");
-        if (playerTarget.lastCharacterCard().isUndestructible()) return; //Enviar evento al frontend
-        DistrictCard districtCard = playerTarget.getDistrictCardFromHand(districtCardId);
+
         Player actualPlayer = findPlayerByCharacterId(actualCharacter.getId());
         if (actualPlayer == null) throw new InternalGameException("El jugador no puede ser nulo");
+
+        DistrictCard districtCard = playerTarget.findDistrictCardBuilt(districtCardId);
+        if (districtCard == null) throw new InternalGameException("La carta de distrito no puede ser nula");
+
+
+        if (!actualPlayer.haveGoldToBuy(districtCard.getPrice() + 1)) {
+            System.out.println("El jugador no tiene suficiente oro para destruir el distrito");
+            return; //Enviar evento al frontend
+        }
+        if (playerTarget.findCharacterUndestructible() != null) {
+            System.out.println("El distrito no puede ser destruido por personaje indestructible");
+            return; //Enviar evento al frontend
+        }
+
+        if (districtCard.isUndestructible()) {
+            System.out.println("El distrito no puede ser destruido por ser indestructible");
+            return; //Enviar evento al frontend
+        }
+
         actualPlayer.removeGold(districtCard.getPrice()+1);
-        this.deckDistrictCards.addCard(playerTarget.getDistrictCardFromHand(districtCardId));
+        this.deckDistrictCards.addCard(playerTarget.getDistrictCardBuilt(districtCardId));
         getActualRound().getActualTurn().characterHabilityUsed();
-
-
     }
 
-    public Player findPlayerByDistrictCardId(Long districtCardId) {
+
+    public Player findPlayerByDistrictCardIdBuilt(Long districtCardId) {
         if (districtCardId == null) throw new InternalGameException("La carta no puede ser nula");
         for (Player player : players) {
-            if (player.haveDistrictCard(districtCardId)) return player;
+            if (player.findDistrictCardBuilt(districtCardId) != null) return player;
+        }
+        return null;
+    }
+
+
+    public Player findPlayerByDistrictCardIdHand(Long districtCardId) {
+        if (districtCardId == null) throw new InternalGameException("La carta no puede ser nula");
+        for (Player player : players) {
+            if (player.findDistrictCardInHand(districtCardId) != null) return player;
         }
         return null;
     }
@@ -174,7 +201,7 @@ public class Game {
 
         List<DistrictCard> playerCards = actualPlayer.getAllDistrictCardsInHand();
         List<DistrictCard> gameCards = deckDistrictCards.getCard(playerCards.size());
-        actualPlayer.addDistrictCards(gameCards);
+        actualPlayer.addDistrictCardsInHand(gameCards);
         deckDistrictCards.addCards(playerCards);
         System.out.println("actualPlayer district cards: " +actualPlayer.districtCardDeckCards());
         getActualRound().getActualTurn().characterHabilityUsed();
@@ -189,15 +216,23 @@ public class Game {
     }
     public void buildDistrictCard(Long districtCardId, Long characterCardId) {
         if (!characterIsTurnCharacter(characterCardId)) throw new InternalGameException("No es el turno de ese personaje");
+
         CharacterCard characterCard = findCharacterCardById(characterCardId);
         if (characterCard == null) throw new InternalGameException("La carta no puede ser nula");
         if (!characterCard.canBuildDistrict(getActualRound().getDistrictsBuiltThisTurn())) return;//Enviar evento al frontend
+
         Player player = findPlayerByCharacterId(characterCardId);
         if (player == null) throw new InternalGameException("El jugador no puede ser nulo");
-        DistrictCard districtCard = player.getDistrictCardFromHand(districtCardId);
+
+        DistrictCard districtCard = player.findDistrictCardInHand(districtCardId);
         if (districtCard == null) throw new InternalGameException("La carta no puede ser nula");
+        if (!player.haveGoldToBuy(districtCard.getPrice())){
+            System.out.println("El jugador no tiene suficiente oro para construir el distrito");
+            return; //Enviar evento al frontend
+        }
+
         player.removeGold(districtCard.getPrice());
-        player.buildDistrictCard(districtCard);
+        player.buildDistrictCard(player.getDistrictCardFromHand(districtCardId));
         getActualRound().incrementDistrictsBuiltThisTurn();
     }
 

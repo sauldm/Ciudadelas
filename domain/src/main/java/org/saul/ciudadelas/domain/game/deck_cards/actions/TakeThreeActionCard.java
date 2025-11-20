@@ -16,7 +16,7 @@ public class TakeThreeActionCard extends DistrictCard implements OptionalEpicCar
     @Override
     public void execute(Game game, Player player) {
         if (!player.removeGold(2L)) throw new ExpectedGameError("No tienes monedas suficientes");
-        player.addDistrictCards(game.getDistrictCards(3));
+        player.addDistrictCardsInHand(game.getDistrictCards(3));
     }
 
 }

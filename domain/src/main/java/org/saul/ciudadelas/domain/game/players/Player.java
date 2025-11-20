@@ -36,6 +36,7 @@ public class Player{
     }
 
 
+
     public boolean removeGold(Long quantity){
         if (gold < quantity) return false;
         gold -= quantity;
@@ -49,7 +50,7 @@ public class Player{
 
     }
 
-    public void addDistrictCards(List<DistrictCard> districtCards){
+    public void addDistrictCardsInHand(List<DistrictCard> districtCards){
         districtDeckCardsInHand.addCards(districtCards);
     }
 
@@ -75,18 +76,37 @@ public class Player{
         return allCards.getLast();
     }
 
+    public CharacterCard findCharacterUndestructible() {
+        for (CharacterCard characterCard : characterCards.orderCards()) {
+            if (characterCard.isUndestructible()) {
+                return characterCard;
+            }
+        }
+        return null;
+    }
+
     public List<CharacterCard> clearCharacterCards() {
         return characterCards.getAllCards();
     }
 
-    public boolean haveDistrictCard(Long districtCardId) {
-        return districtDeckCardsBuilt.haveThisCard(districtCardId) != null;
+    public DistrictCard findDistrictCardBuilt(Long districtCardId) {
+        return districtDeckCardsBuilt.haveThisCard(districtCardId);
+    }
+
+    public DistrictCard findDistrictCardInHand(Long districtCardId) {
+        return districtDeckCardsInHand.haveThisCard(districtCardId);
     }
 
     public DistrictCard getDistrictCardFromHand(Long districtCardId) {
         if (districtCardId == null) throw new IllegalArgumentException("El distrito no puede ser nulo");
         DistrictCard districtCard = districtDeckCardsInHand.haveThisCard(districtCardId);
         return districtDeckCardsInHand.getCard(districtCard);
+    }
+
+    public DistrictCard getDistrictCardBuilt(Long districtCardId) {
+        if (districtCardId == null) throw new IllegalArgumentException("El distrito no puede ser nulo");
+        DistrictCard districtCard = districtDeckCardsBuilt.haveThisCard(districtCardId);
+        return districtDeckCardsBuilt.getCard(districtCard);
     }
 
 
@@ -109,5 +129,13 @@ public class Player{
 
     public void buildDistrictCard(DistrictCard districtCard) {
         districtDeckCardsBuilt.addCard(districtCard);
+    }
+
+    public void addDistrictCardInHand(DistrictCard districtCard) {
+        districtDeckCardsInHand.addCard(districtCard);
+    }
+
+    public boolean haveGoldToBuy(long price) {
+        return gold >= price;
     }
 }
