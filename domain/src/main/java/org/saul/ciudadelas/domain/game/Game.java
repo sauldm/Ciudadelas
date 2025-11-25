@@ -2,8 +2,6 @@ package org.saul.ciudadelas.domain.game;
 
 import org.saul.ciudadelas.domain.exception.InternalGameException;
 import org.saul.ciudadelas.domain.game.deck_cards.DeckCards;
-import org.saul.ciudadelas.domain.game.deck_cards.OptionalEpicCard;
-import org.saul.ciudadelas.domain.game.deck_cards.actions.TakeThreeActionCard;
 import org.saul.ciudadelas.domain.game.deck_cards.actions.WizardActionCard;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.CharacterCard;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.DistrictCard;
@@ -13,15 +11,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.saul.ciudadelas.domain.game.GameConstants.CHARACTER_CARDS_PER_PLAYER;
-import static org.saul.ciudadelas.domain.game.GameConstants.DISTRICT_CARDS_PER_PLAYER;
+import static org.saul.ciudadelas.domain.game.GameConstants.*;
 
 public class Game {
     private final DeckCards<DistrictCard> deckDistrictCards;
     private final List<Player> players;
     private final DeckCards<CharacterCard> deckCharacterCards;
-    public List<Round> rounds;
-
+    private List<Round> rounds;
+    private List<RoundEvent> specialRoundEvents;
 
     private Game(DeckCards<DistrictCard> deckDistrictCards, List<Player> players, DeckCards<CharacterCard> deckCharacterCards) {
         this.deckDistrictCards = deckDistrictCards;
@@ -93,12 +90,14 @@ public class Game {
     public void nextStep() {
         if (!getActualRound().getActualTurn().isTurnCompleted()) {
             System.out.println("No se puede pasar de turno, el turno actual no ha finalizado");
-            return; //Enviar evento de error
+            return;
         }
-        if (!getActualRound().nextTurn()) {
+        if (getActualRound().isLastTurn()) {
             clearPlayerCharacterCards();
             addRound();
         }
+        getActualRound().nextTurn(this);
+
     }
 
     public void clearPlayerCharacterCards(){
@@ -246,5 +245,15 @@ public class Game {
 
     public boolean characterIsTurnCharacter(Long characterCardId){
         return getActualRound().getActualTurn().getCharacterId().equals(characterCardId);
+    }
+
+
+
+    public void characterChooseCoins(){
+        getActualRound().playerAddCoins(TURN_PLAYER_GOLD);
+    }
+
+    public void characterChooseCards(){
+        getActualRound().playerAddDistrictCard(this,TURN_DISTRICT_CARD_PLAYER);
     }
 }

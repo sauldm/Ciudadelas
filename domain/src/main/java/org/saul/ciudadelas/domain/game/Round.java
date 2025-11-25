@@ -2,8 +2,6 @@ package org.saul.ciudadelas.domain.game;
 
 import org.saul.ciudadelas.domain.exception.InternalGameException;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.CharacterCard;
-import org.saul.ciudadelas.domain.game.deck_cards.cards.DistrictCard;
-import org.saul.ciudadelas.domain.game.players.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +11,6 @@ public class Round {
     private List<Turn> turns;
     private int actualTurn;
     private List<RoundEvent> roundEvents;
-    private List<Long> districtsHabilityUsedThisRound;
 
 
     private Round(List<Turn> turns) {
@@ -25,7 +22,6 @@ public class Round {
         round.actualTurn = 0;
         round.turns.getFirst().startTurn();
         round.roundEvents = new ArrayList<>();
-        round.districtsHabilityUsedThisRound = new ArrayList<>();
 
         return round;
     }
@@ -36,8 +32,6 @@ public class Round {
         roundEvents.add(roundEvent);
     }
 
-
-
     public Turn getActualTurn(){
         if (turns.isEmpty()) throw new InternalGameException("Tienen que haber turnos");
         return turns.get(actualTurn);
@@ -47,24 +41,29 @@ public class Round {
         return actualTurn == (turns.size() -1);
     }
 
-    public boolean nextTurn(){
+    public void nextTurn(Game game){
         turns.get(actualTurn).endTurn();
-        if (isLastTurn()) return false;
         actualTurn++;
-        turns.get(actualTurn).startTurn();
+        startTurn(game);
         // Enviar evento al front de nuevo turno
-        turns.get(actualTurn).executeDistrictsHabilitiesAtTurnStart();
-        trigerEvents();
-        return true;
     }
 
-    private void trigerEvents() {
-        if (roundEvents == null || roundEvents.isEmpty()) return; // Arreglar
+    private void startTurn(Game game) {
+        getActualTurn().startTurn();
+        trigerTurnEvents(game);
+        getActualTurn().executeDistrictsHabilitiesAtTurnStart(game);
+    }
+
+    public void trigerTurnEvents(Game game) {
+        if (roundEvents == null || roundEvents.isEmpty()) return;
         Long characterId = getActualTurn().getCharacterId();
         roundEvents.stream()
         .filter(event -> event.getCharacterTrigger().equals(characterId))
-                .forEach(RoundEvent::trigerEvent); //Lanzar el evento de nuevo evento;
+        .forEach(event -> event.trigerEvent(game));
+        ; //Lanzar el evento de nuevo evento;
     }
+
+
 
     public void skipCharacterTurn(Long characterCardId) {
         Turn turn = getActualTurn();
@@ -94,6 +93,13 @@ public class Round {
         return turnOptional.map(Turn::getCharacter).orElse(null);
     }
 
+    public int getDistrictsBuiltThisTurn() {
+        return getActualTurn().getDistrictsBuiltThisTurn();
+    }
+
+    public void incrementDistrictsBuiltThisTurn() {
+        getActualTurn().incrementDistrictsBuiltThisTurn();
+    }
 
 
     @Override
@@ -105,18 +111,11 @@ public class Round {
                 '}';
     }
 
-    public int getDistrictsBuiltThisTurn() {
-        return getActualTurn().getDistrictsBuiltThisTurn();
+    public void playerAddCoins(Long turnPlayerGold) {
+        getActualTurn().playerAddCoins(turnPlayerGold);
     }
 
-    public void incrementDistrictsBuiltThisTurn() {
-        getActualTurn().incrementDistrictsBuiltThisTurn();
+    public void playerAddDistrictCard(Game game,Integer turnDistrictCardPlayer) {
+        getActualTurn().playerAddDistrictCard(game,turnDistrictCardPlayer);
     }
-
-
-    public void addDistrictUsedThisRound(Long districtCardId) {
-        districtsHabilityUsedThisRound.add(districtCardId);
-    }
-
-
 }

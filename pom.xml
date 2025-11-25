@@ -11,6 +11,7 @@
     <modules>
         <module>domain</module>
         <module>boot</module>
+        <module>out</module>
     </modules>
 
     <properties>

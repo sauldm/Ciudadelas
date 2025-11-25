@@ -89,4 +89,14 @@ public class DeckCards<T extends Card> {
                 .filter(card -> card.getColor().equals(color))
                 .count();
     }
+
+    public List<T> findCardWithInstance(Class<StartTurnEpicCard> startTurnEpicCardClass) {
+        List<T> result = new ArrayList<>();
+        for (T card : cards) {
+            if (startTurnEpicCardClass.isInstance(card)) {
+                result.add(card);
+            }
+        }
+        return result;
+    }
 }

@@ -22,8 +22,8 @@ public class ThiefActionCard extends CharacterCard implements OtherPlayerActionC
         if (game.getActualRound().getActualTurn().getPlayer() == game.findPlayerByCharacterId(characterCardId)) throw new InternalGameException("El jugador no puede elegirse a si mismo");
         if (game.characterIsNotInRound(characterCardId)) return; // Enviar evento al front, no esta el personaje en la ronda
         if (characterRobbed.getClass().equals(AssassinActionCard.class)) throw new ExpectedGameError("La carta no puede ser un asesino");
-        RoundEvent event = new RoundEvent(characterCardId, () -> {
-            game.stoleCharacterGold(characterRobbed,this);
+        RoundEvent event = new RoundEvent(characterCardId, (actualGame) -> {
+            actualGame.stoleCharacterGold(characterRobbed,this);
         });
         game.getActualRound().getActualTurn().characterHabilityUsed();
         game.addRoundEvent(event);

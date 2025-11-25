@@ -2,6 +2,7 @@ package org.saul.ciudadelas.domain.game.players;
 
 import org.saul.ciudadelas.domain.game.deck_cards.Color;
 import org.saul.ciudadelas.domain.game.deck_cards.DeckCards;
+import org.saul.ciudadelas.domain.game.deck_cards.StartTurnEpicCard;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.CharacterCard;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.DistrictCard;
 
@@ -50,6 +51,10 @@ public class Player{
 
     }
 
+    public void addGold(Long quantity){
+        gold += quantity;
+    }
+
     public void addDistrictCardsInHand(List<DistrictCard> districtCards){
         districtDeckCardsInHand.addCards(districtCards);
     }
@@ -58,9 +63,6 @@ public class Player{
         return districtDeckCardsInHand.getAllCards();
     }
 
-    public void addGold(Long quantity){
-        gold += quantity;
-    }
 
     public void addCharacterCard(CharacterCard characterCard){
         this.characterCards.addCard(characterCard);
@@ -131,5 +133,10 @@ public class Player{
 
     public void addPoints(int i) {
         points += i;
+    }
+
+    public List<DistrictCard> findDistrictsWithHabilityAtTurnStart() {
+        return districtDeckCardsInHand.findCardWithInstance(StartTurnEpicCard.class);
+
     }
 }

@@ -113,9 +113,13 @@ public class Turn implements Comparable<Turn>{
         districtsBuiltThisTurn++;
     }
 
-    public void executeDistrictsHabilitiesAtTurnStart() {
-
-        //Acabar
+    public void executeDistrictsHabilitiesAtTurnStart(Game game) {
+        if(player.findDistrictsWithHabilityAtTurnStart().isEmpty()) return; //Enviar evento al frontend
+        player.findDistrictsWithHabilityAtTurnStart().forEach(districtCard -> {
+            if (districtUsed(districtCard.getId())) return; //Enviar evento al frontend
+            districtCard.executeDistrictAbility(game, player);
+            addDistrictUsedThisRound(districtCard.getId());
+        });
     }
 
     public void executeDistrictAbility(Game game, Long districtCardId) {
@@ -132,4 +136,11 @@ public class Turn implements Comparable<Turn>{
         addDistrictUsedThisRound(districtCardId);
     }
 
+    public void playerAddCoins(Long turnPlayerGold) {
+        player.addGold(turnPlayerGold);
+    }
+
+    public void playerAddDistrictCard(Game game,Integer turnDistrictCardPlayer) {
+        player.addDistrictCardsInHand(game.getDistrictCards(turnDistrictCardPlayer));
+    }
 }

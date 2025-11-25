@@ -68,7 +68,7 @@ public class Main {
 
 
 
-        for (int i = 5; i < 19; i++) {
+        /*for (int i = 5; i < 19; i++) {
             System.out.println(i + "" + game.getActualRound().getActualTurn());
 
             if (game.findPlayerByDistrictCardIdHand(0L) !=null){
@@ -87,6 +87,6 @@ public class Main {
             }
             game.getActualRound().getActualTurn().endTurn();
             game.nextStep();
-        }
+        }*/
     }
 }

@@ -9,9 +9,9 @@ import java.util.function.Function;
 public class RoundEvent {
 
     private Long characterTrigger;
-    private Runnable eventEffect;
+    private Consumer<Game> eventEffect;
 
-    public RoundEvent(Long characterTrigger, Runnable eventEffect) {
+    public RoundEvent(Long characterTrigger, Consumer<Game> eventEffect) {
         this.characterTrigger = characterTrigger;
         this.eventEffect = eventEffect;
     }
@@ -20,8 +20,8 @@ public class RoundEvent {
         return characterTrigger;
     }
 
-    public void trigerEvent() {
-        eventEffect.run();
+    public void trigerEvent(Game game) {
+        eventEffect.accept(game);
 
     }
 
