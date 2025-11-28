@@ -2,7 +2,7 @@ package org.saul.ciudadelas.domain.game;
 
 import org.saul.ciudadelas.domain.exception.InternalGameException;
 import org.saul.ciudadelas.domain.game.deck_cards.DeckCards;
-import org.saul.ciudadelas.domain.game.deck_cards.actions.WizardActionCard;
+import org.saul.ciudadelas.domain.game.deck_cards.actions.*;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.CharacterCard;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.DistrictCard;
 import org.saul.ciudadelas.domain.game.players.Player;
@@ -19,21 +19,47 @@ public class Game {
     private final DeckCards<CharacterCard> deckCharacterCards;
     private List<Round> rounds;
     private List<RoundEvent> specialRoundEvents;
+    private Turn turnSkipped;
+
 
     private Game(DeckCards<DistrictCard> deckDistrictCards, List<Player> players, DeckCards<CharacterCard> deckCharacterCards) {
         this.deckDistrictCards = deckDistrictCards;
         this.players = players;
         this.deckCharacterCards = deckCharacterCards;
         this.rounds = new ArrayList<>();
+        this.specialRoundEvents = new ArrayList<>();
+        this.turnSkipped = null;
 
 
     }
 
-    public static Game initializeNewGame(DeckCards<DistrictCard> deckDistrictCards, List<Player> players, DeckCards<CharacterCard> deckCharacterCards) {
+    public static Game initializeNewGame(DeckCards<DistrictCard> deckDistrictCards, List<Player> players) {
+        DeckCards<CharacterCard> deckCharacterCards = getAllCharacterCardsForGame();
         Game game = new Game(deckDistrictCards, players, deckCharacterCards);
         game.players.forEach(player -> player.addDistrictCardsInHand(deckDistrictCards.getCard(DISTRICT_CARDS_PER_PLAYER)));
         game.addRound();
         return game;
+    }
+
+    private static DeckCards<CharacterCard> getAllCharacterCardsForGame() {
+        DeckCards<CharacterCard> deckCharacterCards = new DeckCards<>();
+        deckCharacterCards.addCards(List.of(
+                new AssassinActionCard(),
+                new ThiefActionCard(),
+                new WizardActionCard(),
+                new KingActionCard(),
+                new BishopActionCard(),
+                new MerchantActionCard(),
+                new ArchitectActionCard(),
+                new MilitaryActionCard()
+        ));
+        return deckCharacterCards;
+    }
+
+    public void addTurnSkipped(Long characterId){
+        if (characterId == null) throw new InternalGameException("La carta no puede ser nula");
+        this.turnSkipped = getActualRound().getTurnByCharacter(characterId);
+
     }
 
     public List<DistrictCard> getDistrictCards(int numberOfCards) {
@@ -139,7 +165,7 @@ public class Game {
     }
 
     public void executePlayerCharacterAbility(Long characterCardActionId, Long targetId) {
-        if (!characterIsTurnCharacter(characterCardActionId)) throw new InternalGameException("No es el turno de ese personaje");
+        if (!isTurnCharacter(characterCardActionId)) throw new InternalGameException("No es el turno de ese personaje");
         getActualRound().getActualTurn().executeCharacterHability(this, characterCardActionId, targetId);
     }
 
@@ -222,7 +248,7 @@ public class Game {
         return characterCard;
     }
     public void buildDistrictCard(Long districtCardId, Long characterCardId) {
-        if (!characterIsTurnCharacter(characterCardId)) throw new InternalGameException("No es el turno de ese personaje");
+        if (!isTurnCharacter(characterCardId)) throw new InternalGameException("No es el turno de ese personaje");
 
         CharacterCard characterCard = findCharacterCardById(characterCardId);
         if (characterCard == null) throw new InternalGameException("La carta no puede ser nula");
@@ -238,12 +264,13 @@ public class Game {
             return; //Enviar evento al frontend
         }
 
+
         player.removeGold(districtCard.getPrice());
         player.buildDistrictCard(player.getDistrictCardFromHand(districtCardId));
         getActualRound().incrementDistrictsBuiltThisTurn();
     }
 
-    public boolean characterIsTurnCharacter(Long characterCardId){
+    public boolean isTurnCharacter(Long characterCardId){
         return getActualRound().getActualTurn().getCharacterId().equals(characterCardId);
     }
 

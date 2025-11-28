@@ -1,9 +1,12 @@
 package out.dto;
 
-import org.saul.ciudadelas.domain.game.deck_cards.DeckCards;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
+@Getter
+@Setter
 public class PlayerCommonInfoDTO {
     private Long gold;
     private List<CardDTO> districtsBuilt;

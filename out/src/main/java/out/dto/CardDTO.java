@@ -1,5 +1,10 @@
 package out.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class CardDTO {
     private Long gold;
     private String name;

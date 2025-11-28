@@ -2,6 +2,7 @@ package org.saul.ciudadelas.domain.game;
 
 import org.saul.ciudadelas.domain.exception.InternalGameException;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.CharacterCard;
+import org.saul.ciudadelas.domain.game.players.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,15 +61,16 @@ public class Round {
         roundEvents.stream()
         .filter(event -> event.getCharacterTrigger().equals(characterId))
         .forEach(event -> event.trigerEvent(game));
+        roundEvents.removeIf(e -> e.getCharacterTrigger().equals(characterId));
+
         ; //Lanzar el evento de nuevo evento;
     }
 
 
 
     public void skipCharacterTurn(Long characterCardId) {
-        Turn turn = getActualTurn();
+        Turn turn = getTurnByCharacter(characterCardId);
         turn.endTurn();
-        System.out.println("Se ha saltado el turno del personaje: " + characterCardId);
     }
 
     public boolean characterIsNotInRound(Long characterCardId){
