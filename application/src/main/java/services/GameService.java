@@ -1,6 +1,5 @@
 package services;
 
-import org.saul.ciudadelas.domain.game.Events;
 import org.saul.ciudadelas.domain.game.Game;
 import org.saul.ciudadelas.domain.game.deck_cards.DeckCards;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.DistrictCard;
@@ -10,69 +9,65 @@ import org.saul.ciudadelas.ports.CardRepositoryPort;
 import org.saul.ciudadelas.ports.PlayerRepositoryPort;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class GameService {
     private final CardRepositoryPort cardRepositoryPort;
     private final PlayerRepositoryPort playerRepositoryPort;
-    private Game game;
-    private List<Events> gameEvents;
+    private Map<Long,Game> games;
 
     public GameService(CardRepositoryPort cardRepositoryPort, PlayerRepositoryPort playerRepositoryPort) {
         this.cardRepositoryPort = cardRepositoryPort;
         this.playerRepositoryPort = playerRepositoryPort;
     }
 
-    public Game startGame(Long id) {
+
+
+    public Game startGame(Long id, List<Player> players) {
         DeckCards<DistrictCard> allDistrictCards = cardRepositoryPort.findAllCards();
-        List<Player> players = playerRepositoryPort.findAllPlayers();
-        this.game = Game.initializeNewGame(id,allDistrictCards, players);
-        processGameEvents();
+        Game game =  Game.initializeNewGame(id,allDistrictCards, players);
+        games.put(id, game);
         return game;
     }
 
-    public Long getCharacterTurn(){
-        return game.getActualRound().getActualTurn().getCharacterId();
+    public Game getGame(Long id) {
+        return games.get(id);
     }
 
-    public Long nextStep(){
+    public void deleteGame(Long id) {
+        games.remove(id);
+    }
+
+    public Long getCharacterTurn(Long id){
+        return getGame(id).getActualRound().getActualTurn().getCharacterId();
+    }
+
+    public Long nextStep(Long id){
+        Game game = getGame(id);
         game.nextStep();
-        processGameEvents();
         return game.getActualRound().getActualTurn().getCharacterId();
     }
 
-    public void executePlayerCharacterAbility(Long characterCardActionId, Long targetId) {
-        game.executePlayerCharacterAbility(characterCardActionId,targetId);
-        processGameEvents();
+    public void executePlayerCharacterAbility(Long id,Long characterCardActionId, Long targetId) {
+        getGame(id).executePlayerCharacterAbility(characterCardActionId,targetId);
 
     }
 
-    public void executePlayerDistrictAbility(Long districtCardActionId) {
-        game.executeDistrictAbility(districtCardActionId);
-        processGameEvents();
+    public void executePlayerDistrictAbility(Long id,Long districtCardActionId) {
+        getGame(id).executeDistrictAbility(districtCardActionId);
+    }
+
+    public void buildDistrict(Long id,Long districtCardId, Long characterCardId) {
+        getGame(id).buildDistrictCard(districtCardId, characterCardId);
+    }
+
+    public void playerChooseCoins(Long id){
+        getGame(id).characterChooseCoins();
 
     }
 
-    public void buildDistrict(Long districtCardId, Long characterCardId) {
-        game.buildDistrictCard(districtCardId, characterCardId);
-        processGameEvents();
-
-
-    }
-
-    public void playerChooseCoins(){
-        game.characterChooseCoins();
-        processGameEvents();
-
-    }
-
-    public void playerChooseCards(){
-        game.characterChooseCards();
-        processGameEvents();
-
-    }
-
-    private void processGameEvents() {
-        this.gameEvents = game.getEventsBuffer();
+    public void playerChooseCards(Long id){
+        getGame(id).characterChooseCards();
     }
 }

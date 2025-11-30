@@ -4,45 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cf085e23-fed8-43c1-b33c-d4b15dc4cf36" name="Changes" comment="GameService">
-      <change afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/GameEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/Events.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/ports/EventsOutPort.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/in/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/in/src/main/java/in/dto/CardDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/in/src/main/java/in/dto/GameCommonInfoDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/in/src/main/java/in/dto/PlayerCommonInfoDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/in/src/main/java/in/ws/ChatController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/in/src/main/java/in/ws/WebSocketAdapter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/in/src/main/java/in/ws/WebSocketConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/copilot.data.migration.agent.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/copilot.data.migration.ask.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/copilot.data.migration.ask2agent.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/copilot.data.migration.edit.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/application/pom.xml" afterDir="false" />
+    <list default="true" id="cf085e23-fed8-43c1-b33c-d4b15dc4cf36" name="Changes" comment="Estructura">
+      <change afterPath="$PROJECT_DIR$/application/src/main/java/services/LobbyService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/lobby/Lobby.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/ports/LobbyRepositoryPort.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/in/src/main/java/in/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/application/src/main/java/services/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/application/src/main/java/services/GameService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/GameConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/GameConstants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/deck_cards/DeckCards.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/deck_cards/DeckCards.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/players/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/players/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/src/main/java/out/dto/CardDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/src/main/java/out/dto/GameCommonInfoDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/src/main/java/out/dto/PlayerCommonInfoDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/src/main/java/out/respositories/GameMO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/src/main/java/out/respositories/GameRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/port/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/port/src/main/java/ports/CardRepositoryPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/ports/CardRepositoryPort.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/port/src/main/java/ports/PlayerRepositoryPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/ports/PlayerRepositoryPort.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/port/src/main/resources/META-INF/maven/archetype.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/port/src/main/resources/archetype-resources/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/port/src/main/resources/archetype-resources/src/main/java/App.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/port/src/main/resources/archetype-resources/src/test/java/AppTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/in/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/in/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/in/src/main/java/in/ws/WebSocketConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/in/src/main/java/in/ws/WebSocketConfig.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,8 +24,8 @@
       <list>
         <option value="Exception" />
         <option value="Enum" />
-        <option value="Interface" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -85,30 +55,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Main.executor": "Run",
-    "JUnit.GameTest.gameTest.executor": "Run",
-    "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
-    "Maven.Ciudadelas [clean,install].executor": "Run",
-    "Maven.Ciudadelas [install].executor": "Run",
-    "Maven.domain [install].executor": "Run",
-    "Maven.out [clean,install].executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/domin/Desktop/Ciudadelas",
-    "onboarding.tips.debug.path": "C:/Users/domin/Desktop/Ciudadelas/src/main/java/org/example/Main.java",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "MavenSettings"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.GameTest.gameTest.executor&quot;: &quot;Run&quot;,
+    &quot;Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Ciudadelas [clean,install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Ciudadelas [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.domain [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.out [clean,install].executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/domin/Desktop/Ciudadelas&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/domin/Desktop/Ciudadelas/src/main/java/org/example/Main.java&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\domin\Desktop\Ciudadelas" />
@@ -384,7 +354,23 @@
       <option name="project" value="LOCAL" />
       <updated>1764354685955</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="Estructura">
+      <option name="closed" value="true" />
+      <created>1764509779290</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1764509779290</updated>
+    </task>
+    <task id="LOCAL-00029" summary="Estructura">
+      <option name="closed" value="true" />
+      <created>1764513800898</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1764513800898</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -411,7 +397,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Proyecto empezado" />
     <MESSAGE value="Creación de paquete cards" />
     <MESSAGE value="creacion de constructores de game y player" />
     <MESSAGE value="Creacion de la clase Turn" />
@@ -436,7 +421,8 @@
     <MESSAGE value="Atrtibuto points en distritos y ejecutar habilidad de distritos opcionales" />
     <MESSAGE value="Creación dto" />
     <MESSAGE value="GameService" />
-    <option name="LAST_COMMIT_MESSAGE" value="GameService" />
+    <MESSAGE value="Estructura" />
+    <option name="LAST_COMMIT_MESSAGE" value="Estructura" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
