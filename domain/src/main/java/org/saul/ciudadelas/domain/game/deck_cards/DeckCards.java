@@ -99,4 +99,8 @@ public class DeckCards<T extends Card> {
         }
         return result;
     }
+
+    public int size() {
+        return cards.size();
+    }
 }

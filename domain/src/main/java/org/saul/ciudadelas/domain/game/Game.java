@@ -14,15 +14,18 @@ import java.util.List;
 import static org.saul.ciudadelas.domain.game.GameConstants.*;
 
 public class Game {
+    private final Long id;
     private final DeckCards<DistrictCard> deckDistrictCards;
     private final List<Player> players;
     private final DeckCards<CharacterCard> deckCharacterCards;
     private List<Round> rounds;
     private List<RoundEvent> specialRoundEvents;
     private Turn turnSkipped;
+    private List<Events> eventBuffer;
 
 
-    private Game(DeckCards<DistrictCard> deckDistrictCards, List<Player> players, DeckCards<CharacterCard> deckCharacterCards) {
+    private Game(Long id, DeckCards<DistrictCard> deckDistrictCards, List<Player> players, DeckCards<CharacterCard> deckCharacterCards) {
+        this.id = id;
         this.deckDistrictCards = deckDistrictCards;
         this.players = players;
         this.deckCharacterCards = deckCharacterCards;
@@ -33,9 +36,9 @@ public class Game {
 
     }
 
-    public static Game initializeNewGame(DeckCards<DistrictCard> deckDistrictCards, List<Player> players) {
+    public static Game initializeNewGame(Long id,DeckCards<DistrictCard> deckDistrictCards, List<Player> players) {
         DeckCards<CharacterCard> deckCharacterCards = getAllCharacterCardsForGame();
-        Game game = new Game(deckDistrictCards, players, deckCharacterCards);
+        Game game = new Game(id,deckDistrictCards, players, deckCharacterCards);
         game.players.forEach(player -> player.addDistrictCardsInHand(deckDistrictCards.getCard(DISTRICT_CARDS_PER_PLAYER)));
         game.addRound();
         return game;
@@ -62,16 +65,21 @@ public class Game {
 
     }
 
+    public Long getTurnSkippedCharacterId(){
+        if (this.turnSkipped == null) return null;
+        return this.turnSkipped.getCharacterId();
+    }
+
     public List<DistrictCard> getDistrictCards(int numberOfCards) {
         return deckDistrictCards.getCard(numberOfCards);
     }
 
-    public void addRound() {
+    private void addRound() {
         // Enviar evento de nueva ronda
         rounds.add(Round.initializeRound(getNewTurns()));
     }
 
-    public List<Turn> getNewTurns() {
+    private List<Turn> getNewTurns() {
         List<Turn> turns = new ArrayList<>();
         CharacterCard randomCharacterCard;
         for (Player player : players) {
@@ -100,11 +108,13 @@ public class Game {
         if (!getActualRound().getTurnByCharacter(characterRobed.getId()).canPlayerPlay())
             return // Enviar evento de que el jugador esta asesinado;
                     ;
+        eventBuffer.add(Events.CHARACTER_CARD_STEALED);
         playerThief.addGold(playerRobed.getAllGold());
     }
 
     public void stopCharacterPlaying(Long characterCardId) {
         if (characterCardId == null) throw new InternalGameException("La carta no puede ser nula");
+        eventBuffer.add(Events.CHARACTER_CARD_ELIMINATED);
         getActualRound().skipCharacterTurn(characterCardId);
     }
 
@@ -118,19 +128,24 @@ public class Game {
             System.out.println("No se puede pasar de turno, el turno actual no ha finalizado");
             return;
         }
+        if (getActualRound().getActualTurn().getPlayer().districtCardsBuilt() >= MAX_DISTRICTS_TO_BUILD_GAME) {
+            eventBuffer.add(Events.GAME_ENDED);
+            return;
+        }
         if (getActualRound().isLastTurn()) {
             clearPlayerCharacterCards();
             addRound();
+            eventBuffer.add(Events.NEXT_ROUND);
+            return;
         }
         getActualRound().nextTurn(this);
-
+        eventBuffer.add(Events.NEXT_TURN);
     }
 
     public void clearPlayerCharacterCards(){
         for (Player player : players) {
             deckCharacterCards.addCards(player.clearCharacterCards());
         }
-
     }
 
     public Player findPlayerByCharacterId(Long characterCardId) {
@@ -153,13 +168,11 @@ public class Game {
         if (actualPlayer == null) throw new InternalGameException("El jugador no puede ser nulo");
         if (targetPlayer == null) throw new InternalGameException("El jugador objetivo no puede ser nulo");
         if (actualPlayer == targetPlayer) throw new InternalGameException("El jugador no puede elegirse a si mismo");
+
         List<DistrictCard> tempHand = new ArrayList<>(targetPlayer.getAllDistrictCardsInHand());
-        System.out.println("tempHand: " + tempHand);
-        System.out.println("1"+targetPlayer.districtCardDeckCards()+"    " + actualPlayer.districtCardDeckCards());
+        eventBuffer.add(Events.HANDS_SWAPPED);
         targetPlayer.addDistrictCardsInHand(actualPlayer.getAllDistrictCardsInHand());
         actualPlayer.addDistrictCardsInHand(tempHand);
-        System.out.println(targetPlayer.districtCardDeckCards()+"    " + actualPlayer.districtCardDeckCards());
-
 
         getActualRound().getActualTurn().characterHabilityUsed();
     }
@@ -172,8 +185,6 @@ public class Game {
     public void executeDistrictAbility(Long districtCardId){
         if (districtCardId == null) throw new InternalGameException("La carta no puede ser nula");
         getActualRound().getActualTurn().executeDistrictAbility(this, districtCardId);
-
-
     }
 
     public void destroyDistrictOfOtherPlayer(Long districtCardId, CharacterCard actualCharacter) {
@@ -204,6 +215,7 @@ public class Game {
             return; //Enviar evento al frontend
         }
 
+        eventBuffer.add(Events.DISTRICT_CARD_DESTROYED);
         actualPlayer.removeGold(districtCard.getPrice()+1);
         this.deckDistrictCards.addCard(playerTarget.getDistrictCardBuilt(districtCardId));
         getActualRound().getActualTurn().characterHabilityUsed();
@@ -214,15 +226,6 @@ public class Game {
         if (districtCardId == null) throw new InternalGameException("La carta no puede ser nula");
         for (Player player : players) {
             if (player.findDistrictCardBuilt(districtCardId) != null) return player;
-        }
-        return null;
-    }
-
-
-    public Player findPlayerByDistrictCardIdHand(Long districtCardId) {
-        if (districtCardId == null) throw new InternalGameException("La carta no puede ser nula");
-        for (Player player : players) {
-            if (player.findDistrictCardInHand(districtCardId) != null) return player;
         }
         return null;
     }
@@ -282,5 +285,11 @@ public class Game {
 
     public void characterChooseCards(){
         getActualRound().playerAddDistrictCard(this,TURN_DISTRICT_CARD_PLAYER);
+    }
+
+    public List<Events> getEventsBuffer() {
+        List<Events> events = new ArrayList<>(this.eventBuffer);
+        this.eventBuffer.clear();
+        return events;
     }
 }

@@ -1,4 +1,4 @@
-package ports;
+package org.saul.ciudadelas.ports;
 
 import org.saul.ciudadelas.domain.game.players.Player;
 

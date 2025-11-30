@@ -1,4 +1,4 @@
-package out.dto;
+package in.dto;
 
 import lombok.Getter;
 import lombok.Setter;

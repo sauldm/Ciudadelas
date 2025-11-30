@@ -139,4 +139,8 @@ public class Player{
         return districtDeckCardsInHand.findCardWithInstance(StartTurnEpicCard.class);
 
     }
+
+    public int districtCardsBuilt() {
+        return districtDeckCardsBuilt.size();
+    }
 }

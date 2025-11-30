@@ -11,10 +11,14 @@
         <relativePath/>
     </parent>
 
-    <artifactId>out</artifactId>
-    <name>Archetype - out</name>
+    <artifactId>in</artifactId>
+    <name>Archetype - in</name>
 
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
 
         <!-- Dependencia hacia el módulo domain -->
         <dependency>

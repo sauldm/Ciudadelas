@@ -11,9 +11,8 @@
     <modules>
         <module>domain</module>
         <module>boot</module>
-        <module>out</module>
+        <module>in</module>
         <module>application</module>
-        <module>port</module>
     </modules>
 
     <properties>
