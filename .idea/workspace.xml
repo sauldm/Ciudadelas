@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="cf085e23-fed8-43c1-b33c-d4b15dc4cf36" name="Changes" comment="GameService">
+      <change afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/GameEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/Events.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/ports/EventsOutPort.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/in/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/in/src/main/java/in/dto/CardDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/in/src/main/java/in/dto/GameCommonInfoDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/in/src/main/java/in/dto/PlayerCommonInfoDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/in/src/main/java/in/ws/ChatController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/in/src/main/java/in/ws/WebSocketAdapter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/in/src/main/java/in/ws/WebSocketConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/copilot.data.migration.agent.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/copilot.data.migration.ask.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/copilot.data.migration.ask2agent.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/copilot.data.migration.edit.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/application/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/src/main/java/services/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/application/src/main/java/services/GameService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/GameConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/GameConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/deck_cards/DeckCards.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/deck_cards/DeckCards.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/players/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/players/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/src/main/java/out/dto/CardDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/src/main/java/out/dto/GameCommonInfoDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/src/main/java/out/dto/PlayerCommonInfoDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/src/main/java/out/respositories/GameMO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/src/main/java/out/respositories/GameRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/port/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/port/src/main/java/ports/CardRepositoryPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/ports/CardRepositoryPort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/port/src/main/java/ports/PlayerRepositoryPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/ports/PlayerRepositoryPort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/port/src/main/resources/META-INF/maven/archetype.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/port/src/main/resources/archetype-resources/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/port/src/main/resources/archetype-resources/src/main/java/App.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/port/src/main/resources/archetype-resources/src/test/java/AppTest.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Exception" />
+        <option value="Enum" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;sauldm&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/sauldm/Ciudadelas.git&quot;,
+    &quot;accountId&quot;: &quot;f411529f-7aa8-4661-8d25-9c1997d3ad69&quot;
+  }
+}</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="DEPENDENCY_CHECKER_PROBLEMS_TAB" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="34Hr8oqPVGcJ2JKLmN2piCwMTnm" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Run",
+    "JUnit.GameTest.gameTest.executor": "Run",
+    "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
+    "Maven.Ciudadelas [clean,install].executor": "Run",
+    "Maven.Ciudadelas [install].executor": "Run",
+    "Maven.domain [install].executor": "Run",
+    "Maven.out [clean,install].executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/domin/Desktop/Ciudadelas",
+    "onboarding.tips.debug.path": "C:/Users/domin/Desktop/Ciudadelas/src/main/java/org/example/Main.java",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "MavenSettings"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\domin\Desktop\Ciudadelas" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.GameTest.gameTest">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="boot.Main" />
+      <module name="boot" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="boot.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GameTest.gameTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="boot" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="boot.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="boot" />
+      <option name="MAIN_CLASS_NAME" value="boot.GameTest" />
+      <option name="METHOD_NAME" value="gameTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <option name="filePath" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.GameTest.gameTest" />
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="cf085e23-fed8-43c1-b33c-d4b15dc4cf36" name="Changes" comment="" />
+      <created>1760881183815</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1760881183815</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Proyecto empezado">
+      <option name="closed" value="true" />
+      <created>1761060562034</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1761060562034</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Creación de paquete cards">
+      <option name="closed" value="true" />
+      <created>1761061273027</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1761061273027</updated>
+    </task>
+    <task id="LOCAL-00003" summary="creacion de constructores de game y player">
+      <option name="closed" value="true" />
+      <created>1761065750363</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1761065750363</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Creacion de la clase Turn">
+      <option name="closed" value="true" />
+      <created>1761083912375</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1761083912375</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Creacion de metodos para la eleccion de personajes">
+      <option name="closed" value="true" />
+      <created>1761086441109</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1761086441109</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Funcionamiento para quien tenga la carta del rey vaya primero en la eleccion de personaje">
+      <option name="closed" value="true" />
+      <created>1761169187725</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1761169187725</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Repartición de cartas al azar a cada jugador">
+      <option name="closed" value="true" />
+      <created>1761848152530</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1761848152530</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Creación carta ladron">
+      <option name="closed" value="true" />
+      <created>1762264115359</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1762264115359</updated>
+    </task>
+    <task id="LOCAL-00009" summary="creacion en game de la funcionalidad del personaje Ladron, falta en Round">
+      <option name="closed" value="true" />
+      <created>1762286261182</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1762286261182</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Turnos creados por cada CharacterCard que se añade a un jugador">
+      <option name="closed" value="true" />
+      <created>1762343896947</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1762343896947</updated>
+    </task>
+    <task id="LOCAL-00011" summary="getActualTurn y nextTurn">
+      <option name="closed" value="true" />
+      <created>1762452318413</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1762452318413</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Funciones de eventos">
+      <option name="closed" value="true" />
+      <created>1762790795164</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1762790795164</updated>
+    </task>
+    <task id="LOCAL-00013" summary="funciones de asesino y ladron">
+      <option name="closed" value="true" />
+      <created>1762798589354</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1762798589354</updated>
+    </task>
+    <task id="LOCAL-00014" summary="funcion de cambio de cartas de wizard">
+      <option name="closed" value="true" />
+      <created>1762861906018</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1762861906018</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Creacion de todas las cartas de personaje y funcionalidad de ejecutar las habilidades de personaje">
+      <option name="closed" value="true" />
+      <created>1762883069039</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1762883069039</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Arreglados las habilidades de los personajes asesino, ladron y mago">
+      <option name="closed" value="true" />
+      <created>1762934074606</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1762934074606</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Funcion del militar">
+      <option name="closed" value="true" />
+      <created>1762987025070</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1762987025070</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Resolver problema en player y execute">
+      <option name="closed" value="true" />
+      <created>1763425379058</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1763425379058</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Ahora todos los execute de personajes se pasaran por id">
+      <option name="closed" value="true" />
+      <created>1763498526310</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1763498526310</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Ahora todos los execute de personajes se pasaran por id">
+      <option name="closed" value="true" />
+      <created>1763499156862</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1763499156862</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Creación de colores, pagos al principio de ronda, cartas idnestructibles">
+      <option name="closed" value="true" />
+      <created>1763584840066</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1763584840066</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Creacion construir distritos">
+      <option name="closed" value="true" />
+      <created>1763641912589</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1763641912589</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Construir y destruir distritos acabado">
+      <option name="closed" value="true" />
+      <created>1763655984703</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1763655984703</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Atrtibuto points en distritos y ejecutar habilidad de distritos opcionales">
+      <option name="closed" value="true" />
+      <created>1763662857917</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1763662857917</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Creación dto">
+      <option name="closed" value="true" />
+      <created>1764087748699</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1764087748699</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Creación dto">
+      <option name="closed" value="true" />
+      <created>1764087762417</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1764087762417</updated>
+    </task>
+    <task id="LOCAL-00027" summary="GameService">
+      <option name="closed" value="true" />
+      <created>1764354685955</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1764354685955</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Proyecto empezado" />
+    <MESSAGE value="Creación de paquete cards" />
+    <MESSAGE value="creacion de constructores de game y player" />
+    <MESSAGE value="Creacion de la clase Turn" />
+    <MESSAGE value="Creacion de metodos para la eleccion de personajes" />
+    <MESSAGE value="Funcionamiento para quien tenga la carta del rey vaya primero en la eleccion de personaje" />
+    <MESSAGE value="Repartición de cartas al azar a cada jugador" />
+    <MESSAGE value="Creación carta ladron" />
+    <MESSAGE value="creacion en game de la funcionalidad del personaje Ladron, falta en Round" />
+    <MESSAGE value="Turnos creados por cada CharacterCard que se añade a un jugador" />
+    <MESSAGE value="getActualTurn y nextTurn" />
+    <MESSAGE value="Funciones de eventos" />
+    <MESSAGE value="funciones de asesino y ladron" />
+    <MESSAGE value="funcion de cambio de cartas de wizard" />
+    <MESSAGE value="Creacion de todas las cartas de personaje y funcionalidad de ejecutar las habilidades de personaje" />
+    <MESSAGE value="Arreglados las habilidades de los personajes asesino, ladron y mago" />
+    <MESSAGE value="Funcion del militar" />
+    <MESSAGE value="Resolver problema en player y execute" />
+    <MESSAGE value="Ahora todos los execute de personajes se pasaran por id" />
+    <MESSAGE value="Creación de colores, pagos al principio de ronda, cartas idnestructibles" />
+    <MESSAGE value="Creacion construir distritos" />
+    <MESSAGE value="Construir y destruir distritos acabado" />
+    <MESSAGE value="Atrtibuto points en distritos y ejecutar habilidad de distritos opcionales" />
+    <MESSAGE value="Creación dto" />
+    <MESSAGE value="GameService" />
+    <option name="LAST_COMMIT_MESSAGE" value="GameService" />
+  </component>
+  <component name="github-copilot-workspace">
+    <instructionFileLocations>
+      <option value=".github/instructions" />
+    </instructionFileLocations>
+    <promptFileLocations>
+      <option value=".github/prompts" />
+    </promptFileLocations>
+  </component>
+</project>
