@@ -11,7 +11,7 @@ import java.util.List;
 import static org.saul.ciudadelas.domain.game.GameConstants.INITIAL_PLAYER_GOLD;
 
 public class Player{
-    private final Long id;
+    private Long id;
     private final String nickName;
     private final DeckCards<DistrictCard> districtDeckCardsInHand = new DeckCards<>();
     private DeckCards<DistrictCard> districtDeckCardsBuilt;
@@ -19,8 +19,7 @@ public class Player{
     private Long gold;
     private int points;
 
-    public Player(Long id, String nickName) {
-        this.id = id;
+    public Player(String nickName) {
         this.nickName = nickName;
         this.gold = INITIAL_PLAYER_GOLD;
         this.points = 0;

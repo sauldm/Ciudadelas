@@ -14,12 +14,10 @@ import java.util.Map;
 @Service
 public class GameService {
     private final CardRepositoryPort cardRepositoryPort;
-    private final PlayerRepositoryPort playerRepositoryPort;
     private Map<Long,Game> games;
 
-    public GameService(CardRepositoryPort cardRepositoryPort, PlayerRepositoryPort playerRepositoryPort) {
+    public GameService(CardRepositoryPort cardRepositoryPort) {
         this.cardRepositoryPort = cardRepositoryPort;
-        this.playerRepositoryPort = playerRepositoryPort;
     }
 
 

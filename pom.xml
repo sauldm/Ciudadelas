@@ -13,6 +13,7 @@
         <module>boot</module>
         <module>in</module>
         <module>application</module>
+        <module>out</module>
     </modules>
 
     <properties>

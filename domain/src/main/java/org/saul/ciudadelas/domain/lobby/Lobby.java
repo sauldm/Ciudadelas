@@ -11,6 +11,10 @@ public class Lobby {
     private UUID id;
     private List<Player> players = new ArrayList<>();
 
+    public Lobby(UUID lobbyId) {
+        this.id = lobbyId;
+    }
+
     public void addPlayer(Player player) {
         if (!arePlayersCompleted())
             players.add(player);

@@ -39,9 +39,18 @@ public class Game {
     public static Game initializeNewGame(Long id,DeckCards<DistrictCard> deckDistrictCards, List<Player> players) {
         DeckCards<CharacterCard> deckCharacterCards = getAllCharacterCardsForGame();
         Game game = new Game(id,deckDistrictCards, players, deckCharacterCards);
+        game.deckDistrictCards.addCards(getAllEpicDistrictCards(deckDistrictCards.size()));
         game.players.forEach(player -> player.addDistrictCardsInHand(deckDistrictCards.getCard(DISTRICT_CARDS_PER_PLAYER)));
         game.addRound();
         return game;
+    }
+
+    private static List<DistrictCard> getAllEpicDistrictCards(int existingDistrictCardsCount) {
+        Long startingId = existingDistrictCardsCount + 1L;
+        List<DistrictCard> epicDistrictCards = new ArrayList<>();
+        epicDistrictCards.add(new TakeThreeActionCard(startingId));
+        //startingId ++;
+        return epicDistrictCards;
     }
 
     private static DeckCards<CharacterCard> getAllCharacterCardsForGame() {

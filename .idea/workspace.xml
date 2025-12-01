@@ -4,15 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cf085e23-fed8-43c1-b33c-d4b15dc4cf36" name="Changes" comment="Estructura">
-      <change afterPath="$PROJECT_DIR$/application/src/main/java/services/LobbyService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/lobby/Lobby.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/ports/LobbyRepositoryPort.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/in/src/main/java/in/GameController.java" afterDir="false" />
+    <list default="true" id="cf085e23-fed8-43c1-b33c-d4b15dc4cf36" name="Changes" comment="Lobby">
+      <change afterPath="$PROJECT_DIR$/application/src/main/java/services/PlayerService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/in/src/main/java/in/dto/PlayerPrivateInfoDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/src/main/resources/META-INF/maven/archetype.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/src/main/resources/archetype-resources/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/src/main/resources/archetype-resources/src/main/java/App.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/src/main/resources/archetype-resources/src/test/java/AppTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/application/src/main/java/services/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/application/src/main/java/services/GameService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/in/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/in/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/in/src/main/java/in/ws/WebSocketConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/in/src/main/java/in/ws/WebSocketConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/src/main/java/services/LobbyService.java" beforeDir="false" afterPath="$PROJECT_DIR$/application/src/main/java/services/LobbyService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/players/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/players/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/lobby/Lobby.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/lobby/Lobby.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/ports/LobbyRepositoryPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/ports/LobbyRepositoryPort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/ports/PlayerRepositoryPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/ports/PlayerRepositoryPort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/in/src/main/java/in/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/in/src/main/java/in/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/in/src/main/java/in/dto/PlayerCommonInfoDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/in/src/main/java/in/dto/PlayerCommonInfoDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,8 +35,8 @@
       <list>
         <option value="Exception" />
         <option value="Enum" />
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -370,7 +381,15 @@
       <option name="project" value="LOCAL" />
       <updated>1764513800898</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="Lobby">
+      <option name="closed" value="true" />
+      <created>1764521563069</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1764521563069</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -397,7 +416,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Creación de paquete cards" />
     <MESSAGE value="creacion de constructores de game y player" />
     <MESSAGE value="Creacion de la clase Turn" />
     <MESSAGE value="Creacion de metodos para la eleccion de personajes" />
@@ -422,7 +440,8 @@
     <MESSAGE value="Creación dto" />
     <MESSAGE value="GameService" />
     <MESSAGE value="Estructura" />
-    <option name="LAST_COMMIT_MESSAGE" value="Estructura" />
+    <MESSAGE value="Lobby" />
+    <option name="LAST_COMMIT_MESSAGE" value="Lobby" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
