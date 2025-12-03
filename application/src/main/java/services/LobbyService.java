@@ -1,5 +1,6 @@
 package services;
 
+import jakarta.persistence.Lob;
 import org.saul.ciudadelas.domain.game.players.Player;
 import org.saul.ciudadelas.domain.lobby.Lobby;
 import org.saul.ciudadelas.ports.LobbyRepositoryPort;
@@ -20,15 +21,14 @@ public class LobbyService {
     }
 
     // TODO: metodo para crear lobby y guardarlo en bd despues
-    public Lobby createNewLobby(UUID lobbyId) {
+    public boolean createNewLobby(UUID lobbyId) {
         Lobby lobby = new Lobby(lobbyId);
-        lobbyRepositoryPort.save(lobby);
-        return lobby;
+        return lobbyRepositoryPort.save(lobby) != null;
 
     }
 
     // TODO: metodo para añadir jugador a lobby, guardandolo en bd despues
-    public void addPlayerToLobby(Long lobbyId, Long playerId) {
+    public void addPlayerToLobby(UUID lobbyId, UUID playerId) {
         Lobby lobby = lobbyRepositoryPort.findById(lobbyId).orElseThrow(() -> new RuntimeException("Lobby not found"));
         Player player = playerRepositoryPort.findById(playerId).orElseThrow(() -> new RuntimeException("Player not found"));
         lobby.addPlayer(player);
@@ -36,10 +36,15 @@ public class LobbyService {
     }
 
     // TODO: metodo para eliminar jugador de lobby, guardandolo en bd despues
-    public void removePlayerFromLobby(Long lobbyId, Long playerId) {
+    public void removePlayerFromLobby(UUID lobbyId, UUID playerId) {
         Lobby lobby = lobbyRepositoryPort.findById(lobbyId).orElseThrow(() -> new RuntimeException("Lobby not found"));
         Player player = playerRepositoryPort.findById(playerId).orElseThrow(() -> new RuntimeException("Player not found"));
         lobby.removePlayer(player);
         lobbyRepositoryPort.save(lobby);
+    }
+
+    public void deleteLobby(UUID lobbyId){
+        lobbyRepositoryPort.findById(lobbyId).orElseThrow(() -> new RuntimeException("Lobby not found"));
+        lobbyRepositoryPort.remove(lobbyId);
     }
 }

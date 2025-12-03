@@ -1,5 +1,6 @@
 package org.saul.ciudadelas.domain.game;
 
+import org.saul.ciudadelas.domain.GameEvent;
 import org.saul.ciudadelas.domain.exception.InternalGameException;
 import org.saul.ciudadelas.domain.game.deck_cards.DeckCards;
 import org.saul.ciudadelas.domain.game.deck_cards.actions.*;
@@ -10,11 +11,12 @@ import org.saul.ciudadelas.domain.game.players.Player;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 import static org.saul.ciudadelas.domain.game.GameConstants.*;
 
 public class Game {
-    private final Long id;
+    private final UUID id;
     private final DeckCards<DistrictCard> deckDistrictCards;
     private final List<Player> players;
     private final DeckCards<CharacterCard> deckCharacterCards;
@@ -24,7 +26,7 @@ public class Game {
     private List<Events> eventBuffer;
 
 
-    private Game(Long id, DeckCards<DistrictCard> deckDistrictCards, List<Player> players, DeckCards<CharacterCard> deckCharacterCards) {
+    private Game(UUID id, DeckCards<DistrictCard> deckDistrictCards, List<Player> players, DeckCards<CharacterCard> deckCharacterCards) {
         this.id = id;
         this.deckDistrictCards = deckDistrictCards;
         this.players = players;
@@ -32,11 +34,10 @@ public class Game {
         this.rounds = new ArrayList<>();
         this.specialRoundEvents = new ArrayList<>();
         this.turnSkipped = null;
-
-
+        eventBuffer = new ArrayList<>();
     }
 
-    public static Game initializeNewGame(Long id,DeckCards<DistrictCard> deckDistrictCards, List<Player> players) {
+    public static Game initializeNewGame(UUID id,DeckCards<DistrictCard> deckDistrictCards, List<Player> players) {
         DeckCards<CharacterCard> deckCharacterCards = getAllCharacterCardsForGame();
         Game game = new Game(id,deckDistrictCards, players, deckCharacterCards);
         game.deckDistrictCards.addCards(getAllEpicDistrictCards(deckDistrictCards.size()));
@@ -68,6 +69,14 @@ public class Game {
         return deckCharacterCards;
     }
 
+    public List<Player> getPlayers(){
+        return players;
+    }
+
+    public UUID getId(){
+        return id;
+    }
+
     public void addTurnSkipped(Long characterId){
         if (characterId == null) throw new InternalGameException("La carta no puede ser nula");
         this.turnSkipped = getActualRound().getTurnByCharacter(characterId);
@@ -86,6 +95,10 @@ public class Game {
     private void addRound() {
         // Enviar evento de nueva ronda
         rounds.add(Round.initializeRound(getNewTurns()));
+    }
+
+    public GameEvent clearEventsBuffer(){
+        return new GameEvent(this,eventBuffer);
     }
 
     private List<Turn> getNewTurns() {
@@ -242,13 +255,11 @@ public class Game {
     public void swapCardsWithGame(WizardActionCard wizardActionCard) {
         if (wizardActionCard == null) throw new InternalGameException("La carta no puede ser nula");
         Player actualPlayer = findPlayerByCharacterId(wizardActionCard.getId());
-        System.out.println("actualPlayer district cards before swap: " +actualPlayer.districtCardDeckCards());
 
         List<DistrictCard> playerCards = actualPlayer.getAllDistrictCardsInHand();
         List<DistrictCard> gameCards = deckDistrictCards.getCard(playerCards.size());
         actualPlayer.addDistrictCardsInHand(gameCards);
         deckDistrictCards.addCards(playerCards);
-        System.out.println("actualPlayer district cards: " +actualPlayer.districtCardDeckCards());
         getActualRound().getActualTurn().characterHabilityUsed();
     }
 

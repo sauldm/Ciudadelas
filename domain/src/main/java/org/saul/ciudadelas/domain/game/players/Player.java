@@ -7,11 +7,12 @@ import org.saul.ciudadelas.domain.game.deck_cards.cards.CharacterCard;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.DistrictCard;
 
 import java.util.List;
+import java.util.UUID;
 
 import static org.saul.ciudadelas.domain.game.GameConstants.INITIAL_PLAYER_GOLD;
 
 public class Player{
-    private Long id;
+    private UUID id;
     private final String nickName;
     private final DeckCards<DistrictCard> districtDeckCardsInHand = new DeckCards<>();
     private DeckCards<DistrictCard> districtDeckCardsBuilt;
@@ -19,7 +20,8 @@ public class Player{
     private Long gold;
     private int points;
 
-    public Player(String nickName) {
+    public Player(UUID id,String nickName) {
+        this.id = id;
         this.nickName = nickName;
         this.gold = INITIAL_PLAYER_GOLD;
         this.points = 0;
@@ -27,15 +29,33 @@ public class Player{
         this.districtDeckCardsBuilt = new DeckCards<>();
     }
 
-    public DeckCards <DistrictCard> districtCardDeckCards() {
-        return districtDeckCardsInHand;
-    }
-
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
+    public Long getGold(){
+        return gold;
+    }
 
+    public DeckCards<DistrictCard> getDistrictDeckCardsInHand() {
+        return districtDeckCardsInHand;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public DeckCards<DistrictCard> getDistrictDeckCardsBuilt() {
+        return districtDeckCardsBuilt;
+    }
+
+    public DeckCards<CharacterCard> getCharacterCards() {
+        return characterCards;
+    }
+
+    public int getPoints() {
+        return points;
+    }
 
     public boolean removeGold(Long quantity){
         if (gold < quantity) return false;

@@ -12,14 +12,17 @@ public class DistrictCard extends Card{
     private int points;
 
 
-    public DistrictCard(Long id, String name, Color color,boolean undestructible, Long price, int points) {
-        super(id, name, color, undestructible);
+    public DistrictCard(Long id, String name, Color color,boolean undestructible, String description,Long price, int points) {
+        super(id, name, color, undestructible,description);
         this.price = price;
         this.points = points;
     }
 
     public Long getPrice() {
         return price;
+    }
+    public int getPoints(){
+        return points;
     }
 
     public void executeDistrictAbility(Game game, Player player) {

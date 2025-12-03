@@ -8,12 +8,14 @@ public class Card implements Comparable<Card> {
     private String name;
     private Color color;
     private boolean undestructible;
+    private String description;
 
-    public Card(Long id, String name, Color color, boolean undestructible) {
+    public Card(Long id, String name, Color color, boolean undestructible, String description) {
         this.id = id;
         this.name = name;
         this.color = color;
         this.undestructible = undestructible;
+        this.description = description;
     }
 
     public Color getColor() {
@@ -28,8 +30,13 @@ public class Card implements Comparable<Card> {
         return id;
     }
 
+    public String getName() {
+        return name;
+    }
 
-
+    public String getDescription() {
+        return description;
+    }
 
     @Override
     public int compareTo(Card o) {
@@ -42,4 +49,6 @@ public class Card implements Comparable<Card> {
                 "id=" + id +
                 '}';
     }
+
+
 }

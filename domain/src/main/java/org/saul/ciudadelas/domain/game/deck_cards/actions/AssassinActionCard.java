@@ -10,7 +10,7 @@ import org.saul.ciudadelas.domain.game.deck_cards.OtherPlayerActionCharacterCard
 public class AssassinActionCard extends CharacterCard implements OtherPlayerActionCharacterCard {
 
     public AssassinActionCard() {
-        super(1L,"Assassin", Color.GREY, false,1);
+        super(1L,"Assassin", Color.GREY, false,"Assa",1);
     }
 
 

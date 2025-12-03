@@ -14,8 +14,7 @@ public class PlayerService {
         this.playerRepositoryPort = playerRepositoryPort;
     }
 
-    public Player createNewPlayer(String name) {
-        Player player = new Player(name);
+    public Player createNewPlayer(Player player) {
         playerRepositoryPort.save(player);
         return player;
     }

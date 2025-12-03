@@ -8,7 +8,7 @@ import org.saul.ciudadelas.domain.game.deck_cards.cards.CharacterCard;
 
 public class MilitaryActionCard extends CharacterCard implements OtherPlayerActionCharacterCard {
     public MilitaryActionCard() {
-        super(8L,"Military", Color.RED,false,1);
+        super(8L,"Military", Color.RED,false,"Milit",1);
     }
 
 

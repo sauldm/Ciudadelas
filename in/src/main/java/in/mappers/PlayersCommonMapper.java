@@ -1,0 +1,30 @@
+package in.mappers;
+
+import in.dto.PlayerCommonInfoDTO;
+import org.saul.ciudadelas.domain.game.players.Player;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class PlayersCommonMapper {
+
+    public static PlayerCommonInfoDTO toPlayerCommonInfoDTO(Player player){
+        PlayerCommonInfoDTO playerCommonInfoDTO = new PlayerCommonInfoDTO();
+        playerCommonInfoDTO.setGold(player.getGold());
+        playerCommonInfoDTO.setDistrictsBuilt(
+                CardDTOMapper.toCardDTOList(player.getDistrictDeckCardsBuilt().getCards())
+        );
+        playerCommonInfoDTO.setNickName(player.getNickName());
+        playerCommonInfoDTO.setNumberDistrictsInHand(player.getDistrictDeckCardsInHand().size());
+
+        return playerCommonInfoDTO;
+    }
+
+    public static List<PlayerCommonInfoDTO> toPlayerCommonInfoDTOList(List<? extends Player> players) {
+        List<PlayerCommonInfoDTO> dtos = new ArrayList<>();
+        for (Player player : players) {
+            dtos.add(toPlayerCommonInfoDTO(player));
+        }
+        return dtos;
+    }
+}

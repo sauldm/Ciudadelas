@@ -8,6 +8,7 @@ import org.saul.ciudadelas.domain.game.players.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Main {
     public static void main(String[] args) {
@@ -42,11 +43,11 @@ public class Main {
 
 
         List<Player> players = List.of(
-                new Player(1L, "Saul"),
-                new Player(2L, "DDD")
+                new Player(UUID.randomUUID(), "Saul"),
+                new Player(UUID.randomUUID(), "DDD")
 
         );
-        Game game = Game.initializeNewGame(deckDistrictCards, players, deckCharacterCards2);
+        Game game = Game.initializeNewGame(UUID.randomUUID(),deckDistrictCards, players);
 
         /*for (int i = 0; i < 8; i++) {
             System.out.println(i + "" + game.getActualRound().getActualTurn());

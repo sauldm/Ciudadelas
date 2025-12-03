@@ -12,7 +12,7 @@ public class ThiefActionCard extends CharacterCard implements OtherPlayerActionC
 
 
     public ThiefActionCard() {
-        super(2L,"Thief", Color.GREY,false,1);
+        super(2L,"Thief", Color.GREY,false,"Thief",1);
     }
 
     @Override

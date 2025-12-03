@@ -11,7 +11,6 @@ public class DeckCards<T extends Card> {
     private final Random random = new Random();
 
 
-
     public List<T> getCard(int quantity){
         if (cards.isEmpty())  throw new ExpectedGameError("No hay cartas en el mazo");
         if (cards.size() < quantity){
@@ -102,5 +101,9 @@ public class DeckCards<T extends Card> {
 
     public int size() {
         return cards.size();
+    }
+
+    public List<T> getCards() {
+        return cards;
     }
 }

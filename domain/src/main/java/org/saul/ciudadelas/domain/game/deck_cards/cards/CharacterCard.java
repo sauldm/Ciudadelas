@@ -10,8 +10,8 @@ public class CharacterCard extends Card{
 
     private int maxDistrictsToBuild;
 
-    public CharacterCard(Long id, String name, Color color, boolean undestructible, int maxDistrictsToBuild) {
-        super(id, name, color, undestructible);
+    public CharacterCard(Long id, String name, Color color, boolean undestructible, String description, int maxDistrictsToBuild) {
+        super(id, name, color, undestructible,description);
         this.maxDistrictsToBuild = maxDistrictsToBuild;
     }
 

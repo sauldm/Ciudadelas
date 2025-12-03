@@ -31,4 +31,8 @@ public class Lobby {
     public boolean arePlayersCompleted(){
         return players.size() < 2;
     }
+
+    public UUID getId() {
+        return id;
+    }
 }
