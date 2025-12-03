@@ -19,6 +19,9 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static in.Constants.*;
+
+
 @Controller
 public class GameController {
 
@@ -54,6 +57,9 @@ public class GameController {
 
     @MessageMapping("/createGame")
     public void startNewGame(LobbyDTO lobbyDTO){
+        if (lobbyDTO == null) throw new RuntimeException("El lobby no puede ser null");
+        if (lobbyDTO.getPlayers() == null) throw new RuntimeException("Los players no pueden ser null");
+        if (lobbyDTO.getPlayers().size() !=  PLAYERS_PER_GAME) throw new RuntimeException("Los jugadores deben ser los descritos");
         List<Player> players = lobbyDTO.getPlayers()
                 .stream()
                 .map(PlayerMapper::toDomain)
@@ -119,6 +125,7 @@ public class GameController {
         webSocketSender.sendPrivateInfo(gameEvent,connectedPlayers);
     }
 
+    @MessageMapping("/build")
     public void buildDistrict(BuildDistrictDTO buildDistrictDTO){
         if (buildDistrictDTO.getGameId() == null) throw new RuntimeException("El id del game no puede ser nulo");
         if (buildDistrictDTO.getDistrictId() == null) throw new RuntimeException("El id del district no puede ser nulo");
@@ -135,6 +142,7 @@ public class GameController {
         webSocketSender.sendPrivateInfo(gameEvent,connectedPlayers);
     }
 
+    @MessageMapping("/chooseCoin")
     public void chooseCoin(String gameId){
         if (gameId == null) throw new RuntimeException("El id del game no puede ser nulo");
 
@@ -145,6 +153,7 @@ public class GameController {
         webSocketSender.sendPrivateInfo(gameEvent,connectedPlayers);
     }
 
+    @MessageMapping("/chooseCard")
     public void chooseCards(String gameId){
         if (gameId == null) throw new RuntimeException("El id del game no puede ser nulo");
 

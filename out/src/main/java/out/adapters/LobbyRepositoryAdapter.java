@@ -1,11 +1,15 @@
 package out.adapters;
 
+import org.saul.ciudadelas.domain.game.players.Player;
 import org.saul.ciudadelas.domain.lobby.Lobby;
 import org.saul.ciudadelas.ports.LobbyRepositoryPort;
 import org.springframework.stereotype.Repository;
+import out.entity.LobbyEntity;
+import out.entity.PlayerEntity;
 import out.mapper.LobbyMapper;
 import out.repositories.LobbyJpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -23,16 +27,21 @@ public class LobbyRepositoryAdapter implements LobbyRepositoryPort {
 
     @Override
     public Optional<Lobby> findById(UUID id) {
-        return Optional.empty();
+        return jpaRepository.findById(id)
+                .map(mapper::toDomain);
     }
 
     @Override
     public Lobby save(Lobby lobby) {
-        return null;
+        LobbyEntity entity = mapper.toEntity(lobby);
+        jpaRepository.save(entity);
+        return mapper.toDomain(entity);
     }
 
     @Override
     public Lobby remove(UUID id) {
-        return null;
+        LobbyEntity entity = mapper.toEntity(findById(id).orElseThrow(() -> new RuntimeException("El lobby no existe")));
+        jpaRepository.delete(entity);
+        return mapper.toDomain(entity);
     }
 }

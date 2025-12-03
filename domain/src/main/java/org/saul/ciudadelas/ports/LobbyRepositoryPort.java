@@ -1,7 +1,9 @@
 package org.saul.ciudadelas.ports;
 
+import org.saul.ciudadelas.domain.game.players.Player;
 import org.saul.ciudadelas.domain.lobby.Lobby;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 

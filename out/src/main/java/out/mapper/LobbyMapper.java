@@ -23,11 +23,17 @@ public class LobbyMapper {
         return lobby;
     }
 
-    public LobbyEntity toEntity(Lobby lobby, List<PlayerEntity> playerEntities) {
+    public LobbyEntity toEntity(Lobby lobby) {
         LobbyEntity entity = new LobbyEntity();
         entity.setId(lobby.getId());
+
+        List<PlayerEntity> playerEntities = lobby.getPlayers().stream()
+                .map(playerMapper::toEntity)
+                .toList();
+
         entity.getPlayers().addAll(playerEntities);
         playerEntities.forEach(p -> p.setLobby(entity));
+
         return entity;
     }
 }
