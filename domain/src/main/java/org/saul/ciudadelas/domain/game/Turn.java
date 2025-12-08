@@ -25,7 +25,6 @@ public class Turn implements Comparable<Turn>{
         this.player = player;
         this.characterCard = characterCard;
         this.districtsHabilityUsedThisRound = new ArrayList<>();
-
     }
 
     public boolean districtUsed(Long districtCardId) {

@@ -5,10 +5,9 @@ import out.entity.PlayerEntity;
 
 public class PlayerMapper {
 
-    public PlayerEntity toEntity(Player player) {
+    public PlayerEntity toEntity(String nickName) {
         PlayerEntity entity = new PlayerEntity();
-        entity.setNickName(player.getNickName());
-        entity.setId(player.getId());
+        entity.setNickName(nickName);
         return entity;
     }
 

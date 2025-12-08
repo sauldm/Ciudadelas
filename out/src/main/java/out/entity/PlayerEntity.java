@@ -12,8 +12,10 @@ import java.util.UUID;
 @Table(name = "players")
 public class PlayerEntity {
     @Id
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private String nickName;
+
     @ManyToOne
     @JoinColumn(name = "lobby_id")
     private LobbyEntity lobby;

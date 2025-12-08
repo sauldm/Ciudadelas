@@ -8,10 +8,7 @@ import org.saul.ciudadelas.domain.game.deck_cards.cards.CharacterCard;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.DistrictCard;
 import org.saul.ciudadelas.domain.game.players.Player;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import static org.saul.ciudadelas.domain.game.GameConstants.*;
 
@@ -34,7 +31,6 @@ public class Game {
         this.rounds = new ArrayList<>();
         this.specialRoundEvents = new ArrayList<>();
         this.turnSkipped = null;
-        eventBuffer = new ArrayList<>();
     }
 
     public static Game initializeNewGame(UUID id,DeckCards<DistrictCard> deckDistrictCards, List<Player> players) {
@@ -43,6 +39,7 @@ public class Game {
         game.deckDistrictCards.addCards(getAllEpicDistrictCards(deckDistrictCards.size()));
         game.players.forEach(player -> player.addDistrictCardsInHand(deckDistrictCards.getCard(DISTRICT_CARDS_PER_PLAYER)));
         game.addRound();
+        game.eventBuffer.add(Events.GAME_STARTED);
         return game;
     }
 

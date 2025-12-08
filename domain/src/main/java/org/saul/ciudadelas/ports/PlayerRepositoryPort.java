@@ -7,8 +7,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface PlayerRepositoryPort {
-    Optional<Player> findById(UUID id);
+    Optional<Player> findById(Long id);
     List<Player> findAllPlayers();
-    void save(Player player);
+    Optional<Player> findByName(String name);
+    Player save(String nickName);
 
 }

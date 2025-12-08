@@ -28,6 +28,7 @@ public class LobbyMapper {
         entity.setId(lobby.getId());
 
         List<PlayerEntity> playerEntities = lobby.getPlayers().stream()
+                .map(Player::getNickName)
                 .map(playerMapper::toEntity)
                 .toList();
 

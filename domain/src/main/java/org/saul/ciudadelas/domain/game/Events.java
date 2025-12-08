@@ -2,6 +2,7 @@ package org.saul.ciudadelas.domain.game;
 
 public enum Events {
     CHARACTER_CARD_ELIMINATED,
+    GAME_STARTED,
     GAME_ENDED,
     CHARACTER_CARD_STEALED,
     NEXT_TURN,

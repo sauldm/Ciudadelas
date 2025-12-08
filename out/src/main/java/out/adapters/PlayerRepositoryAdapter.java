@@ -9,7 +9,6 @@ import out.repositories.PlayerJpaRepository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Repository
 public class PlayerRepositoryAdapter implements PlayerRepositoryPort {
@@ -22,8 +21,10 @@ public class PlayerRepositoryAdapter implements PlayerRepositoryPort {
         this.mapper = mapper;
     }
 
+
+
     @Override
-    public Optional<Player> findById(UUID id) {
+    public Optional<Player> findById(Long id) {
         return jpaRepository.findById(id)
                 .map(mapper::toDomain);
     }
@@ -37,8 +38,15 @@ public class PlayerRepositoryAdapter implements PlayerRepositoryPort {
     }
 
     @Override
-    public void save(Player player) {
-        PlayerEntity entity = mapper.toEntity(player);
-        jpaRepository.save(entity);
+    public Optional<Player> findByName(String name) {
+        return jpaRepository.findByNickName(name)
+                .map(mapper::toDomain);
+
+    }
+
+    @Override
+    public Player save(String nickName) {
+        PlayerEntity entity = mapper.toEntity(nickName);
+        return mapper.toDomain(jpaRepository.save(entity));
     }
 }

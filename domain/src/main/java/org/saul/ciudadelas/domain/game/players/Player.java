@@ -12,7 +12,7 @@ import java.util.UUID;
 import static org.saul.ciudadelas.domain.game.GameConstants.INITIAL_PLAYER_GOLD;
 
 public class Player{
-    private UUID id;
+    private Long id;
     private final String nickName;
     private final DeckCards<DistrictCard> districtDeckCardsInHand = new DeckCards<>();
     private DeckCards<DistrictCard> districtDeckCardsBuilt;
@@ -20,7 +20,7 @@ public class Player{
     private Long gold;
     private int points;
 
-    public Player(UUID id,String nickName) {
+    public Player(Long id,String nickName) {
         this.id = id;
         this.nickName = nickName;
         this.gold = INITIAL_PLAYER_GOLD;
@@ -29,7 +29,7 @@ public class Player{
         this.districtDeckCardsBuilt = new DeckCards<>();
     }
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 

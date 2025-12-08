@@ -4,6 +4,8 @@ import org.saul.ciudadelas.domain.game.players.Player;
 import org.saul.ciudadelas.ports.PlayerRepositoryPort;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 
 @Service
 public class PlayerService {
@@ -15,8 +17,10 @@ public class PlayerService {
         this.playerRepositoryPort = playerRepositoryPort;
     }
 
-    public Player createNewPlayer(Player player) {
-        playerRepositoryPort.save(player);
+    public Player getOrCreatePlayer(String nickName) {
+
+        Player player = playerRepositoryPort.save(nickName);
+
         return player;
     }
 }
