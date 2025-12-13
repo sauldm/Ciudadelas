@@ -1,8 +1,6 @@
 package org.saul.ciudadelas.out.adapters;
 
-import org.saul.ciudadelas.domain.game.players.Player;
 import org.saul.ciudadelas.domain.lobby.Lobby;
-import org.saul.ciudadelas.out.entity.PlayerEntity;
 import org.saul.ciudadelas.ports.LobbyRepositoryPort;
 import org.springframework.stereotype.Repository;
 import org.saul.ciudadelas.out.entity.LobbyEntity;

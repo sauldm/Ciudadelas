@@ -125,8 +125,7 @@ public class Game {
         if (playerThief == null) throw new InternalGameException("El jugador que roba no puede ser nulo");
         Player playerRobed = findPlayerByCharacterId(characterRobed.getId());
         if (!getActualRound().getTurnByCharacter(characterRobed.getId()).canPlayerPlay())
-            return // Enviar evento de que el jugador esta asesinado;
-                    ;
+            return;
         eventBuffer.add(Events.CHARACTER_CARD_STEALED);
         playerThief.addGold(playerRobed.getAllGold());
     }

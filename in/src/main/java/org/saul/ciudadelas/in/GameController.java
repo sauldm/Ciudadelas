@@ -9,6 +9,7 @@ import org.saul.ciudadelas.domain.game.players.Player;
 import org.saul.ciudadelas.services.GameService;
 import org.saul.ciudadelas.services.LobbyService;
 import org.saul.ciudadelas.services.PlayerService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -65,19 +66,26 @@ public class GameController {
         webSocketSender.publishLobies();
         return lobbyId;
     }
+    @PostMapping("/api/joinLobby")
+    public ResponseEntity<String> joinLobby(@RequestBody LobbyAddPlayer dto) {
+        Player player = lobbyService.addPlayerToLobby(
+                dto.getId(),
+                playerService.getOrCreatePlayer(dto.getNickName()).getNickName()
+        );
 
-    @MessageMapping("/joinLobby")
-    public void joinLobby(@Payload LobbyAddPlayer dto, Principal principal) {
-        String nick = principal.getName();
-        System.out.println("join:" + nick);
-        lobbyService.addPlayerToLobby(dto.getId(), nick);
         webSocketSender.publishLobies();
-        webSocketSender.publishPlayersLobby(dto.getId(), lobbyService.getAllPlayers(dto.getId()));
-    }
+        webSocketSender.publishPlayersLobby(
+                dto.getId(),
+                lobbyService.getAllPlayers(dto.getId())
+        );
+        System.out.println(lobbyService.getAllPlayers(dto.getId()));
 
+        return ResponseEntity.ok(player.getNickName());
+    }
 
     @MessageMapping("/unjoinLobby")
     public void unjoinLobby(@Payload LobbyAddPlayer dto){
+        System.out.println("DTO id=" + dto.getId() + " nick=" + dto.getNickName());
         lobbyService.removePlayerFromLobby(dto.getId(), dto.getNickName());
         webSocketSender.publishPlayersLobby(dto.getId(), lobbyService.getAllPlayers(dto.getId()));
         webSocketSender.publishLobies();

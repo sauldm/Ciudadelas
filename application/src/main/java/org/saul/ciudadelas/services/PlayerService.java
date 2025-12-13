@@ -23,7 +23,6 @@ public class PlayerService {
     }
 
     public Optional<Player> findByName(String nickName){
-        System.out.println("findd "+playerRepositoryPort.findByName(nickName));
         return playerRepositoryPort.findByName(nickName);
     }
 }
