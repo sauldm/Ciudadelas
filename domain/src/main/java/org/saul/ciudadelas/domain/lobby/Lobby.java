@@ -1,5 +1,6 @@
 package org.saul.ciudadelas.domain.lobby;
 
+import org.saul.ciudadelas.domain.exception.ExpectedGameError;
 import org.saul.ciudadelas.domain.game.players.Player;
 
 import java.util.ArrayList;
@@ -16,8 +17,8 @@ public class Lobby {
     }
 
     public void addPlayer(Player player) {
-        if (!arePlayersCompleted())
-            players.add(player);
+        if (arePlayersCompleted()) throw new ExpectedGameError("No puede haber mas de dos jugadores");
+        players.add(player);
     }
 
     public void removePlayer(Player player) {
@@ -29,10 +30,18 @@ public class Lobby {
     }
 
     public boolean arePlayersCompleted(){
-        return players.size() < 2;
+        return players.size() >= 2;
     }
 
     public UUID getId() {
         return id;
+    }
+
+    @Override
+    public String toString() {
+        return "Lobby{" +
+                "id=" + id +
+                ", players=" + players +
+                '}';
     }
 }

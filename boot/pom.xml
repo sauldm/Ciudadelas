@@ -1,3 +1,4 @@
+<!-- xml -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
@@ -13,17 +14,20 @@
     <artifactId>boot</artifactId>
     <name>Archetype - boot</name>
 
-
     <dependencies>
-        <!-- Dependencias de Spring Boot -->
+        <!-- Asegura JPA/autoconfiguración -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <!-- Web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-
-        <!-- Dependencias de los módulos internos -->
-
+        <!-- Módulos internos: sin <version> (heredan del padre) -->
         <dependency>
             <groupId>org.saul.ciudadelas</groupId>
             <artifactId>domain</artifactId>
@@ -40,6 +44,13 @@
             <groupId>org.saul.ciudadelas</groupId>
             <artifactId>out</artifactId>
         </dependency>
+
+        <!-- H2 para runtime (memoria) -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -47,6 +58,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>3.3.5</version>
             </plugin>
         </plugins>
     </build>
