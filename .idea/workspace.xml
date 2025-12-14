@@ -4,14 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cf085e23-fed8-43c1-b33c-d4b15dc4cf36" name="Changes" comment="h2">
+    <list default="true" id="cf085e23-fed8-43c1-b33c-d4b15dc4cf36" name="Changes" comment="arreglado join lobby">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/src/main/java/org/saul/ciudadelas/services/PlayerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/application/src/main/java/org/saul/ciudadelas/services/PlayerService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/boot/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/boot/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/ciudadelas.mv.db" beforeDir="false" afterPath="$PROJECT_DIR$/data/ciudadelas.mv.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/in/src/main/java/org/saul/ciudadelas/in/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/in/src/main/java/org/saul/ciudadelas/in/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/src/main/java/org/saul/ciudadelas/out/adapters/LobbyRepositoryAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/out/src/main/java/org/saul/ciudadelas/out/adapters/LobbyRepositoryAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/src/main/java/org/saul/ciudadelas/out/repositories/LobbyJpaRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/out/src/main/java/org/saul/ciudadelas/out/repositories/LobbyJpaRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/in/src/main/java/org/saul/ciudadelas/in/dto/BuildDistrictDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/in/src/main/java/org/saul/ciudadelas/in/dto/BuildDistrictDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/in/src/main/java/org/saul/ciudadelas/in/dto/ExecuteCharacterHabilityDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/in/src/main/java/org/saul/ciudadelas/in/dto/ExecuteCharacterHabilityDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/in/src/main/java/org/saul/ciudadelas/in/dto/ExecuteDistrictHabilityDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/in/src/main/java/org/saul/ciudadelas/in/dto/ExecuteDistrictHabilityDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/in/src/main/java/org/saul/ciudadelas/in/dto/LobbyDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/in/src/main/java/org/saul/ciudadelas/in/dto/LobbyDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/in/src/main/java/org/saul/ciudadelas/in/mappers/LobbyDTOMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/in/src/main/java/org/saul/ciudadelas/in/mappers/LobbyDTOMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/in/src/main/java/org/saul/ciudadelas/in/ws/WebSocketSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/in/src/main/java/org/saul/ciudadelas/in/ws/WebSocketSender.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,39 +59,39 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Main.executor": "Run",
-    "JUnit.GameTest.gameTest.executor": "Run",
-    "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
-    "Maven.Ciudadelas [clean,install].executor": "Run",
-    "Maven.Ciudadelas [clean].executor": "Run",
-    "Maven.Ciudadelas [deploy].executor": "Run",
-    "Maven.Ciudadelas [install].executor": "Run",
-    "Maven.application [install].executor": "Run",
-    "Maven.boot [clean,install].executor": "Run",
-    "Maven.domain [clean,install].executor": "Run",
-    "Maven.domain [install].executor": "Run",
-    "Maven.out [clean,install].executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "Spring Boot.Main (1).executor": "Run",
-    "Spring Boot.Main (2).executor": "Run",
-    "Spring Boot.Main.executor": "Run",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/domin/Desktop/Ciudadelas/data",
-    "onboarding.tips.debug.path": "C:/Users/domin/Desktop/Ciudadelas/src/main/java/org/example/Main.java",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "reference.projectsettings.compiler.annotationProcessors",
-    "settings.editor.splitter.proportion": "0.28134558"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.GameTest.gameTest.executor&quot;: &quot;Run&quot;,
+    &quot;Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Ciudadelas [clean,install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Ciudadelas [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Ciudadelas [deploy].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Ciudadelas [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.application [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.boot [clean,install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.domain [clean,install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.domain [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.out [clean,install].executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Spring Boot.Main (1).executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.Main (2).executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.Main.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/domin/Desktop/Ciudadelas/data&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/domin/Desktop/Ciudadelas/src/main/java/org/example/Main.java&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.annotationProcessors&quot;,
+    &quot;settings.editor.splitter.proportion&quot;: &quot;0.28134558&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\domin\Desktop\Ciudadelas\data" />
@@ -510,7 +512,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765619667701</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="arreglado join lobby">
+      <option name="closed" value="true" />
+      <created>1765650784179</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1765650784179</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -540,7 +550,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Repartición de cartas al azar a cada jugador" />
     <MESSAGE value="Creación carta ladron" />
     <MESSAGE value="creacion en game de la funcionalidad del personaje Ladron, falta en Round" />
     <MESSAGE value="Turnos creados por cada CharacterCard que se añade a un jugador" />
@@ -565,19 +574,15 @@
     <MESSAGE value="Controller y repositorios" />
     <MESSAGE value="websocket" />
     <MESSAGE value="h2" />
-    <option name="LAST_COMMIT_MESSAGE" value="h2" />
+    <MESSAGE value="arreglado join lobby" />
+    <option name="LAST_COMMIT_MESSAGE" value="arreglado join lobby" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/in/src/main/java/org/saul/ciudadelas/in/ws/WebSocketSender.java</url>
-          <line>45</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/in/src/main/java/org/saul/ciudadelas/in/GameController.java</url>
-          <line>62</line>
+          <line>57</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
@@ -586,9 +591,6 @@
       <configuration name="SpringBootApplicationConfigurationType">
         <watch expression="public void sendPrivate(String msg){&#10;            messagingTemplate.convertAndSendToUser(&#10;                    &quot;jugador1&quot;,&#10;                    &quot;/queue/game&quot;+1,&#10;                    msg&#10;            );&#10;        }" />
       </configuration>
-      <inline-watch fileUrl="file://$PROJECT_DIR$/in/src/main/java/org/saul/ciudadelas/in/ws/WebSocketSender.java" line="62">
-        <watch expression="this.messagingTemplate" language="JAVA" custom="org.saul.ciudadelas.in.ws.WebSocketSender" />
-      </inline-watch>
     </watches-manager>
   </component>
   <component name="github-copilot-workspace">

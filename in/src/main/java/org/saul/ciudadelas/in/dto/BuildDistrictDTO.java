@@ -9,7 +9,7 @@ import java.util.UUID;
 @Getter
 @Setter
 public class BuildDistrictDTO {
-    private String gameId;
+    private UUID gameId;
     private Long districtId;
     private Long characterId;
 }

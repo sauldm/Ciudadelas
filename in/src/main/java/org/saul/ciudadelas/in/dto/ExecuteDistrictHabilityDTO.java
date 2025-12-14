@@ -8,6 +8,6 @@ import java.util.UUID;
 @Getter
 @Setter
 public class ExecuteDistrictHabilityDTO {
-    private String gameId;
+    private UUID gameId;
     private Long districtId;
 }

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.saul.ciudadelas.in.Constants.*;
@@ -39,12 +40,6 @@ public class GameController {
         this.webSocketSender = webSocketSender;
     }
 
-
-    @MessageMapping("/mensaje")
-    public void recibirMensaje(String mensaje, Principal principal) {
-        System.out.println("Principal actual: " + principal.getName());
-        webSocketSender.sendPrivate(mensaje, principal);
-    }
 
     @MessageMapping("/getLobbies")
     public void getLobbies(){
@@ -92,41 +87,41 @@ public class GameController {
     }
 
 
-    @MessageMapping("/createGame")
-    public void startNewGame(LobbyDTO lobbyDTO, Principal principal){
+    @PostMapping("/createGame")
+    public void startNewGame(@RequestBody LobbyDTO lobbyDTO){
         if (lobbyDTO == null) throw new RuntimeException("El lobby no puede ser null");
         if (lobbyDTO.getPlayers() == null) throw new RuntimeException("Los players no pueden ser null");
         if (lobbyDTO.getPlayers().size() !=  PLAYERS_PER_GAME) throw new RuntimeException("Los jugadores deben ser los descritos");
         List<Player> players = lobbyDTO.getPlayers()
                 .stream()
-                .map(PlayerMapper::toDomain)
+                .map(playerService::findByName)   // Stream<Optional<Player>>
+                .flatMap(Optional::stream)        // Stream<Player>
                 .toList();
         GameEvent gameEvent = gameService.startGame(lobbyDTO.getId(),players);
         webSocketSender.publishEvent(gameEvent);
-        webSocketSender.sendPrivateInfo(gameEvent,principal);
+        webSocketSender.sendPrivateInfo(gameEvent);
         lobbyService.deleteLobby(lobbyDTO.getId());
     }
 
     @MessageMapping("/deleteGame/{id}")
-    public void deleteGame(String gameId, Principal principal){
-        GameEvent gameEvent = gameService.deleteGame(UUID.fromString(gameId));
+    public void deleteGame(UUID gameId){
+        GameEvent gameEvent = gameService.deleteGame(gameId);
         webSocketSender.publishEvent(gameEvent);
-        webSocketSender.sendPrivateInfo(gameEvent,principal);
+        webSocketSender.sendPrivateInfo(gameEvent);
 
     }
 
     @MessageMapping("/getTurn")
-    public void getCharacterTurn(String gameId){
-        UUID id = UUID.fromString(gameId);
-        Long idCharacter = gameService.getCharacterTurn(id);
-        webSocketSender.publishId(id,idCharacter);
+    public void getCharacterTurn(UUID gameId){
+        Long idCharacter = gameService.getCharacterTurn((gameId));
+        webSocketSender.publishId((gameId),idCharacter);
     }
 
     @MessageMapping("/nextStep")
-    public void nextStep(String gameId, Principal principal){
-        GameEvent gameEvent = gameService.nextStep(UUID.fromString(gameId));
+    public void nextStep(UUID gameId, Principal principal){
+        GameEvent gameEvent = gameService.nextStep((gameId));
         webSocketSender.publishEvent(gameEvent);
-        webSocketSender.sendPrivateInfo(gameEvent,principal);
+        webSocketSender.sendPrivateInfo(gameEvent);
     }
 
     @MessageMapping("/CharacterHability")
@@ -135,7 +130,7 @@ public class GameController {
         if (executeCharacterHabilityDTO.getCharacterId() == null) throw new RuntimeException("El id del character no puede ser nulo");
         if (executeCharacterHabilityDTO.getTargetId() == null) throw new RuntimeException("El id del target no puede ser nulo");
 
-        UUID gameId = UUID.fromString(executeCharacterHabilityDTO.getGameId());
+        UUID gameId = (executeCharacterHabilityDTO.getGameId());
 
         GameEvent gameEvent = gameService.executePlayerCharacterAbility(
                 gameId,
@@ -143,7 +138,7 @@ public class GameController {
                 executeCharacterHabilityDTO.getTargetId()
         );
         webSocketSender.publishEvent(gameEvent);
-        webSocketSender.sendPrivateInfo(gameEvent,principal);
+        webSocketSender.sendPrivateInfo(gameEvent);
     }
 
     @MessageMapping("/DistrictHability")
@@ -151,7 +146,7 @@ public class GameController {
         if (executeDistrictHabilityDTO.getGameId() == null) throw new RuntimeException("El id del game no puede ser nulo");
         if (executeDistrictHabilityDTO.getDistrictId() == null) throw new RuntimeException("El id del district no puede ser nulo");
 
-        UUID gameId = UUID.fromString(executeDistrictHabilityDTO.getGameId());
+        UUID gameId = (executeDistrictHabilityDTO.getGameId());
 
         GameEvent gameEvent = gameService.executePlayerDistrictAbility(
                 gameId,
@@ -159,7 +154,7 @@ public class GameController {
         );
 
         webSocketSender.publishEvent(gameEvent);
-        webSocketSender.sendPrivateInfo(gameEvent,principal);
+        webSocketSender.sendPrivateInfo(gameEvent);
     }
 
     @MessageMapping("/build")
@@ -168,7 +163,7 @@ public class GameController {
         if (buildDistrictDTO.getDistrictId() == null) throw new RuntimeException("El id del district no puede ser nulo");
         if (buildDistrictDTO.getCharacterId() == null) throw new RuntimeException("El id del character no puede ser nulo");
 
-        UUID gameId = UUID.fromString(buildDistrictDTO.getGameId());
+        UUID gameId = (buildDistrictDTO.getGameId());
         GameEvent gameEvent = gameService.buildDistrict(
                 gameId,
                 buildDistrictDTO.getDistrictId(),
@@ -176,28 +171,26 @@ public class GameController {
         );
 
         webSocketSender.publishEvent(gameEvent);
-        webSocketSender.sendPrivateInfo(gameEvent,principal);
+        webSocketSender.sendPrivateInfo(gameEvent);
     }
 
     @MessageMapping("/chooseCoin")
-    public void chooseCoin(String gameId, Principal principal){
+    public void chooseCoin(UUID gameId, Principal principal){
         if (gameId == null) throw new RuntimeException("El id del game no puede ser nulo");
 
-        UUID id = UUID.fromString(gameId);
-        GameEvent gameEvent = gameService.playerChooseCoins(id);
+        GameEvent gameEvent = gameService.playerChooseCoins((gameId));
 
         webSocketSender.publishEvent(gameEvent);
-        webSocketSender.sendPrivateInfo(gameEvent,principal);
+        webSocketSender.sendPrivateInfo(gameEvent);
     }
 
     @MessageMapping("/chooseCard")
-    public void chooseCards(String gameId, Principal principal){
+    public void chooseCards(UUID gameId, Principal principal){
         if (gameId == null) throw new RuntimeException("El id del game no puede ser nulo");
 
-        UUID id = UUID.fromString(gameId);
-        GameEvent gameEvent = gameService.playerChooseCards(id);
+        GameEvent gameEvent = gameService.playerChooseCards((gameId));
 
         webSocketSender.publishEvent(gameEvent);
-        webSocketSender.sendPrivateInfo(gameEvent,principal);
+        webSocketSender.sendPrivateInfo(gameEvent);
     }
 }

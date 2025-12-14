@@ -10,5 +10,5 @@ import java.util.UUID;
 @Setter
 public class LobbyDTO {
     private UUID id;
-    private List<PlayerDTO> players;
+    private List<String> players;
 }
