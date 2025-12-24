@@ -53,9 +53,9 @@ public class Round {
 
     public void startTurn(Game game) {
         trigerTurnEvents(game);
-        while (!getActualTurn().canPlayerPlay()){
-            actualTurn++;
-            trigerTurnEvents(game);
+        if (!getActualTurn().canPlayerPlay()){
+            game.nextStep();
+            return;
         }
         game.getEventsBuffer().add(new EventMessage(Events.NEXT_TURN, "Es el turno de "+getActualTurn().getCharacter().getName()));
         getActualTurn().startTurn(game);
