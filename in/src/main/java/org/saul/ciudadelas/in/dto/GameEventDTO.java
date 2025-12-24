@@ -10,5 +10,5 @@ import java.util.List;
 public class GameEventDTO {
 
     private GameCommonInfoDTO gameCommonInfoDTO;
-    private List<String> events;
+    private List<EventsMessagesDTO> eventsMessagesDTO;
 }

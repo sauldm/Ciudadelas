@@ -1,8 +1,7 @@
 package org.saul.ciudadelas.in;
 
+import org.saul.ciudadelas.domain.game.Game;
 import org.saul.ciudadelas.in.dto.*;
-import org.saul.ciudadelas.in.mappers.LobbyDTOMapper;
-import org.saul.ciudadelas.in.mappers.PlayerMapper;
 import org.saul.ciudadelas.in.ws.WebSocketSender;
 import org.saul.ciudadelas.domain.GameEvent;
 import org.saul.ciudadelas.domain.game.players.Player;
@@ -73,48 +72,63 @@ public class GameController {
                 dto.getId(),
                 lobbyService.getAllPlayers(dto.getId())
         );
-        System.out.println(lobbyService.getAllPlayers(dto.getId()));
 
         return ResponseEntity.ok(player.getNickName());
     }
 
     @MessageMapping("/unjoinLobby")
     public void unjoinLobby(@Payload LobbyAddPlayer dto){
-        System.out.println("DTO id=" + dto.getId() + " nick=" + dto.getNickName());
         lobbyService.removePlayerFromLobby(dto.getId(), dto.getNickName());
         webSocketSender.publishPlayersLobby(dto.getId(), lobbyService.getAllPlayers(dto.getId()));
         webSocketSender.publishLobies();
     }
 
 
-    @PostMapping("/createGame")
-    public void startNewGame(@RequestBody LobbyDTO lobbyDTO){
-        if (lobbyDTO == null) throw new RuntimeException("El lobby no puede ser null");
+    @PostMapping("api/createGame")
+    public ResponseEntity<UUID> startNewGame(@RequestBody LobbyDTO lobbyDTO){
+        if (gameService.existsGame(lobbyDTO.getId())) throw new RuntimeException("El game no puede existir antes de crearlo");
         if (lobbyDTO.getPlayers() == null) throw new RuntimeException("Los players no pueden ser null");
-        if (lobbyDTO.getPlayers().size() !=  PLAYERS_PER_GAME) throw new RuntimeException("Los jugadores deben ser los descritos");
         List<Player> players = lobbyDTO.getPlayers()
                 .stream()
-                .map(playerService::findByName)   // Stream<Optional<Player>>
-                .flatMap(Optional::stream)        // Stream<Player>
+                .map(playerService::findByName)
+                .flatMap(Optional::stream)
                 .toList();
-        GameEvent gameEvent = gameService.startGame(lobbyDTO.getId(),players);
-        webSocketSender.publishEvent(gameEvent);
-        webSocketSender.sendPrivateInfo(gameEvent);
+
+        if (players.size() != PLAYERS_PER_GAME) {
+            throw new RuntimeException("No se han encontrado todos los jugadores");
+        }
+        Game game = gameService.startGame(lobbyDTO.getId(),players);
         lobbyService.deleteLobby(lobbyDTO.getId());
+        webSocketSender.sendGameStarted(game.getId());
+        return ResponseEntity.ok(game.getId());
+
     }
 
+    @MessageMapping("/game/{id}/state")
+    public void getGameState(@DestinationVariable UUID id){
+        GameEvent gameEvent = gameService.getCurrentGameEvent(id);
+        webSocketSender.publishEvent(gameEvent);
+        webSocketSender.sendPrivateInfo(gameEvent);
+    }
+
+    @MessageMapping("/game/{id}/private")
+    public void requestPrivateInfo(
+            @DestinationVariable UUID id,
+            Principal principal
+    ) {
+        Player player = gameService.getPlayer(id, principal.getName());
+        System.out.println("request: "+ principal.getName());
+        webSocketSender.sendToPlayer(id,principal,player);
+    }
+
+
+
     @MessageMapping("/deleteGame/{id}")
-    public void deleteGame(UUID gameId){
+    public void deleteGame(@DestinationVariable UUID gameId){
         GameEvent gameEvent = gameService.deleteGame(gameId);
         webSocketSender.publishEvent(gameEvent);
         webSocketSender.sendPrivateInfo(gameEvent);
 
-    }
-
-    @MessageMapping("/getTurn")
-    public void getCharacterTurn(UUID gameId){
-        Long idCharacter = gameService.getCharacterTurn((gameId));
-        webSocketSender.publishId((gameId),idCharacter);
     }
 
     @MessageMapping("/nextStep")

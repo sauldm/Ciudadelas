@@ -8,8 +8,7 @@ public class GameEventDTOMapper {
     public static GameEventDTO toGameEventDTO(GameEvent gameEvent){
         GameEventDTO gameEventDTO = new GameEventDTO();
         gameEventDTO.setGameCommonInfoDTO(GameCommonMapper.toGameCommonInfoDTO(gameEvent.getGame()));
-        gameEventDTO.setEvents(gameEvent.getEvents().stream().map(Enum::name).toList());
-
+        gameEventDTO.setEventsMessagesDTO(gameEvent.getEvents().stream().map(EventsMessagesMapper::toEventMessageDTO).toList());
         return gameEventDTO;
     }
 }

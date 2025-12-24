@@ -10,12 +10,15 @@ public class Card implements Comparable<Card> {
     private boolean undestructible;
     private String description;
 
-    public Card(Long id, String name, Color color, boolean undestructible, String description) {
+    private Long price;
+
+    public Card(Long id, String name, Color color, boolean undestructible, String description, Long price) {
         this.id = id;
         this.name = name;
         this.color = color;
         this.undestructible = undestructible;
         this.description = description;
+        this.price = price;
     }
 
     public Color getColor() {
@@ -51,4 +54,7 @@ public class Card implements Comparable<Card> {
     }
 
 
+    public Long getPrice() {
+        return this.price;
+    }
 }

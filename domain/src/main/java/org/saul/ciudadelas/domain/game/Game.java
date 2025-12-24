@@ -18,9 +18,14 @@ public class Game {
     private final List<Player> players;
     private final DeckCards<CharacterCard> deckCharacterCards;
     private List<Round> rounds;
+
+    private Turn actualTurn;
     private List<RoundEvent> specialRoundEvents;
-    private Turn turnSkipped;
-    private List<Events> eventBuffer;
+    private Long characterSkipped;
+
+    private Long characterRobbed;
+    private List<EventMessage> eventBuffer;
+    private Long characterId;
 
 
     private Game(UUID id, DeckCards<DistrictCard> deckDistrictCards, List<Player> players, DeckCards<CharacterCard> deckCharacterCards) {
@@ -30,18 +35,29 @@ public class Game {
         this.deckCharacterCards = deckCharacterCards;
         this.rounds = new ArrayList<>();
         this.specialRoundEvents = new ArrayList<>();
-        this.turnSkipped = null;
+        this.characterSkipped = null;
     }
 
     public static Game initializeNewGame(UUID id,DeckCards<DistrictCard> deckDistrictCards, List<Player> players) {
         DeckCards<CharacterCard> deckCharacterCards = getAllCharacterCardsForGame();
         Game game = new Game(id,deckDistrictCards, players, deckCharacterCards);
+        game.eventBuffer = new ArrayList<>();
+        game.eventBuffer.add(new EventMessage(Events.GAME_STARTED,"El juego ha comenzado"));
         game.deckDistrictCards.addCards(getAllEpicDistrictCards(deckDistrictCards.size()));
-        game.players.forEach(player -> player.addDistrictCardsInHand(deckDistrictCards.getCard(DISTRICT_CARDS_PER_PLAYER)));
+        deckDistrictCards.randomizeCards();
+        game.players.forEach(player ->{
+                    List<DistrictCard> districtCard = deckDistrictCards.getCard(DISTRICT_CARDS_PER_PLAYER);
+                    player.addDistrictCardsInHand(districtCard);
+                    player.setPrivateDistrictGained(districtCard);
+        });
         game.addRound();
-        game.eventBuffer.add(Events.GAME_STARTED);
+        game.actualTurn = game.getActualRound().getActualTurn();
+        game.characterIdTurn();
+        game.eventBuffer.add(new EventMessage(Events.PRIVATE,"Cartas obtenidas"));
+
         return game;
     }
+
 
     private static List<DistrictCard> getAllEpicDistrictCards(int existingDistrictCardsCount) {
         Long startingId = existingDistrictCardsCount + 1L;
@@ -65,6 +81,9 @@ public class Game {
         ));
         return deckCharacterCards;
     }
+    public Turn getActualTurn(){
+        return actualTurn;
+    }
 
     public List<Player> getPlayers(){
         return players;
@@ -74,15 +93,22 @@ public class Game {
         return id;
     }
 
+    public Long getCharacterId(){
+        return characterId;
+    }
+
     public void addTurnSkipped(Long characterId){
         if (characterId == null) throw new InternalGameException("La carta no puede ser nula");
-        this.turnSkipped = getActualRound().getTurnByCharacter(characterId);
+        this.characterSkipped = characterId;
 
     }
 
-    public Long getTurnSkippedCharacterId(){
-        if (this.turnSkipped == null) return null;
-        return this.turnSkipped.getCharacterId();
+    public Long getCharacterSkipped(){
+        return this.characterSkipped;
+    }
+
+    public Long getCharacterRobbed(){
+        return this.characterRobbed;
     }
 
     public List<DistrictCard> getDistrictCards(int numberOfCards) {
@@ -90,8 +116,12 @@ public class Game {
     }
 
     private void addRound() {
-        // Enviar evento de nueva ronda
-        rounds.add(Round.initializeRound(getNewTurns()));
+        characterRobbed = null;
+        characterSkipped = null;
+        rounds.add(Round.initializeRound(getNewTurns(), this));
+        actualTurn = getActualRound().getActualTurn();
+        characterIdTurn();
+        getActualRound().startTurn(this);
     }
 
     public GameEvent clearEventsBuffer(){
@@ -118,22 +148,33 @@ public class Game {
         getActualRound().addRoundEvent(roundEvent);
     }
 
+    public void setCharacterRobbed(Long characterCardId){
+        characterRobbed = characterCardId;
+    }
+
     public void stoleCharacterGold(CharacterCard characterRobed, CharacterCard characterThief) {
         if (characterRobed == null) throw new InternalGameException("La carta no puede ser nula");
         if (characterThief == null) throw new InternalGameException("La carta no puede ser nula");
         Player playerThief = findPlayerByCharacterId(characterThief.getId());
         if (playerThief == null) throw new InternalGameException("El jugador que roba no puede ser nulo");
         Player playerRobed = findPlayerByCharacterId(characterRobed.getId());
-        if (!getActualRound().getTurnByCharacter(characterRobed.getId()).canPlayerPlay())
+        if (characterRobbed.equals(characterSkipped)){
+            eventBuffer.add(new EventMessage(Events.MESSAGE,"Personaje asesinado, no puede ser robado"));
             return;
-        eventBuffer.add(Events.CHARACTER_CARD_STEALED);
+        }
+        eventBuffer.add(new EventMessage(Events.CHARACTER_CARD_STEALED, "El personaje "+characterRobed.getName()+" ha sido robado por el "+characterThief.getName()));
         playerThief.addGold(playerRobed.getAllGold());
     }
 
     public void stopCharacterPlaying(Long characterCardId) {
         if (characterCardId == null) throw new InternalGameException("La carta no puede ser nula");
-        eventBuffer.add(Events.CHARACTER_CARD_ELIMINATED);
         getActualRound().skipCharacterTurn(characterCardId);
+        eventBuffer.add(new EventMessage(Events.CHARACTER_CARD_ELIMINATED,"El personaje "+findCharacterCardById(characterCardId).getName()+" ha sido eliminado esta ronda"));
+
+    }
+
+    public void characterIdTurn(){
+        characterId = actualTurn.getCharacterId();
     }
 
     public boolean characterIsNotInRound(Long characterCardId) {
@@ -142,22 +183,27 @@ public class Game {
     }
 
     public void nextStep() {
-        if (!getActualRound().getActualTurn().isTurnCompleted()) {
+        if (!actualTurn.isTurnCompleted()) {
             System.out.println("No se puede pasar de turno, el turno actual no ha finalizado");
             return;
         }
-        if (getActualRound().getActualTurn().getPlayer().districtCardsBuilt() >= MAX_DISTRICTS_TO_BUILD_GAME) {
-            eventBuffer.add(Events.GAME_ENDED);
+
+        if (actualTurn.getPlayer().districtCardsBuilt() >= MAX_DISTRICTS_TO_BUILD_GAME) {
+            eventBuffer.add(new EventMessage(Events.GAME_ENDED, "El juego ha acabado"));
+
             return;
         }
         if (getActualRound().isLastTurn()) {
             clearPlayerCharacterCards();
+            eventBuffer.add(new EventMessage(Events.NEXT_ROUND, "Siguiente ronda"));
             addRound();
-            eventBuffer.add(Events.NEXT_ROUND);
+            actualTurn = getActualRound().getActualTurn();
+            characterIdTurn();
             return;
         }
         getActualRound().nextTurn(this);
-        eventBuffer.add(Events.NEXT_TURN);
+        actualTurn = getActualRound().getActualTurn();
+        characterIdTurn();
     }
 
     public void clearPlayerCharacterCards(){
@@ -188,21 +234,21 @@ public class Game {
         if (actualPlayer == targetPlayer) throw new InternalGameException("El jugador no puede elegirse a si mismo");
 
         List<DistrictCard> tempHand = new ArrayList<>(targetPlayer.getAllDistrictCardsInHand());
-        eventBuffer.add(Events.HANDS_SWAPPED);
         targetPlayer.addDistrictCardsInHand(actualPlayer.getAllDistrictCardsInHand());
         actualPlayer.addDistrictCardsInHand(tempHand);
+        eventBuffer.add(new EventMessage(Events.HANDS_SWAPPED,"Se ha intercambiado cartas con "+ targetPlayer.getNickName()));
 
-        getActualRound().getActualTurn().characterHabilityUsed();
+        actualTurn.characterHabilityUsed();
     }
 
     public void executePlayerCharacterAbility(Long characterCardActionId, Long targetId) {
         if (!isTurnCharacter(characterCardActionId)) throw new InternalGameException("No es el turno de ese personaje");
-        getActualRound().getActualTurn().executeCharacterHability(this, characterCardActionId, targetId);
+        actualTurn.executeCharacterHability(this, characterCardActionId, targetId);
     }
 
     public void executeDistrictAbility(Long districtCardId){
         if (districtCardId == null) throw new InternalGameException("La carta no puede ser nula");
-        getActualRound().getActualTurn().executeDistrictAbility(this, districtCardId);
+        actualTurn.executeDistrictAbility(this, districtCardId);
     }
 
     public void destroyDistrictOfOtherPlayer(Long districtCardId, CharacterCard actualCharacter) {
@@ -219,24 +265,27 @@ public class Game {
         if (districtCard == null) throw new InternalGameException("La carta de distrito no puede ser nula");
 
 
-        if (!actualPlayer.removeGold(districtCard.getPrice() + 1)) {
-            System.out.println("El jugador no tiene suficiente oro para destruir el distrito");
-            return; //Enviar evento al frontend
+        if (actualPlayer.getGold() < (districtCard.getPrice() - 1)) {
+            eventBuffer.add(new EventMessage(Events.IMPOSIBLE_ACTION, "No tienes suficiente oro"));
+
+            return;
         }
         if (playerTarget.findCharacterUndestructible() != null) {
-            System.out.println("El distrito no puede ser destruido por personaje indestructible");
-            return; //Enviar evento al frontend
+            eventBuffer.add(new EventMessage(Events.IMPOSIBLE_ACTION, "Este distrito es indestructible"));
+            return;
         }
 
         if (districtCard.isUndestructible()) {
-            System.out.println("El distrito no puede ser destruido por ser indestructible");
-            return; //Enviar evento al frontend
+            eventBuffer.add(new EventMessage(Events.IMPOSIBLE_ACTION, "Este distrito es indestructible"));
+            return;
         }
 
-        eventBuffer.add(Events.DISTRICT_CARD_DESTROYED);
-        actualPlayer.removeGold(districtCard.getPrice()+1);
+        actualPlayer.removeGold(districtCard.getPrice()-1);
         this.deckDistrictCards.addCard(playerTarget.getDistrictCardBuilt(districtCardId));
-        getActualRound().getActualTurn().characterHabilityUsed();
+        eventBuffer.add(new EventMessage(Events.DISTRICT_CARD_DESTROYED, districtCard.getName()+" ha sido destruida"));
+        getEventsBuffer().add(new EventMessage(Events.CHARACTER_HABILITY_USED,"Ha usado la habilidad de "+findCharacterCardById(actualCharacter.getId()).getName()));
+
+        actualTurn.characterHabilityUsed();
     }
 
 
@@ -250,13 +299,19 @@ public class Game {
 
     public void swapCardsWithGame(WizardActionCard wizardActionCard) {
         if (wizardActionCard == null) throw new InternalGameException("La carta no puede ser nula");
+        if (deckDistrictCards.size() == 0) {
+            getEventsBuffer().add(new EventMessage(Events.IMPOSIBLE_ACTION,"No quedan cartas en el mazo"));
+            return;
+        }
         Player actualPlayer = findPlayerByCharacterId(wizardActionCard.getId());
 
         List<DistrictCard> playerCards = actualPlayer.getAllDistrictCardsInHand();
         List<DistrictCard> gameCards = deckDistrictCards.getCard(playerCards.size());
         actualPlayer.addDistrictCardsInHand(gameCards);
         deckDistrictCards.addCards(playerCards);
-        getActualRound().getActualTurn().characterHabilityUsed();
+        actualTurn.characterHabilityUsed();
+        eventBuffer.add(new EventMessage(Events.HANDS_SWAPPED,actualPlayer.getNickName()+" ha intercambiado cartas con el mazo"));
+
     }
 
     public CharacterCard findCharacterCardById(Long characterCardId) {
@@ -271,18 +326,20 @@ public class Game {
 
         CharacterCard characterCard = findCharacterCardById(characterCardId);
         if (characterCard == null) throw new InternalGameException("La carta no puede ser nula");
-        if (!characterCard.canBuildDistrict(getActualRound().getDistrictsBuiltThisTurn())) return;//Enviar evento al frontend
+        if (!characterCard.canBuildDistrict(getActualRound().getDistrictsBuiltThisTurn())) {
+            eventBuffer.add(new EventMessage(Events.IMPOSIBLE_ACTION, "Ya no puedes construir más"));
+            return;
+        }
 
         Player player = findPlayerByCharacterId(characterCardId);
         if (player == null) throw new InternalGameException("El jugador no puede ser nulo");
 
         DistrictCard districtCard = player.findDistrictCardInHand(districtCardId);
         if (districtCard == null) throw new InternalGameException("La carta no puede ser nula");
-        if (!player.removeGold(districtCard.getPrice())){
-            System.out.println("El jugador no tiene suficiente oro para construir el distrito");
-            return; //Enviar evento al frontend
+        if (player.getGold() < (districtCard.getPrice())){
+            eventBuffer.add(new EventMessage(Events.IMPOSIBLE_ACTION, "Oro insuficiente"));
+            return;
         }
-
 
         player.removeGold(districtCard.getPrice());
         player.buildDistrictCard(player.getDistrictCardFromHand(districtCardId));
@@ -290,22 +347,34 @@ public class Game {
     }
 
     public boolean isTurnCharacter(Long characterCardId){
-        return getActualRound().getActualTurn().getCharacterId().equals(characterCardId);
+        return actualTurn.getCharacterId().equals(characterCardId);
     }
 
 
 
     public void characterChooseCoins(){
         getActualRound().playerAddCoins(TURN_PLAYER_GOLD);
+        eventBuffer.add(new EventMessage(Events.CHOOSED_COINS, "El jugador ha elegido oro"));
     }
 
     public void characterChooseCards(){
         getActualRound().playerAddDistrictCard(this,TURN_DISTRICT_CARD_PLAYER);
+        eventBuffer.add(new EventMessage(Events.CHOOSED_CARDS, "El jugador ha elegido cartas"));
     }
 
-    public List<Events> getEventsBuffer() {
-        List<Events> events = new ArrayList<>(this.eventBuffer);
-        this.eventBuffer.clear();
-        return events;
+    public List<EventMessage> getEventsBuffer() {
+        return eventBuffer;
+    }
+
+    @Override
+    public String toString() {
+        return "Game{" +
+                "id=" + id +
+                ", players=" + players +
+                '}';
+    }
+
+    public DeckCards<DistrictCard> districtCards() {
+        return deckDistrictCards;
     }
 }

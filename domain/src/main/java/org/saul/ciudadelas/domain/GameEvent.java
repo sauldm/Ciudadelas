@@ -1,15 +1,15 @@
 package org.saul.ciudadelas.domain;
 
-import org.saul.ciudadelas.domain.game.Events;
+import org.saul.ciudadelas.domain.game.EventMessage;
 import org.saul.ciudadelas.domain.game.Game;
 
 import java.util.List;
 
 public class GameEvent {
     private Game game;
-    private List<Events> events;
+    private List<EventMessage> events;
 
-    public GameEvent(Game game, List<Events> events) {
+    public GameEvent(Game game, List<EventMessage> events) {
         this.game = game;
         this.events = events;
     }
@@ -18,7 +18,7 @@ public class GameEvent {
         return game;
     }
 
-    public List<Events> getEvents() {
+    public List<EventMessage> getEvents() {
         return events;
     }
 }

@@ -1,14 +1,18 @@
 package org.saul.ciudadelas.in.ws;
 
 
+import org.saul.ciudadelas.in.dto.EventsMessagesDTO;
+import org.saul.ciudadelas.in.dto.GameCommonInfoDTO;
 import org.saul.ciudadelas.in.dto.GameEventDTO;
 import org.saul.ciudadelas.in.dto.PlayerPrivateInfoDTO;
+import org.saul.ciudadelas.in.mappers.GameCommonMapper;
 import org.saul.ciudadelas.in.mappers.GameEventDTOMapper;
 import org.saul.ciudadelas.in.mappers.PlayerPrivateMapper;
 import org.saul.ciudadelas.domain.GameEvent;
 import org.saul.ciudadelas.domain.game.players.Player;
 import org.saul.ciudadelas.ports.EventsInPort;
 
+import org.saul.ciudadelas.services.GameService;
 import org.saul.ciudadelas.services.LobbyService;
 import org.saul.ciudadelas.services.PlayerService;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -26,10 +30,13 @@ public class WebSocketSender implements EventsInPort {
     private final LobbyService lobbyService;
     private final PlayerService playerService;
 
-    public WebSocketSender(SimpMessagingTemplate simpMessagingTemplate, LobbyService lobbyService, PlayerService playerService) {
+    private final GameService gameService;
+
+    public WebSocketSender(SimpMessagingTemplate simpMessagingTemplate, LobbyService lobbyService, PlayerService playerService, GameService gameService) {
         this.messagingTemplate = simpMessagingTemplate;
         this.lobbyService = lobbyService;
         this.playerService = playerService;
+        this.gameService = gameService;
     }
 
     @Override
@@ -45,6 +52,7 @@ public class WebSocketSender implements EventsInPort {
     public void sendPrivateInfo(GameEvent gameEvent) {
         for (Player player : gameEvent.getGame().getPlayers()) {
             PlayerPrivateInfoDTO playerPrivateInfoDTO = PlayerPrivateMapper.toPlayerPrivateInfoDTO(player);
+
             messagingTemplate.convertAndSendToUser(
                     player.getNickName(),
                     "/queue/game/" + gameEvent.getGame().getId(),
@@ -53,13 +61,23 @@ public class WebSocketSender implements EventsInPort {
         }
     }
 
-    public void publishId(UUID gameID, Long id) {
-        messagingTemplate.convertAndSend("/topic/game/" + gameID, id);
-
-    }
 
     public void publishPlayersLobby(UUID lobbyId, List<String> nickNames) {
-        System.out.println("nombress  " +nickNames);
         messagingTemplate.convertAndSend("/topic/players/" + lobbyId, nickNames);
+    }
+
+    public void sendGameStarted(UUID id) {
+        messagingTemplate.convertAndSend(
+                "/topic/gameCreated/" + id,
+                id
+        );
+    }
+
+    public void sendToPlayer(UUID id, Principal principal, Player player){
+        messagingTemplate.convertAndSendToUser(
+                principal.getName(),
+                "/queue/game/" + id,
+                PlayerPrivateMapper.toPlayerPrivateInfoDTO(player)
+        );
     }
 }

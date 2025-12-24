@@ -10,6 +10,11 @@ public class PlayerPrivateMapper {
         playerPrivateInfoDTO.setDistrictsInHand(
                 CardDTOMapper.toCardDTOList(player.getDistrictDeckCardsInHand().getCards())
         );
+        playerPrivateInfoDTO.setCharacterCards(
+                CardDTOMapper.toCardDTOList(player.getCharacterCards().getCards())
+        );
+        playerPrivateInfoDTO.setDistrictsCardsGained(CardDTOMapper.toCardDTOList(player.getPrivateDistrictGained()));
+
         return playerPrivateInfoDTO;
     }
 }

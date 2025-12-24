@@ -1,6 +1,8 @@
 package org.saul.ciudadelas.domain.game.deck_cards.actions;
 
 import org.saul.ciudadelas.domain.exception.ExpectedGameError;
+import org.saul.ciudadelas.domain.game.EventMessage;
+import org.saul.ciudadelas.domain.game.Events;
 import org.saul.ciudadelas.domain.game.Game;
 import org.saul.ciudadelas.domain.game.deck_cards.Color;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.DistrictCard;
@@ -15,8 +17,14 @@ public class TakeThreeActionCard extends DistrictCard implements OptionalEpicCar
 
     @Override
     public void execute(Game game, Player player) {
-        if (!player.removeGold(2L)) throw new ExpectedGameError("No tienes monedas suficientes");
+        if (player.getGold() < (2L)){
+            game.getEventsBuffer().add(new EventMessage(Events.IMPOSIBLE_ACTION,"No tienes suficientes monedas" ));
+            return;
+        };
+        player.removeGold(2L);
         player.addDistrictCardsInHand(game.getDistrictCards(3));
+        game.getEventsBuffer().add(new EventMessage(Events.DISTRICT_HABILITY_USED,player
+                .getNickName()+" ha usado la habilidad de "+this.getName()+"\n Gana: 3 cartas\nPierde 2 de oro"));
+        game.getActualTurn().addDistrictUsedThisRound(this.getId());
     }
-
 }

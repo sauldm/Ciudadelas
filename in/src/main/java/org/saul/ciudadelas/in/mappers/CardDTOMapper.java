@@ -13,8 +13,8 @@ public class CardDTOMapper {
         cardDTO.setColor(card.getColor().ordinal());
         cardDTO.setId(card.getId());
         cardDTO.setName(card.getName());
+        cardDTO.setGold(card.getPrice());
         cardDTO.setDescription(card.getDescription());
-
         return cardDTO;
     }
 

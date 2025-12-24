@@ -89,7 +89,7 @@ public class DeckCards<T extends Card> {
                 .count();
     }
 
-    public List<T> findCardWithInstance(Class<StartTurnEpicCard> startTurnEpicCardClass) {
+    public List<T> findCardsWithInstance(Class<StartTurnActionCard> startTurnEpicCardClass) {
         List<T> result = new ArrayList<>();
         for (T card : cards) {
             if (startTurnEpicCardClass.isInstance(card)) {
@@ -105,5 +105,22 @@ public class DeckCards<T extends Card> {
 
     public List<T> getCards() {
         return cards;
+    }
+
+    public void randomizeCards() {
+        Collections.shuffle(cards, random);
+    }
+
+    public void clearCards() {
+        cards.clear();
+    }
+
+    public T findCardWithInstance(Class<StartTurnActionCard> startTurnEpicCardClass) {
+        for (T card : cards) {
+            if (startTurnEpicCardClass.isInstance(card)) {
+                return card;
+            }
+        }
+        return null;
     }
 }

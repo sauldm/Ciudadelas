@@ -10,9 +10,14 @@ public class PlayersCommonMapper {
 
     public static PlayerCommonInfoDTO toPlayerCommonInfoDTO(Player player){
         PlayerCommonInfoDTO playerCommonInfoDTO = new PlayerCommonInfoDTO();
+        playerCommonInfoDTO.setId(player.getId());
         playerCommonInfoDTO.setGold(player.getGold());
         playerCommonInfoDTO.setDistrictsBuilt(
                 CardDTOMapper.toCardDTOList(player.getDistrictDeckCardsBuilt().getCards())
+        );
+
+        playerCommonInfoDTO.setCharacterCardsPlayed(
+                CardDTOMapper.toCardDTOList(player.getCharacterCardsPlayed())
         );
         playerCommonInfoDTO.setNickName(player.getNickName());
         playerCommonInfoDTO.setNumberDistrictsInHand(player.getDistrictDeckCardsInHand().size());

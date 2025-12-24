@@ -1,13 +1,14 @@
 package org.saul.ciudadelas.domain.game.players;
 
+import org.saul.ciudadelas.domain.game.EventMessage;
 import org.saul.ciudadelas.domain.game.deck_cards.Color;
 import org.saul.ciudadelas.domain.game.deck_cards.DeckCards;
-import org.saul.ciudadelas.domain.game.deck_cards.StartTurnEpicCard;
+import org.saul.ciudadelas.domain.game.deck_cards.StartTurnActionCard;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.CharacterCard;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.DistrictCard;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import static org.saul.ciudadelas.domain.game.GameConstants.INITIAL_PLAYER_GOLD;
 
@@ -19,6 +20,8 @@ public class Player{
     private final DeckCards<CharacterCard> characterCards;
     private Long gold;
     private int points;
+    private List<CharacterCard> characterCardsPlayed;
+    private List<DistrictCard> privateDistrictGained;
 
     public Player(Long id,String nickName) {
         this.id = id;
@@ -27,6 +30,7 @@ public class Player{
         this.points = 0;
         this.characterCards = new DeckCards<>();
         this.districtDeckCardsBuilt = new DeckCards<>();
+        this.characterCardsPlayed = new ArrayList<>();
     }
 
     public Long getId() {
@@ -41,6 +45,14 @@ public class Player{
         return districtDeckCardsInHand;
     }
 
+    public void setPrivateDistrictGained(List<DistrictCard> privateDistrictGained) {
+        this.privateDistrictGained = privateDistrictGained;
+    }
+
+    public List<DistrictCard> getPrivateDistrictGained() {
+        return privateDistrictGained;
+    }
+
     public String getNickName() {
         return nickName;
     }
@@ -51,6 +63,10 @@ public class Player{
 
     public DeckCards<CharacterCard> getCharacterCards() {
         return characterCards;
+    }
+
+    public List<CharacterCard> getCharacterCardsPlayed(){
+        return characterCardsPlayed;
     }
 
     public int getPoints() {
@@ -68,6 +84,10 @@ public class Player{
         gold = 0L;
         return stoledGold;
 
+    }
+
+    public void addCharacterPlayed(CharacterCard characterCard){
+        characterCardsPlayed.add(characterCard);
     }
 
     public void addGold(Long quantity){
@@ -101,6 +121,7 @@ public class Player{
     }
 
     public List<CharacterCard> clearCharacterCards() {
+        characterCardsPlayed.clear();
         return characterCards.getAllCards();
     }
 
@@ -146,17 +167,16 @@ public class Player{
         districtDeckCardsBuilt.addCard(districtCard);
     }
 
-    public void addDistrictCardInHand(DistrictCard districtCard) {
-        districtDeckCardsInHand.addCard(districtCard);
-    }
-
     public void addPoints(int i) {
         points += i;
     }
 
     public List<DistrictCard> findDistrictsWithHabilityAtTurnStart() {
-        return districtDeckCardsInHand.findCardWithInstance(StartTurnEpicCard.class);
+        return districtDeckCardsInHand.findCardsWithInstance(StartTurnActionCard.class);
+    }
 
+    public CharacterCard findCharacterWithHabilityAtTurnStart(){
+        return characterCards.findCardWithInstance(StartTurnActionCard.class);
     }
 
     public int districtCardsBuilt() {

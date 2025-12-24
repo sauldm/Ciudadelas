@@ -16,6 +16,7 @@ public class LobbyEntity {
     @Id
     private UUID id;
 
-    @OneToMany(mappedBy = "lobby", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany
+    @JoinColumn(name = "lobby_id")
     private List<PlayerEntity> players;
 }

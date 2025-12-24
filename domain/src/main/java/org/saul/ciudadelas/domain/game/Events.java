@@ -1,6 +1,6 @@
 package org.saul.ciudadelas.domain.game;
-
 public enum Events {
+
     CHARACTER_CARD_ELIMINATED,
     GAME_STARTED,
     GAME_ENDED,
@@ -8,5 +8,14 @@ public enum Events {
     NEXT_TURN,
     NEXT_ROUND,
     DISTRICT_CARD_DESTROYED,
-    HANDS_SWAPPED
+    HANDS_SWAPPED,
+    CHARACTER_HABILITY_USED,
+    DISTRICT_HABILITY_USED,
+    CHOOSED_COINS,
+    CHOOSED_CARDS,
+    IMPOSIBLE_ACTION,
+    MESSAGE,
+    PRIVATE,
+    ARQUITECT
+
 }

@@ -8,6 +8,7 @@ import org.saul.ciudadelas.domain.game.players.Player;
 import org.springframework.stereotype.Service;
 import org.saul.ciudadelas.ports.CardRepositoryPort;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -15,7 +16,7 @@ import java.util.UUID;
 @Service
 public class GameService {
     private final CardRepositoryPort cardRepositoryPort;
-    private Map<UUID,Game> games;
+    private Map<UUID,Game> games = new HashMap<>();
     private GameEvent eventBuffer;
 
     public GameService(CardRepositoryPort cardRepositoryPort) {
@@ -24,19 +25,29 @@ public class GameService {
 
 
 
-    public GameEvent startGame(UUID id, List<Player> players) {
+    public Game startGame(UUID id, List<Player> players) {
         List<DistrictCard> districtCards = cardRepositoryPort.findAllCards();
         DeckCards<DistrictCard> allDistrictCards = new DeckCards<>();
         allDistrictCards.addCards(districtCards);
         Game game = Game.initializeNewGame(id,allDistrictCards, players);
         games.put(id, game);
-        eventBuffer = getGame(id).clearEventsBuffer();
-        return eventBuffer;
+        return game;
     }
 
-    private Game getGame(UUID id) {
-        return games.get(id);
+    public Game getGame(UUID id) {
+        Game game = games.get(id);
+        if (game == null) {
+            throw new IllegalStateException("Game not found: " + id);
+        }
+        return game;
     }
+    public GameEvent getCurrentGameEvent(UUID id) {
+        Game game = games.get(id);
+        if (game == null) return null;
+        return game.clearEventsBuffer();
+    }
+
+
 
     public GameEvent deleteGame(UUID id) {
         Game game = getGame(id);
@@ -44,10 +55,6 @@ public class GameService {
         eventBuffer = game.clearEventsBuffer();
         return eventBuffer;
 
-    }
-
-    public Long getCharacterTurn(UUID id){
-        return getGame(id).getActualRound().getActualTurn().getCharacterId();
     }
 
     public GameEvent nextStep(UUID id){
@@ -98,4 +105,20 @@ public class GameService {
         eventBuffer = game.clearEventsBuffer();
         return eventBuffer;
     }
+
+    public boolean existsGame(UUID id) {
+        return games.containsKey(id);
+    }
+
+    public Player getPlayer(UUID gameId, String nickName) {
+        Game game = games.get(gameId);
+        if (game == null) return null;
+
+        return game.getPlayers()
+                .stream()
+                .filter(player -> player.getNickName().equals(nickName))
+                .findFirst()
+                .orElse(null);
+    }
+
 }

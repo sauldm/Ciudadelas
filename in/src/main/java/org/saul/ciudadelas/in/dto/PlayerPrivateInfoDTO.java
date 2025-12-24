@@ -10,5 +10,6 @@ import java.util.List;
 public class PlayerPrivateInfoDTO {
 
     private List<CardDTO> districtsInHand;
-    private List<CardDTO> characterCardsNotPlayed;
+    private List<CardDTO> characterCards;
+    private List<CardDTO> districtsCardsGained;
 }

@@ -1,8 +1,8 @@
 package org.saul.ciudadelas.domain.game;
 
+import org.saul.ciudadelas.domain.exception.ExpectedGameError;
 import org.saul.ciudadelas.domain.exception.InternalGameException;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.CharacterCard;
-import org.saul.ciudadelas.domain.game.players.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +18,10 @@ public class Round {
         this.turns = turns;
     }
 
-    public static Round initializeRound(List<Turn> turns){
+    public static Round initializeRound(List<Turn> turns, Game game){
         Round round = new Round(turns);
         round.actualTurn = 0;
-        round.turns.getFirst().startTurn();
+        round.turns.getFirst().startTurn(game);
         round.roundEvents = new ArrayList<>();
 
         return round;
@@ -35,6 +35,7 @@ public class Round {
 
     public Turn getActualTurn(){
         if (turns.isEmpty()) throw new InternalGameException("Tienen que haber turnos");
+
         return turns.get(actualTurn);
     }
 
@@ -43,16 +44,21 @@ public class Round {
     }
 
     public void nextTurn(Game game){
-        turns.get(actualTurn).endTurn();
+        System.out.println(getActualTurn().getCharacter().getId());
+        if (!getActualTurn().isTurnCompleted()) throw new ExpectedGameError("El jugador no ha elegido");
+        turns.get(actualTurn).skipTurn();
         actualTurn++;
         startTurn(game);
-        // Enviar evento al front de nuevo turno
     }
 
-    private void startTurn(Game game) {
-        getActualTurn().startTurn();
+    public void startTurn(Game game) {
         trigerTurnEvents(game);
-        getActualTurn().executeDistrictsHabilitiesAtTurnStart(game);
+        while (!getActualTurn().canPlayerPlay()){
+            actualTurn++;
+            trigerTurnEvents(game);
+        }
+        game.getEventsBuffer().add(new EventMessage(Events.NEXT_TURN, "Es el turno de "+getActualTurn().getCharacter().getName()));
+        getActualTurn().startTurn(game);
     }
 
     public void trigerTurnEvents(Game game) {
@@ -69,8 +75,8 @@ public class Round {
 
 
     public void skipCharacterTurn(Long characterCardId) {
-        Turn turn = getTurnByCharacter(characterCardId);
-        turn.endTurn();
+        if (getTurnByCharacter(characterCardId) == null) return;
+        getTurnByCharacter(characterCardId).skipTurn();
     }
 
     public boolean characterIsNotInRound(Long characterCardId){
@@ -84,8 +90,7 @@ public class Round {
         Optional<Turn> turnOptional = turns.stream()
                 .filter(turn -> turn.getCharacterId().equals(characterCardId))
                 .findFirst();
-        if (turnOptional.isEmpty()) throw new InternalGameException("El turno tiene que existir en la ronda");
-        return turnOptional.get();
+        return turnOptional.orElse(null);
     }
 
     public CharacterCard findCharacterById(Long characterCardId){

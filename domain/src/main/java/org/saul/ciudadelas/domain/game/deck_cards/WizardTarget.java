@@ -1,14 +1,8 @@
 package org.saul.ciudadelas.domain.game.deck_cards;
 
 public enum WizardTarget {
-    GAMEDECK(0L),
-    PLAYER(-1L);
-
-    private Long value;
-
-    WizardTarget(Long value) {
-        this.value = value;
-    }
+    GAMEDECK,
+    PLAYER;
 
 
     public static WizardTarget fromValue(Long value) {
