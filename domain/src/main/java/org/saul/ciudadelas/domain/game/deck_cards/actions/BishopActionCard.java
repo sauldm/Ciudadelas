@@ -5,6 +5,6 @@ import org.saul.ciudadelas.domain.game.deck_cards.cards.CharacterCard;
 
 public class BishopActionCard extends CharacterCard {
     public BishopActionCard() {
-        super(5L,"Bishop", Color.BLUE, true,"Bis",1,0L);
+        super(5L,"Inquisidor", Color.BLUE, true,"Sus distritos no podrán ser destruidos",1,0L);
     }
 }

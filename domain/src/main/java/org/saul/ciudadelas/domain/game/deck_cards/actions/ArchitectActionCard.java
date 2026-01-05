@@ -15,7 +15,7 @@ import java.util.List;
 
 public class ArchitectActionCard extends CharacterCard implements StartTurnActionCard {
     public ArchitectActionCard() {
-        super(7L,"Architect", Color.GREY,false, "arc",2,0L);
+        super(7L,"Forjador", Color.GREY,false, "Cosigue 2 distritos \n Puede construir 2 distritos",2,0L);
     }
 
     @Override

@@ -14,7 +14,7 @@ public class ThiefActionCard extends CharacterCard implements OtherPlayerActionC
 
 
     public ThiefActionCard() {
-        super(2L,"Thief", Color.GREY,false,"Thief",1,0L);
+        super(2L,"Saqueador", Color.GREY,false,"Elige al personaje al que quieres robar",1,0L);
     }
 
     @Override

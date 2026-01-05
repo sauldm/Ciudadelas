@@ -10,7 +10,7 @@ import org.saul.ciudadelas.domain.game.deck_cards.cards.CharacterCard;
 
 public class MilitaryActionCard extends CharacterCard implements OtherPlayerActionCharacterCard {
     public MilitaryActionCard() {
-        super(8L,"Military", Color.RED,false,"Milit",1,0L);
+        super(8L,"Conquistador", Color.RED,false,"Destruye un distrito del enemigo",1,0L);
     }
 
 

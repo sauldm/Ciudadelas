@@ -11,13 +11,13 @@ import org.saul.ciudadelas.domain.game.players.Player;
 
 public class MerchantActionCard extends CharacterCard implements StartTurnActionCard {
     public MerchantActionCard() {
-        super(6L,"Merchant", Color.GREEN,false,"Merch",1,0L);
+        super(6L,"Mercader", Color.GREEN,false,"Consigue una moneda",1,0L);
     }
 
     @Override
     public void execute(Game game, Player player) {
         if (player == null) throw new InternalGameException("El player no puede ser null");
         player.addGold(1L);
-        game.getEventsBuffer().add(new EventMessage(Events.MESSAGE, "El jugador consigue 1 moneda"));
+        game.getEventsBuffer().add(new EventMessage(Events.MESSAGE, player.getNickName()+" consigue 1 moneda"));
     }
 }

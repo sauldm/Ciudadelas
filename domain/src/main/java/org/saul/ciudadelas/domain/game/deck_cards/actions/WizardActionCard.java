@@ -13,7 +13,7 @@ public class WizardActionCard extends CharacterCard implements MainDeckCardActio
 
 
     public WizardActionCard() {
-        super(3L,"Wizard", Color.GREY,false,"Wiz",1,0L);
+        super(3L,"Ilusionista", Color.GREY,false,"Elige entre intercambiar cartas con\n El mazo\n El jugador",1,0L);
     }
 
     @Override

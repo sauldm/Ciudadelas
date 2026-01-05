@@ -4,38 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cf085e23-fed8-43c1-b33c-d4b15dc4cf36" name="Changes" comment="arreglo ronda">
-      <change afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/PlayerClassification.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/src/main/java/org/saul/ciudadelas/out/projection/PlayerClassificationP.java" afterDir="false" />
+    <list default="true" id="cf085e23-fed8-43c1-b33c-d4b15dc4cf36" name="Changes" comment="Tablas de clasificación">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/src/main/java/org/saul/ciudadelas/services/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/application/src/main/java/org/saul/ciudadelas/services/GameService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/src/main/java/org/saul/ciudadelas/services/LobbyService.java" beforeDir="false" afterPath="$PROJECT_DIR$/application/src/main/java/org/saul/ciudadelas/services/LobbyService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/src/main/java/org/saul/ciudadelas/services/PlayerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/application/src/main/java/org/saul/ciudadelas/services/PlayerService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/ciudadelas.mv.db" beforeDir="false" afterPath="$PROJECT_DIR$/data/ciudadelas.mv.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/GameConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/GameConstants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/Round.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/Round.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/Turn.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/Turn.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/deck_cards/DeckCards.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/deck_cards/DeckCards.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/deck_cards/actions/ArchitectActionCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/deck_cards/actions/ArchitectActionCard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/deck_cards/cards/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/deck_cards/cards/Card.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/deck_cards/cards/CharacterCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/deck_cards/cards/CharacterCard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/deck_cards/cards/DistrictCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/deck_cards/cards/DistrictCard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/players/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/players/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/ports/LobbyRepositoryPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/ports/LobbyRepositoryPort.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/ports/PlayerRepositoryPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/ports/PlayerRepositoryPort.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/in/src/main/java/org/saul/ciudadelas/in/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/in/src/main/java/org/saul/ciudadelas/in/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/in/src/main/java/org/saul/ciudadelas/in/dto/PlayerCommonInfoDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/in/src/main/java/org/saul/ciudadelas/in/dto/PlayerCommonInfoDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/in/src/main/java/org/saul/ciudadelas/in/dto/PlayerDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/in/src/main/java/org/saul/ciudadelas/in/dto/PlayerDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/in/src/main/java/org/saul/ciudadelas/in/mappers/PlayerMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/in/src/main/java/org/saul/ciudadelas/in/mappers/PlayersCommonMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/in/src/main/java/org/saul/ciudadelas/in/mappers/PlayersCommonMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/src/main/java/org/saul/ciudadelas/out/adapters/LobbyRepositoryAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/out/src/main/java/org/saul/ciudadelas/out/adapters/LobbyRepositoryAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/src/main/java/org/saul/ciudadelas/out/adapters/PlayerRepositoryAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/out/src/main/java/org/saul/ciudadelas/out/adapters/PlayerRepositoryAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/src/main/java/org/saul/ciudadelas/out/entity/PlayerEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/out/src/main/java/org/saul/ciudadelas/out/entity/PlayerEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/src/main/java/org/saul/ciudadelas/out/mapper/LobbyMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/out/src/main/java/org/saul/ciudadelas/out/mapper/LobbyMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/src/main/java/org/saul/ciudadelas/out/mapper/PlayerMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/out/src/main/java/org/saul/ciudadelas/out/mapper/PlayerMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/src/main/java/org/saul/ciudadelas/out/repositories/LobbyJpaRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/out/src/main/java/org/saul/ciudadelas/out/repositories/LobbyJpaRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/src/main/java/org/saul/ciudadelas/out/repositories/PlayerJpaRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/out/src/main/java/org/saul/ciudadelas/out/repositories/PlayerJpaRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/deck_cards/actions/AssassinActionCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/deck_cards/actions/AssassinActionCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/deck_cards/actions/BishopActionCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/deck_cards/actions/BishopActionCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/deck_cards/actions/KingActionCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/deck_cards/actions/KingActionCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/deck_cards/actions/MerchantActionCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/deck_cards/actions/MerchantActionCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/deck_cards/actions/ThiefActionCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/deck_cards/actions/ThiefActionCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/deck_cards/actions/WizardActionCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/deck_cards/actions/WizardActionCard.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -559,7 +535,15 @@
       <option name="project" value="LOCAL" />
       <updated>1766577621022</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="Tablas de clasificación">
+      <option name="closed" value="true" />
+      <created>1767613871155</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1767613871155</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -589,7 +573,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="getActualTurn y nextTurn" />
     <MESSAGE value="Funciones de eventos" />
     <MESSAGE value="funciones de asesino y ladron" />
     <MESSAGE value="funcion de cambio de cartas de wizard" />
@@ -614,22 +597,10 @@
     <MESSAGE value="cambios" />
     <MESSAGE value="base de datos" />
     <MESSAGE value="arreglo ronda" />
-    <option name="LAST_COMMIT_MESSAGE" value="arreglo ronda" />
+    <MESSAGE value="Tablas de clasificación" />
+    <option name="LAST_COMMIT_MESSAGE" value="Tablas de clasificación" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/deck_cards/actions/ArchitectActionCard.java</url>
-          <line>21</line>
-          <properties class="org.saul.ciudadelas.domain.game.deck_cards.actions.ArchitectActionCard" method="execute">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <watches-manager>
       <configuration name="SpringBootApplicationConfigurationType">
         <watch expression="public void sendPrivate(String msg){&#10;            messagingTemplate.convertAndSendToUser(&#10;                    &quot;jugador1&quot;,&#10;                    &quot;/queue/game&quot;+1,&#10;                    msg&#10;            );&#10;        }" />
