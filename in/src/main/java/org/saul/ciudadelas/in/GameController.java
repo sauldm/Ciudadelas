@@ -1,6 +1,7 @@
 package org.saul.ciudadelas.in;
 
 import org.saul.ciudadelas.domain.game.Game;
+import org.saul.ciudadelas.domain.game.PlayerClassification;
 import org.saul.ciudadelas.in.dto.*;
 import org.saul.ciudadelas.in.ws.WebSocketSender;
 import org.saul.ciudadelas.domain.GameEvent;
@@ -206,5 +207,10 @@ public class GameController {
 
         webSocketSender.publishEvent(gameEvent);
         webSocketSender.sendPrivateInfo(gameEvent);
+    }
+
+    @GetMapping("/getClassificationTable")
+    public List<PlayerClassification> getClassificationTable(){
+        return playerService.getClassificationTable();
     }
 }

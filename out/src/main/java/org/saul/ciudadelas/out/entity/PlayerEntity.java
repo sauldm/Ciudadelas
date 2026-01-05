@@ -1,5 +1,6 @@
 package org.saul.ciudadelas.out.entity;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,6 +15,8 @@ public class PlayerEntity {
     private Long id;
     @Column(unique = true)
     private String nickName;
+    @Column
+    private Integer wins = 0;
 
     @ManyToOne
     @JoinColumn(name = "lobby_id")

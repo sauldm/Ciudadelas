@@ -76,6 +76,7 @@ public class Turn implements Comparable<Turn>{
         isPlaying = true;
         if (!getPlayer().getCharacterCardsPlayed().contains(getCharacter()))
             getPlayer().addCharacterPlayed(getCharacter());
+        System.out.println("ejecutando habilidad inicio");
         executeDistrictsHabilitiesAtTurnStart(game);
         executeCharacterHabilitiesAtTurnStart(game);
     }

@@ -17,4 +17,5 @@ public class PlayerCommonInfoDTO {
     private List<CardDTO> districtsBuilt;
     private List<CardDTO> characterCardsPlayed;
     private int numberDistrictsInHand;
+    private int points;
 }

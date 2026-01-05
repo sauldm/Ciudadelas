@@ -123,4 +123,16 @@ public class DeckCards<T extends Card> {
         }
         return null;
     }
+
+    public int sumPoints() {
+        int points = 0;
+        for (T card : cards){
+            points += card.getPoints();
+        }
+        return points;
+    }
+
+    public boolean isEmpty() {
+        return cards.isEmpty();
+    }
 }

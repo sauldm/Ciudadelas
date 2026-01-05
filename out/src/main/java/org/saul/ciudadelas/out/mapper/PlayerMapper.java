@@ -7,14 +7,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class PlayerMapper {
 
-    public PlayerEntity toEntity(Long id,String nickName) {
+    public PlayerEntity toEntity(Player player) {
         PlayerEntity entity = new PlayerEntity();
-        if (id != null) entity.setId(id);
-        entity.setNickName(nickName);
+        if (player.getId() != null) entity.setId(player.getId());
+        entity.setNickName(player.getNickName());
+        entity.setWins(player.getWins());
         return entity;
     }
 
     public Player toDomain(PlayerEntity entity) {
-        return new Player(entity.getId(), entity.getNickName());
+        return new Player(entity.getId(), entity.getNickName(), entity.getWins());
     }
 }

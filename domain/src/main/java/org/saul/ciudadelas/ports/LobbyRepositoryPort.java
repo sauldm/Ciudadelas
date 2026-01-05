@@ -20,4 +20,6 @@ public interface LobbyRepositoryPort {
     List<String> findAllPlayers(UUID id);
 
     boolean removePlayer(UUID lobbyId, String nickName);
+
+    void removeLobbyWithoutPlayers();
 }

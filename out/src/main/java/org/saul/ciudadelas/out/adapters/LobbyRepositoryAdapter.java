@@ -71,4 +71,9 @@ public class LobbyRepositoryAdapter implements LobbyRepositoryPort {
     public boolean removePlayer(UUID lobbyId, String nickName) {
         return jpaRepository.removePlayer(lobbyId, nickName) > 0;
     }
+
+    @Override
+    public void removeLobbyWithoutPlayers() {
+        jpaRepository.removeLobbyWithoutPlayers();
+    }
 }

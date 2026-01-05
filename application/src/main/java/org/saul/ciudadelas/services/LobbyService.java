@@ -20,6 +20,7 @@
             this.playerService = playerService;
         }
 
+        @Transactional
         public List<UUID> getLobbiesWithLessThan2Players(){
             return lobbyRepositoryPort.findAllLobbyWithMaxTwoPlayers();
         }
@@ -43,8 +44,9 @@
         }
 
         @Transactional
-        public boolean removePlayerFromLobby(UUID lobbyId, String nickName) {
-            return lobbyRepositoryPort.removePlayer(lobbyId, nickName);
+        public void removePlayerFromLobby(UUID lobbyId, String nickName) {
+            lobbyRepositoryPort.removePlayer(lobbyId, nickName);
+            lobbyRepositoryPort.removeLobbyWithoutPlayers();
         }
 
 

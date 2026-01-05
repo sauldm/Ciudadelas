@@ -5,6 +5,7 @@ import org.saul.ciudadelas.domain.game.Game;
 import org.saul.ciudadelas.domain.game.deck_cards.DeckCards;
 import org.saul.ciudadelas.domain.game.deck_cards.cards.DistrictCard;
 import org.saul.ciudadelas.domain.game.players.Player;
+import org.saul.ciudadelas.ports.PlayerRepositoryPort;
 import org.springframework.stereotype.Service;
 import org.saul.ciudadelas.ports.CardRepositoryPort;
 
@@ -19,11 +20,12 @@ public class GameService {
     private Map<UUID,Game> games = new HashMap<>();
     private GameEvent eventBuffer;
 
-    public GameService(CardRepositoryPort cardRepositoryPort) {
+    private PlayerRepositoryPort playerRepositoryPort;
+
+    public GameService(CardRepositoryPort cardRepositoryPort, PlayerRepositoryPort playerRepositoryPort) {
         this.cardRepositoryPort = cardRepositoryPort;
+        this.playerRepositoryPort = playerRepositoryPort;
     }
-
-
 
     public Game startGame(UUID id, List<Player> players) {
         List<DistrictCard> districtCards = cardRepositoryPort.findAllCards();
@@ -61,6 +63,10 @@ public class GameService {
         Game game = getGame(id);
         game.nextStep();
         eventBuffer = game.clearEventsBuffer();
+        if (eventBuffer.getEvents().getLast().getType().toString().equals("GAME_ENDED")){
+            game.getPlayers()
+                    .forEach(playerRepositoryPort::save);
+        }
         return eventBuffer;
 
     }
@@ -120,5 +126,4 @@ public class GameService {
                 .findFirst()
                 .orElse(null);
     }
-
 }

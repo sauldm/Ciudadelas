@@ -21,4 +21,8 @@ public interface LobbyJpaRepository extends JpaRepository<LobbyEntity, UUID> {
     @Query("update PlayerEntity p set p.lobby = null where p.lobby.id = :lobbyId and p.nickName = :nick")
     int removePlayer(@Param("lobbyId") UUID lobbyId,
                      @Param("nick") String nick);
+
+    @Modifying
+    @Query("DELETE FROM LobbyEntity l WHERE l.players IS EMPTY")
+    void removeLobbyWithoutPlayers();
 }

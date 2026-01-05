@@ -44,7 +44,6 @@ public class Round {
     }
 
     public void nextTurn(Game game){
-        System.out.println(getActualTurn().getCharacter().getId());
         if (!getActualTurn().isTurnCompleted()) throw new ExpectedGameError("El jugador no ha elegido");
         turns.get(actualTurn).skipTurn();
         actualTurn++;

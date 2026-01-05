@@ -1,5 +1,6 @@
 package org.saul.ciudadelas.ports;
 
+import org.saul.ciudadelas.domain.game.PlayerClassification;
 import org.saul.ciudadelas.domain.game.players.Player;
 
 import java.util.List;
@@ -10,6 +11,7 @@ public interface PlayerRepositoryPort {
     Optional<Player> findById(Long id);
     List<Player> findAllPlayers();
     Optional<Player> findByName(String name);
-    Player save(String nickName);
+    Player save(Player player);
+    List<PlayerClassification> findAllByOrderByGamesWonDesc();
 
 }

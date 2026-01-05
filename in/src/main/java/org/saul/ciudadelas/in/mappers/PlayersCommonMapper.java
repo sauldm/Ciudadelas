@@ -21,6 +21,7 @@ public class PlayersCommonMapper {
         );
         playerCommonInfoDTO.setNickName(player.getNickName());
         playerCommonInfoDTO.setNumberDistrictsInHand(player.getDistrictDeckCardsInHand().size());
+        playerCommonInfoDTO.setPoints(player.getPoints());
 
         return playerCommonInfoDTO;
     }

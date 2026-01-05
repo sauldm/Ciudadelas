@@ -21,7 +21,7 @@ public class ArchitectActionCard extends CharacterCard implements StartTurnActio
     @Override
     public void execute(Game game, Player player) {
         if (player == null) throw new InternalGameException("El jugador no puede ser null");
-        if (game.districtCards().size() == 0){
+        if (game.districtCards().isEmpty()){
             game.getEventsBuffer().add(new EventMessage(Events.MESSAGE, "No quedan cartas en el mazo"));
             return;
         }

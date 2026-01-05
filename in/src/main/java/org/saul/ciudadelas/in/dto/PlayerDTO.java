@@ -11,4 +11,5 @@ import java.util.UUID;
 public class PlayerDTO {
     private Long id;
     private String nickName;
+    private int wins;
 }

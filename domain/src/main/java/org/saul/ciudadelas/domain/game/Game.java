@@ -190,7 +190,11 @@ public class Game {
 
         if (actualTurn.getPlayer().districtCardsBuilt() >= MAX_DISTRICTS_TO_BUILD_GAME) {
             eventBuffer.add(new EventMessage(Events.GAME_ENDED, "El juego ha acabado"));
-
+            actualTurn.getPlayer().sumPoints(3);
+            for (Player player:players){
+                player.sumAllPoints();
+            }
+            getWiner();
             return;
         }
         if (getActualRound().isLastTurn()) {
@@ -204,6 +208,12 @@ public class Game {
         getActualRound().nextTurn(this);
         actualTurn = getActualRound().getActualTurn();
         characterIdTurn();
+    }
+
+    private void getWiner() {
+        players.stream()
+                .max(Comparator.comparingInt(Player::getPoints))
+                .ifPresent(Player::addWin);
     }
 
     public void clearPlayerCharacterCards(){

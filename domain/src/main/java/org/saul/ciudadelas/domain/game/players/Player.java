@@ -1,6 +1,5 @@
 package org.saul.ciudadelas.domain.game.players;
 
-import org.saul.ciudadelas.domain.game.EventMessage;
 import org.saul.ciudadelas.domain.game.deck_cards.Color;
 import org.saul.ciudadelas.domain.game.deck_cards.DeckCards;
 import org.saul.ciudadelas.domain.game.deck_cards.StartTurnActionCard;
@@ -22,8 +21,9 @@ public class Player{
     private int points;
     private List<CharacterCard> characterCardsPlayed;
     private List<DistrictCard> privateDistrictGained;
+    private Integer wins;
 
-    public Player(Long id,String nickName) {
+    public Player(Long id,String nickName, Integer wins) {
         this.id = id;
         this.nickName = nickName;
         this.gold = INITIAL_PLAYER_GOLD;
@@ -31,6 +31,7 @@ public class Player{
         this.characterCards = new DeckCards<>();
         this.districtDeckCardsBuilt = new DeckCards<>();
         this.characterCardsPlayed = new ArrayList<>();
+        this.wins = wins == null ? 0 : wins;
     }
 
     public Long getId() {
@@ -73,6 +74,10 @@ public class Player{
         return points;
     }
 
+    public Integer getWins() {
+        return wins;
+    }
+
     public boolean removeGold(Long quantity){
         if (gold < quantity) return false;
         gold -= quantity;
@@ -101,7 +106,6 @@ public class Player{
     public List<DistrictCard> getAllDistrictCardsInHand(){
         return districtDeckCardsInHand.getAllCards();
     }
-
 
     public void addCharacterCard(CharacterCard characterCard){
         this.characterCards.addCard(characterCard);
@@ -145,8 +149,6 @@ public class Player{
         return districtDeckCardsBuilt.getCard(districtCard);
     }
 
-
-
     @Override
     public String toString() {
         return "Player{" +
@@ -167,10 +169,6 @@ public class Player{
         districtDeckCardsBuilt.addCard(districtCard);
     }
 
-    public void addPoints(int i) {
-        points += i;
-    }
-
     public List<DistrictCard> findDistrictsWithHabilityAtTurnStart() {
         return districtDeckCardsInHand.findCardsWithInstance(StartTurnActionCard.class);
     }
@@ -181,5 +179,18 @@ public class Player{
 
     public int districtCardsBuilt() {
         return districtDeckCardsBuilt.size();
+    }
+
+    public void sumAllPoints(){
+        points += districtDeckCardsBuilt.sumPoints();
+
+    }
+
+    public void sumPoints(int cuantity){
+        points += cuantity;
+    }
+
+    public void addWin() {
+        this.wins += 1;
     }
 }
