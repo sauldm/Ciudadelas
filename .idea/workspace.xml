@@ -4,14 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cf085e23-fed8-43c1-b33c-d4b15dc4cf36" name="Changes" comment="Tablas de clasificación">
+    <list default="true" id="cf085e23-fed8-43c1-b33c-d4b15dc4cf36" name="Changes" comment="Cambio de nombre y descripción de personajes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/deck_cards/actions/AssassinActionCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/deck_cards/actions/AssassinActionCard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/deck_cards/actions/BishopActionCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/deck_cards/actions/BishopActionCard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/deck_cards/actions/KingActionCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/deck_cards/actions/KingActionCard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/deck_cards/actions/MerchantActionCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/deck_cards/actions/MerchantActionCard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/deck_cards/actions/ThiefActionCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/deck_cards/actions/ThiefActionCard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/deck_cards/actions/WizardActionCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/deck_cards/actions/WizardActionCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/ciudadelas.mv.db" beforeDir="false" afterPath="$PROJECT_DIR$/data/ciudadelas.mv.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/GameConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/domain/src/main/java/org/saul/ciudadelas/domain/game/GameConstants.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,44 +53,44 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Main.executor": "Run",
-    "Application.org.saul.ciudadelas.Main.executor": "Run",
-    "JUnit.GameTest.gameTest.executor": "Run",
-    "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
-    "Maven.Ciudadelas [clean,install].executor": "Run",
-    "Maven.Ciudadelas [clean].executor": "Run",
-    "Maven.Ciudadelas [deploy].executor": "Run",
-    "Maven.Ciudadelas [install].executor": "Run",
-    "Maven.Ciudadelas [package].executor": "Run",
-    "Maven.application [clean,install].executor": "Run",
-    "Maven.application [install].executor": "Run",
-    "Maven.boot [clean,install].executor": "Run",
-    "Maven.domain [clean,install].executor": "Run",
-    "Maven.domain [install].executor": "Run",
-    "Maven.out [clean,install].executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Spring Boot.Main (1).executor": "Run",
-    "Spring Boot.Main (2).executor": "Run",
-    "Spring Boot.Main.executor": "Run",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/saul/Desktop/Ciudadelas",
-    "onboarding.tips.debug.path": "C:/Users/domin/Desktop/Ciudadelas/src/main/java/org/example/Main.java",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.fileTypes",
-    "settings.editor.splitter.proportion": "0.28134558"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.org.saul.ciudadelas.Main.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.GameTest.gameTest.executor&quot;: &quot;Run&quot;,
+    &quot;Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Ciudadelas [clean,install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Ciudadelas [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Ciudadelas [deploy].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Ciudadelas [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.Ciudadelas [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.application [clean,install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.application [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.boot [clean,install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.domain [clean,install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.domain [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.out [clean,install].executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Spring Boot.Main (1).executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.Main (2).executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.Main.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/saul/Desktop/Ciudadelas&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/domin/Desktop/Ciudadelas/src/main/java/org/example/Main.java&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.fileTypes&quot;,
+    &quot;settings.editor.splitter.proportion&quot;: &quot;0.28134558&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\domin\Desktop\Ciudadelas\data" />
@@ -543,7 +539,15 @@
       <option name="project" value="LOCAL" />
       <updated>1767613871155</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="Cambio de nombre y descripción de personajes">
+      <option name="closed" value="true" />
+      <created>1767614656173</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1767614656173</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -573,7 +577,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Funciones de eventos" />
     <MESSAGE value="funciones de asesino y ladron" />
     <MESSAGE value="funcion de cambio de cartas de wizard" />
     <MESSAGE value="Creacion de todas las cartas de personaje y funcionalidad de ejecutar las habilidades de personaje" />
@@ -598,7 +601,8 @@
     <MESSAGE value="base de datos" />
     <MESSAGE value="arreglo ronda" />
     <MESSAGE value="Tablas de clasificación" />
-    <option name="LAST_COMMIT_MESSAGE" value="Tablas de clasificación" />
+    <MESSAGE value="Cambio de nombre y descripción de personajes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cambio de nombre y descripción de personajes" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
